@@ -11,32 +11,49 @@ import {
 
 import SearchInput from "./SearchInput";
 
-import dotenv, { load } from "dotenv";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-async function getData(q = null) {
-  let url =
-    "https://data.rechtegewalt.info/rechtegewalt.json?sql=select%0D%0A++id%2C%0D%0A++title%2C%0D%0A++AsGeoJSON%28point_geom%29%0D%0Afrom%0D%0A++incidents";
+async function fetchOptions(q = null) {
+  let whereClause = "";
 
   if (q != null) {
-    url += `+where+title+like+'%25${q}%25'`;
+    whereClause = `+where+title+like+'%25${q}%25'`;
   }
+
+  let url = `https://data.rechtegewalt.info/rechtegewalt.json?sql=select+id%2C+title%2C+subdivisions%2C+date+from+incidents+${whereClause}`;
+
+  const apiResponse = await ky.get(url).json();
+
+  const optionsArray = apiResponse.rows
+    .map((x) => x[1])
+    .filter((x) => x != null);
+
+  const optionsSet = new Set();
+  optionsArray.forEach((x) => {
+    x.split(" ").forEach((xx) => optionsSet.add(xx));
+  });
+
+  return Array.from(optionsSet);
+}
+
+async function fetchGeoData(q = null) {
+  let whereClause = "";
+
+  if (q != null) {
+    whereClause = `+where+title+like+'%25${q}%25'`;
+  }
+
+  let url = `https://data.rechtegewalt.info/rechtegewalt.json?sql=select+count%28*%29%2C+subdivisions%2C%0D%0A++AsGeoJSON%28point_geom%29%0D%0Afrom%0D%0A+incidents+${whereClause}+group+by+subdivisions`;
 
   const apiResponse = await ky.get(url).json();
   const features = apiResponse.rows.map((x) => {
     return {
       geometry: JSON.parse(x[2]),
-      properties: { id: x[0], title: x[1] },
+      properties: { count: x[0], location: x[1] },
       type: "Feature",
     };
-  });
-  const optionsArray = apiResponse.rows
-    .map((x) => x[1])
-    .filter((x) => x != null);
-  const optionsSet = new Set();
-  optionsArray.forEach((x) => {
-    x.split(" ").forEach((xx) => optionsSet.add(xx));
   });
 
   const data = {
@@ -44,7 +61,13 @@ async function getData(q = null) {
     features,
   };
 
-  return { options: Array.from(optionsSet), data };
+  return data;
+}
+
+async function fetchData(q = null) {
+  const options = await fetchOptions(q);
+  const data = await fetchGeoData(q);
+  return { data, options };
 }
 
 export default class Map extends Component {
@@ -65,7 +88,7 @@ export default class Map extends Component {
   };
 
   async loadData(q = null) {
-    const theData = await getData(q);
+    const theData = await fetchData(q);
 
     this.setState({
       ...theData,
