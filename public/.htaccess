@@ -1,0 +1,10 @@
+AuthType Basic
+AuthName "Secure Content"
+AuthUserFile "/var/www/virtual/jfilter/.htpasswd"
+require valid-user
+
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript text/javascript application/json
+
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+  Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
