@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
+import ky from "ky";
 import MapGL, { Source, Layer } from "react-map-gl";
 
 import {
@@ -12,16 +13,42 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+async function getData() {
+  const url =
+    "https://data.rechtegewalt.info/rechtegewalt.json?sql=select%0D%0A++id%2C%0D%0A++title%2C%0D%0A++AsGeoJSON%28point_geom%29%0D%0Afrom%0D%0A++incidents";
+
+  const data = await ky.get(url).json();
+  const features = data.rows.map((x) => {
+    return { geometry: JSON.parse(x[2]), id: x[0], title: x[1] };
+  });
+  return {
+    type: "FeatureCollection",
+    features,
+  };
+}
+
 export default class Map extends Component {
   state = {
     viewport: {
-      latitude: 40.67,
-      longitude: -103.59,
-      zoom: 3,
+      latitude: 52.520645,
+      longitude: 13.409779,
+      zoom: 4,
       bearing: 0,
       pitch: 0,
     },
+    data: {
+      type: "FeatureCollection",
+      features: [],
+    },
   };
+
+  async componentDidMount() {
+    const data = await getData();
+
+    this.setState({
+      data,
+    });
+  }
 
   _sourceRef = React.createRef();
 
@@ -56,7 +83,7 @@ export default class Map extends Component {
       <MapGL
         {...viewport}
         width="100%"
-        height="100%"
+        height="80%"
         mapStyle="mapbox://styles/mapbox/dark-v9"
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -65,7 +92,7 @@ export default class Map extends Component {
       >
         <Source
           type="geojson"
-          data="https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
+          data={this.state.data}
           cluster={true}
           clusterMaxZoom={14}
           clusterRadius={50}
