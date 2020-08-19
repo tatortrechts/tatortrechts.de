@@ -35,9 +35,29 @@ export const unclusteredPointLayer = {
   source: "earthquakes",
   filter: ["!", ["has", "point_count"]],
   paint: {
-    "circle-color": "#11b4da",
-    "circle-radius": 4,
+    "circle-color": "grey",
+    "circle-radius": {
+      property: "count",
+      stops: [
+        [0, 8],
+        [10, 20],
+        [30, 30],
+        [100, 50],
+      ],
+    },
     "circle-stroke-width": 1,
     "circle-stroke-color": "#fff",
+  },
+};
+
+export const unclusteredPointTextLayer = {
+  id: "unclustered-point-text",
+  type: "symbol",
+  source: "earthquakes",
+  filter: ["!", ["has", "point_count"]],
+  layout: {
+    "text-field": "{count}",
+    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    "text-size": 12,
   },
 };

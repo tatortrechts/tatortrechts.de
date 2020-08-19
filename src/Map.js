@@ -7,6 +7,7 @@ import {
   clusterLayer,
   clusterCountLayer,
   unclusteredPointLayer,
+  unclusteredPointTextLayer,
 } from "./layers";
 
 import SearchInput from "./SearchInput";
@@ -158,6 +159,7 @@ export default class Map extends Component {
             <Layer {...clusterLayer} />
             <Layer {...clusterCountLayer} />
             <Layer {...unclusteredPointLayer} />
+            <Layer {...unclusteredPointTextLayer} />
           </Source>
         </MapGL>
         <SearchInput options={this.state.options} cb={this._onSearchChange} />
