@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import ky from "ky";
+import ky from "ky-universal";
 import MapGL, { Source, Layer } from "react-map-gl";
 
 import {
@@ -11,10 +11,6 @@ import {
 } from "./layers";
 
 import SearchInput from "./SearchInput";
-
-import dotenv from "dotenv";
-
-dotenv.config();
 
 async function fetchOptions(q = null) {
   let whereClause = "";
@@ -71,12 +67,21 @@ async function fetchData(q = null) {
   return { data, options };
 }
 
+const GERMAN_LAT = [48, 53];
+const GERMAN_LNG = [6, 15];
+
+const GERMAN_BOUNDS = [
+  [GERMAN_LAT[0], GERMAN_LNG[0]],
+  [GERMAN_LAT[1], GERMAN_LNG[1]],
+];
+
 export default class Map extends Component {
   state = {
     viewport: {
       latitude: 52.520645,
       longitude: 13.409779,
-      zoom: 4,
+      zoom: 6,
+      minZoom: 6,
       bearing: 0,
       pitch: 0,
     },
@@ -102,7 +107,24 @@ export default class Map extends Component {
 
   _sourceRef = React.createRef();
 
-  _onViewportChange = (viewport) => this.setState({ viewport });
+  _onViewportChange = (viewport) => {
+    if (viewport.longitude < GERMAN_LNG[0]) {
+      viewport.longitude = GERMAN_LNG[0];
+    }
+    if (viewport.longitude > GERMAN_LNG[1]) {
+      viewport.longitude = GERMAN_LNG[1];
+    }
+    if (viewport.latitude < GERMAN_LAT[0]) {
+      viewport.latitude = GERMAN_LAT[0];
+    }
+    if (viewport.latitude > GERMAN_LAT[1]) {
+      viewport.latitude = GERMAN_LAT[1];
+    }
+
+    console.log(viewport);
+
+    this.setState({ viewport });
+  };
 
   _onClick = (event) => {
     if (event.features.length > 0) {
@@ -134,19 +156,20 @@ export default class Map extends Component {
 
   render() {
     const { viewport } = this.state;
-    const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX;
+    const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
     return (
       <>
         <MapGL
           {...viewport}
           width="100%"
-          height="80%"
-          mapStyle="mapbox://styles/mapbox/dark-v9"
+          height="100%"
+          mapStyle="mapbox://styles/mapbox/light-v10"
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
           interactiveLayerIds={[clusterLayer.id]}
           onClick={this._onClick}
+          maxBounds={GERMAN_BOUNDS}
         >
           <Source
             type="geojson"
