@@ -8,9 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "@material-ui/pickers": "^3.2.10",
     "bulma": "^0.9.0",
+    "dayjs": "^1.8.34",
     "ky": "^0.23.0",
     "ky-universal": "^0.8.1",
     "next": "^9.5.2",

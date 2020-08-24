@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Component } from "react";
-import ky from "ky-universal";
 import MapGL, { Source, Layer } from "react-map-gl";
 
 import {
@@ -11,61 +10,8 @@ import {
 } from "./layers";
 
 import SearchInput from "./SearchInput";
-
-async function fetchOptions(q = null) {
-  let whereClause = "";
-
-  if (q != null) {
-    whereClause = `+where+title+like+'%25${q}%25'`;
-  }
-
-  let url = `https://data.rechtegewalt.info/rechtegewalt.json?sql=select+id%2C+title%2C+subdivisions%2C+date+from+incidents+${whereClause}`;
-
-  const apiResponse = await ky.get(url).json();
-
-  const optionsArray = apiResponse.rows
-    .map((x) => x[1])
-    .filter((x) => x != null);
-
-  const optionsSet = new Set();
-  optionsArray.forEach((x) => {
-    x.split(" ").forEach((xx) => optionsSet.add(xx));
-  });
-
-  return Array.from(optionsSet);
-}
-
-async function fetchGeoData(q = null) {
-  let whereClause = "";
-
-  if (q != null) {
-    whereClause = `+where+title+like+'%25${q}%25'`;
-  }
-
-  let url = `https://data.rechtegewalt.info/rechtegewalt.json?sql=select+count%28*%29%2C+subdivisions%2C%0D%0A++AsGeoJSON%28point_geom%29%0D%0Afrom%0D%0A+incidents+${whereClause}+group+by+subdivisions`;
-
-  const apiResponse = await ky.get(url).json();
-  const features = apiResponse.rows.map((x) => {
-    return {
-      geometry: JSON.parse(x[2]),
-      properties: { count: x[0], location: x[1] },
-      type: "Feature",
-    };
-  });
-
-  const data = {
-    type: "FeatureCollection",
-    features,
-  };
-
-  return data;
-}
-
-async function fetchData(q = null) {
-  const options = await fetchOptions(q);
-  const data = await fetchGeoData(q);
-  return { data, options };
-}
+import DateInput from "./DateInput";
+import { fetchData } from "../../utils/networking";
 
 const GERMAN_LAT = [48, 53];
 const GERMAN_LNG = [6, 15];
@@ -91,6 +37,8 @@ export default class Map extends Component {
     },
     options: [],
     q: null,
+    startDate: null,
+    endDate: null,
   };
 
   async loadData(q = null) {
@@ -120,8 +68,6 @@ export default class Map extends Component {
     if (viewport.latitude > GERMAN_LAT[1]) {
       viewport.latitude = GERMAN_LAT[1];
     }
-
-    console.log(viewport);
 
     this.setState({ viewport });
   };
@@ -189,7 +135,15 @@ export default class Map extends Component {
             <Layer {...unclusteredPointTextLayer} />
           </Source>
         </MapGL>
-        <SearchInput options={this.state.options} cb={this._onSearchChange} />
+        <div id="sidebar">
+          <SearchInput options={this.state.options} cb={this._onSearchChange} />
+          <DateInput
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            startCb={(x) => this.setState({ startDate: x })}
+            endCb={(x) => this.setState({ endDate: x })}
+          />
+        </div>
       </>
     );
   }
