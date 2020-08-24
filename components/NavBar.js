@@ -1,3 +1,5 @@
+import { withRouter } from "next/router";
+
 import React from "react";
 
 class NavBar extends React.Component {
@@ -10,6 +12,7 @@ class NavBar extends React.Component {
 
   render() {
     const { isActive } = this.state;
+    const { router } = this.props;
 
     return (
       <div className="container">
@@ -46,19 +49,25 @@ class NavBar extends React.Component {
             className={isActive ? "navbar-menu is-active" : "navbar-menu"}
           >
             <div className="navbar-start">
-              <a className="navbar-item" href="/">
-                Start
-              </a>
-              <a className="navbar-item" href="/karte">
-                Karte
-              </a>
-              <a className="navbar-item" href="/hintergrund">
-                Hintergrund
-              </a>
-              <a className="navbar-item" href="/stories">
-                Stories
-              </a>
-
+              {[
+                ["/", "Start"],
+                ["/karte", "Karte"],
+                ["/hintergrund", "Hintergrund"],
+                ["/stories", "Stories"],
+              ].map((x) => {
+                return (
+                  <a
+                    className={
+                      router.pathname === x[0]
+                        ? "navbar-item is-active"
+                        : "navbar-item"
+                    }
+                    href={x[0]}
+                  >
+                    {x[1]}
+                  </a>
+                );
+              })}
               <div className="navbar-item has-dropdown is-hoverable">
                 <a className="navbar-link">Mehr</a>
 
@@ -78,4 +87,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
