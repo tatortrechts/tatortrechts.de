@@ -156,7 +156,11 @@ export default class Map extends Component {
 
   render() {
     const { viewport } = this.state;
-    const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+    let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+
+    if (MAPBOX_TOKEN == null || MAPBOX_TOKEN.length < 3) {
+      MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+    }
 
     return (
       <>
