@@ -1,3 +1,28 @@
+# rechtegewalt.info
+
+
+## Dev
+
+
+Create a file `.env.local` with:
+
+```bash
+NEXT_PUBLIC_MAPBOX_TOKEN=XX
+```
+
+## Production
+
+Right now: Confused about `MAPBOX_TOKEN` vs `NEXT_PUBLIC_MAPBOX_TOKEN`
+
+```bash
+MAPBOX_TOKEN:              XX
+NEXT_PUBLIC_MAPBOX_TOKEN:  XX
+NEXT_TELEMETRY_DISABLED:   1
+```
+
+
+## Old
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
