@@ -57,6 +57,7 @@ class NavBar extends React.Component {
               ].map((x) => {
                 return (
                   <a
+                    key={x[0]}
                     className={
                       router.pathname === x[0]
                         ? "navbar-item is-active"
