@@ -1,37 +1,42 @@
 import ky from "ky-universal";
 
-const API_LOCATION = "http://localhost:8000";
-// const API_LOCATION = "https://api.rechtegewalt.info";
+let API_LOCATION = "http://localhost:8000";
+if (process.env.NODE_ENV === "production") {
+  API_LOCATION = "https://api.rechtegewalt.info";
+}
 
-async function fetchOptions(q = null, startDate = null, endDate = null) {
-  let whereClause = "";
-
+function buildQuery(q, startDate, endDate) {
+  const params = [];
   if (q != null) {
-    whereClause += `?q=${q}'`;
+    params.push(`q=${q}`);
   }
 
-  const url = `${API_LOCATION}/autocomplete/${whereClause}`;
+  if (startDate != null) {
+    const formatedDate = startDate.format("YYYY-MM-DD");
+    params.push(`start_date=${formatedDate}`);
+  }
+
+  if (endDate != null) {
+    const formatedDate = endDate.format("YYYY-MM-DD");
+    params.push(`end_date=${formatedDate}`);
+  }
+
+  if (params.length === 0) return "";
+  return "?" + params.join("&");
+}
+
+async function fetchOptions(q = null, startDate = null, endDate = null) {
+  const paramsString = buildQuery(q, startDate, endDate);
+  const url = `${API_LOCATION}/autocomplete/${paramsString}`;
   const apiResponse = await ky.get(url).json();
   return apiResponse.results.map((x) => x.string);
 }
 
 async function fetchGeoData(q = null, startDate = null, endDate = null) {
-  let whereClause = "";
-
-  if (q != null) {
-    whereClause += `?q=${q}'`;
-  }
-
-  let url = `${API_LOCATION}/aggincidents/${whereClause}`;
-
+  const paramsString = buildQuery(q, startDate, endDate);
+  const url = `${API_LOCATION}/aggincidents/${paramsString}`;
   const apiResponse = await ky.get(url).json();
   return apiResponse;
 }
 
-async function fetchData(q = null) {
-  const options = await fetchOptions(q);
-  const data = await fetchGeoData(q);
-  return { data, options };
-}
-
-export { fetchData };
+export { fetchGeoData, fetchOptions };

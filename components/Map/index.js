@@ -11,7 +11,7 @@ import {
 
 import SearchInput from "./SearchInput";
 import DateInput from "./DateInput";
-import { fetchData } from "../../utils/networking";
+import { fetchData, fetchGeoData, fetchOptions } from "../../utils/networking";
 
 const GERMAN_LAT = [48, 53];
 const GERMAN_LNG = [6, 15];
@@ -41,11 +41,12 @@ export default class Map extends Component {
     endDate: null,
   };
 
-  async loadData(q = null) {
-    const theData = await fetchData(q);
+  async loadData() {
+    const { q, startDate, endDate } = this.state;
+    const data = await fetchGeoData(q, startDate, endDate);
 
     this.setState({
-      ...theData,
+      data,
     });
   }
 
@@ -96,8 +97,16 @@ export default class Map extends Component {
   };
 
   _onSearchChange = (event) => {
-    this.setState({ q: event.target.value });
-    this.loadData(event.target.value);
+    this._setStateAndReload({ q: event.target.value });
+  };
+
+  _onInputChange = async (event) => {
+    const options = await fetchOptions(event.target.value);
+    this.setState({ options });
+  };
+
+  _setStateAndReload = (state) => {
+    this.setState(state, this.loadData);
   };
 
   render() {
@@ -136,12 +145,16 @@ export default class Map extends Component {
           </Source>
         </MapGL>
         <div id="sidebar">
-          <SearchInput options={this.state.options} cb={this._onSearchChange} />
+          <SearchInput
+            options={this.state.options}
+            cbChange={this._onSearchChange}
+            cbInputChange={this._onInputChange}
+          />
           <DateInput
             startDate={this.state.startDate}
             endDate={this.state.endDate}
-            startCb={(x) => this.setState({ startDate: x })}
-            endCb={(x) => this.setState({ endDate: x })}
+            startCb={(x) => this._setStateAndReload({ startDate: x })}
+            endCb={(x) => this._setStateAndReload({ endDate: x })}
           />
         </div>
       </>
