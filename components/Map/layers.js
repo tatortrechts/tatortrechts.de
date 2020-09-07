@@ -7,13 +7,25 @@ export const clusterLayer = {
     "circle-color": [
       "step",
       ["get", "point_count"],
-      "#51bbd6",
+      "#bdc9e1",
+      50,
+      "#74a9cf",
       100,
-      "#f1f075",
-      750,
-      "#f28cb1",
+      "#2b8cbe",
+      300,
+      "#045a8d",
     ],
-    "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
+    "circle-radius": [
+      "step",
+      ["get", "point_count"],
+      15,
+      50,
+      25,
+      100,
+      30,
+      300,
+      40,
+    ],
   },
 };
 
@@ -24,7 +36,7 @@ export const clusterCountLayer = {
   filter: ["has", "point_count"],
   layout: {
     "text-field": "{point_count_abbreviated}",
-    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
     "text-size": 12,
   },
 };
@@ -35,14 +47,14 @@ export const unclusteredPointLayer = {
   source: "earthquakes",
   filter: ["!", ["has", "point_count"]],
   paint: {
-    "circle-color": "grey",
+    "circle-color": "#404040",
     "circle-radius": {
-      property: "count",
+      property: "total",
       stops: [
         [0, 8],
-        [10, 20],
-        [30, 30],
-        [100, 50],
+        [10, 15],
+        [30, 20],
+        [100, 30],
       ],
     },
     "circle-stroke-width": 1,
@@ -56,8 +68,11 @@ export const unclusteredPointTextLayer = {
   source: "earthquakes",
   filter: ["!", ["has", "point_count"]],
   layout: {
-    "text-field": "{count}",
-    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    "text-field": "{total}",
+    "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
     "text-size": 12,
+  },
+  paint: {
+    "text-color": "#ffffff",
   },
 };
