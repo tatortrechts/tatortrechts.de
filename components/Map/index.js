@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Component } from "react";
+import React, { Component } from "react";
 import MapGL, { Source, Layer, WebMercatorViewport } from "react-map-gl";
 
 import {
@@ -14,8 +13,8 @@ import DateInput from "./DateInput";
 import IncidentList from "./IncidentList";
 
 import {
-  fetchGeoData,
-  fetchOptions,
+  fetchAggregatedIncidents,
+  fetchAutocomplete,
   fetchIncidents,
   fetchIncidentsNext,
 } from "../../utils/networking";
@@ -30,6 +29,7 @@ const GERMAN_BOUNDS = [
 
 export default class Map extends Component {
   state = {
+    mapInitalized: false,
     viewport: {
       latitude: 52.520645,
       longitude: 13.409779,
@@ -38,39 +38,49 @@ export default class Map extends Component {
       bearing: 0,
       pitch: 0,
     },
-    data: {
+    bbox: null,
+    aggregatedIncidents: {
       type: "FeatureCollection",
       features: [],
     },
-    options: [],
     q: null,
+    autocompleteOptions: [],
     startDate: null,
     endDate: null,
-    bbox: null,
     incidentsTimeoutFetch: null,
     incidentsResults: null,
     incidentsCount: null,
     incidentsNext: null,
   };
 
-  async loadData() {
-    const { q, startDate, endDate } = this.state;
-    const data = await fetchGeoData(q, startDate, endDate);
+  _sourceRef = React.createRef();
 
-    if (data.length === 2 && data[0] === null) {
-      console.error(`Could not fetch data. ${data[1]}`);
+  async componentDidMount() {
+    this._loadAggregatedIncidents();
+  }
+
+  async _loadAggregatedIncidents() {
+    const { q, startDate, endDate } = this.state;
+    const aggregatedIncidents = await fetchAggregatedIncidents(
+      q,
+      startDate,
+      endDate
+    );
+
+    if (aggregatedIncidents.length === 2 && aggregatedIncidents[0] === null) {
+      console.error(
+        `Could not fetch aggregatedIncidents. ${aggregatedIncidents[1]}`
+      );
     } else {
       this.setState({
-        data,
+        aggregatedIncidents,
       });
     }
   }
 
-  async componentDidMount() {
-    this.loadData();
-  }
-
-  _sourceRef = React.createRef();
+  _setStateAndReload = (state) => {
+    this.setState(state, this._loadAggregatedIncidents);
+  };
 
   async _loadIncidents() {
     const { q, startDate, endDate, bbox } = this.state;
@@ -86,6 +96,15 @@ export default class Map extends Component {
       });
     }
   }
+
+  _loadMoreIncidents = async () => {
+    const { incidentsNext, incidentsResults } = this.state;
+    const { next, results } = await fetchIncidentsNext(incidentsNext);
+    this.setState({
+      incidentsNext: next,
+      incidentsResults: incidentsResults.concat(results),
+    });
+  };
 
   _delayFetch = () => {
     let { incidentsTimeoutFetch } = this.state;
@@ -111,8 +130,11 @@ export default class Map extends Component {
     if (viewport.latitude > GERMAN_LAT[1]) {
       viewport.latitude = GERMAN_LAT[1];
     }
-
-    this.setState({ viewport, bbox }, this._delayFetch);
+    if (this.state.mapInitalized) {
+      this.setState({ viewport, bbox }, this._delayFetch);
+    } else {
+      this.setState({ mapInitalized: true });
+    }
   };
 
   _onClick = (event) => {
@@ -142,31 +164,29 @@ export default class Map extends Component {
     this._setStateAndReload({ q: event.target.value });
   };
 
-  _loadMoreIncidents = async () => {
-    const { next, results } = await fetchIncidentsNext(
-      this.state.incidentsNext
-    );
-    this.setState({
-      incidentsNext: next,
-      incidentsResults: this.state.incidentsResults.concat(results),
-    });
-  };
-
   _onInputChange = async (event) => {
-    const options = await fetchOptions(event.target.value);
-    if (options.length === 2 && options[0] === null) {
-      console.error(`Could not fetch options for autocomplete. ${options[1]}`);
+    const autocompleteOptions = await fetchAutocomplete(event.target.value);
+    if (autocompleteOptions.length === 2 && autocompleteOptions[0] === null) {
+      console.error(
+        `Could not fetch autocompleteOptions for autocomplete. ${autocompleteOptions[1]}`
+      );
     } else {
-      this.setState({ options });
+      this.setState({ autocompleteOptions });
     }
   };
 
-  _setStateAndReload = (state) => {
-    this.setState(state, this.loadData);
-  };
-
   render() {
-    const { viewport } = this.state;
+    const {
+      viewport,
+      aggregatedIncidents,
+      incidentsResults,
+      incidentsCount,
+      incidentsNext,
+      startDate,
+      endDate,
+      autocompleteOptions,
+    } = this.state;
+
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
     if (MAPBOX_TOKEN == null || MAPBOX_TOKEN.length < 3) {
@@ -188,7 +208,7 @@ export default class Map extends Component {
         >
           <Source
             type="geojson"
-            data={this.state.data}
+            data={aggregatedIncidents}
             cluster={true}
             clusterMaxZoom={14}
             clusterRadius={50}
@@ -202,21 +222,21 @@ export default class Map extends Component {
         </MapGL>
         <div id="sidebar-filter">
           <SearchInput
-            options={this.state.options}
+            options={autocompleteOptions}
             cbChange={this._onSearchChange}
             cbInputChange={this._onInputChange}
           />
           <DateInput
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
+            startDate={startDate}
+            endDate={endDate}
             startCb={(x) => this._setStateAndReload({ startDate: x })}
             endCb={(x) => this._setStateAndReload({ endDate: x })}
           />
         </div>
         <IncidentList
-          results={this.state.incidentsResults || null}
-          count={this.state.incidentsCount}
-          next={this.state.incidentsNext}
+          results={incidentsResults}
+          count={incidentsCount}
+          next={incidentsNext}
           loadMore={this._loadMoreIncidents}
         />
       </>

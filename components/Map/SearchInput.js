@@ -6,7 +6,6 @@ export default function SearchInput({ options, cbChange, cbInputChange }) {
   return (
     <Autocomplete
       freeSolo
-      id="free-solo-2-demo"
       disableClearable
       options={options}
       onChange={cbChange}
