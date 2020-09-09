@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
-import MapGL, { Source, Layer } from "react-map-gl";
+import MapGL, { Source, Layer, WebMercatorViewport } from "react-map-gl";
 
 import {
   clusterLayer,
@@ -11,7 +11,14 @@ import {
 
 import SearchInput from "./SearchInput";
 import DateInput from "./DateInput";
-import { fetchData, fetchGeoData, fetchOptions } from "../../utils/networking";
+import IncidentList from "./IncidentList";
+
+import {
+  fetchGeoData,
+  fetchOptions,
+  fetchIncidents,
+  fetchIncidentsNext,
+} from "../../utils/networking";
 
 const GERMAN_LAT = [48, 53];
 const GERMAN_LNG = [6, 15];
@@ -39,15 +46,24 @@ export default class Map extends Component {
     q: null,
     startDate: null,
     endDate: null,
+    bbox: null,
+    incidentsTimeoutFetch: null,
+    incidentsResults: null,
+    incidentsCount: null,
+    incidentsNext: null,
   };
 
   async loadData() {
     const { q, startDate, endDate } = this.state;
     const data = await fetchGeoData(q, startDate, endDate);
 
-    this.setState({
-      data,
-    });
+    if (data.length === 2 && data[0] === null) {
+      console.error(`Could not fetch data. ${data[1]}`);
+    } else {
+      this.setState({
+        data,
+      });
+    }
   }
 
   async componentDidMount() {
@@ -56,7 +72,33 @@ export default class Map extends Component {
 
   _sourceRef = React.createRef();
 
+  async _loadIncidents() {
+    const { q, startDate, endDate, bbox } = this.state;
+    const incidentsResult = await fetchIncidents(q, startDate, endDate, bbox);
+    if (incidentsResult.length === 2 && incidentsResult[0] === null) {
+      console.error(`Could not fetch incidents. ${incidentsResult[1]}`);
+    } else {
+      const { count, next, results } = incidentsResult;
+      this.setState({
+        incidentsCount: count,
+        incidentsNext: next,
+        incidentsResults: results,
+      });
+    }
+  }
+
+  _delayFetch = () => {
+    let { incidentsTimeoutFetch } = this.state;
+    incidentsTimeoutFetch && clearTimeout(incidentsTimeoutFetch);
+
+    incidentsTimeoutFetch = setTimeout(() => this._loadIncidents(), 2000);
+    this.setState({ incidentsTimeoutFetch });
+  };
+
   _onViewportChange = (viewport) => {
+    const projection = new WebMercatorViewport(this.state.viewport);
+    const bbox = projection.getBounds();
+
     if (viewport.longitude < GERMAN_LNG[0]) {
       viewport.longitude = GERMAN_LNG[0];
     }
@@ -70,7 +112,7 @@ export default class Map extends Component {
       viewport.latitude = GERMAN_LAT[1];
     }
 
-    this.setState({ viewport });
+    this.setState({ viewport, bbox }, this._delayFetch);
   };
 
   _onClick = (event) => {
@@ -100,9 +142,23 @@ export default class Map extends Component {
     this._setStateAndReload({ q: event.target.value });
   };
 
+  _loadMoreIncidents = async () => {
+    const { next, results } = await fetchIncidentsNext(
+      this.state.incidentsNext
+    );
+    this.setState({
+      incidentsNext: next,
+      incidentsResults: this.state.incidentsResults.concat(results),
+    });
+  };
+
   _onInputChange = async (event) => {
     const options = await fetchOptions(event.target.value);
-    this.setState({ options });
+    if (options.length === 2 && options[0] === null) {
+      console.error(`Could not fetch options for autocomplete. ${options[1]}`);
+    } else {
+      this.setState({ options });
+    }
   };
 
   _setStateAndReload = (state) => {
@@ -144,7 +200,7 @@ export default class Map extends Component {
             <Layer {...unclusteredPointTextLayer} />
           </Source>
         </MapGL>
-        <div id="sidebar">
+        <div id="sidebar-filter">
           <SearchInput
             options={this.state.options}
             cbChange={this._onSearchChange}
@@ -157,6 +213,12 @@ export default class Map extends Component {
             endCb={(x) => this._setStateAndReload({ endDate: x })}
           />
         </div>
+        <IncidentList
+          results={this.state.incidentsResults || null}
+          count={this.state.incidentsCount}
+          next={this.state.incidentsNext}
+          loadMore={this._loadMoreIncidents}
+        />
       </>
     );
   }

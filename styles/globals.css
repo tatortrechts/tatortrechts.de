@@ -24,7 +24,7 @@ a {
   height: 100vh;
 }
 
-#sidebar {
+#sidebar-filter {
   position: absolute;
   top: 0;
   right: 0;
@@ -33,9 +33,21 @@ a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   padding: 1rem 2rem;
   margin: 10rem 1rem;
-  font-size: 13px;
   line-height: 2;
-  color: #6b6b76;
-  text-transform: uppercase;
   outline: none;
+}
+
+#sidebar-results {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30rem;
+  height: 30rem;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 1rem 2rem;
+  margin: 30rem 1rem;
+  line-height: 2;
+  outline: none;
+  overflow: auto;
 }

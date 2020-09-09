@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.rechtegewalt.info";
 }
 
-function buildQuery(q, startDate, endDate) {
+function buildQuery(q, startDate, endDate, bbox = null) {
   const params = [];
   if (q != null) {
     params.push(`q=${q}`);
@@ -21,6 +21,10 @@ function buildQuery(q, startDate, endDate) {
     params.push(`end_date=${formatedDate}`);
   }
 
+  if (bbox != null) {
+    bbox.flat().forEach((x) => params.push(`bbox=${x}`));
+  }
+
   if (params.length === 0) return "";
   return "?" + params.join("&");
 }
@@ -28,15 +32,48 @@ function buildQuery(q, startDate, endDate) {
 async function fetchOptions(q = null, startDate = null, endDate = null) {
   const paramsString = buildQuery(q, startDate, endDate);
   const url = `${API_LOCATION}/autocomplete/${paramsString}`;
-  const apiResponse = await ky.get(url).json();
-  return apiResponse.results.map((x) => x.string);
+  try {
+    const apiResponse = await ky.get(url).json();
+    return apiResponse.results.map((x) => x.string);
+  } catch (e) {
+    return [null, e];
+  }
 }
 
 async function fetchGeoData(q = null, startDate = null, endDate = null) {
   const paramsString = buildQuery(q, startDate, endDate);
   const url = `${API_LOCATION}/aggincidents/${paramsString}`;
-  const apiResponse = await ky.get(url).json();
-  return apiResponse;
+  try {
+    const apiResponse = await ky.get(url).json();
+    return apiResponse;
+  } catch (e) {
+    return [null, e];
+  }
 }
 
-export { fetchGeoData, fetchOptions };
+async function fetchIncidents(
+  q = null,
+  startDate = null,
+  endDate = null,
+  bbox = null
+) {
+  const paramsString = buildQuery(q, startDate, endDate, bbox);
+  const url = `${API_LOCATION}/incidents/${paramsString}`;
+  try {
+    const apiResponse = await ky.get(url).json();
+    return apiResponse;
+  } catch (e) {
+    return [null, e];
+  }
+}
+
+async function fetchIncidentsNext(url) {
+  try {
+    const apiResponse = await ky.get(url).json();
+    return apiResponse;
+  } catch (e) {
+    return [null, e];
+  }
+}
+
+export { fetchGeoData, fetchOptions, fetchIncidents, fetchIncidentsNext };
