@@ -5,7 +5,11 @@ const PieChart = ({ data }) => {
   return (
     <VictoryChart height={150} scale={{ x: "time" }}>
       <VictoryAxis />
-      <VictoryAxis dependentAxis tickCount={3} />
+      <VictoryAxis
+        dependentAxis
+        tickCount={3}
+        tickFormat={(x) => Math.floor(x)}
+      />
       <VictoryBar
         barRatio={1}
         style={{
