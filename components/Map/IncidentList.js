@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
+import Histogram from "./Histogram";
+
 import * as dayjs from "dayjs";
 
 const Source = ({ name, url, date }) => {
@@ -13,7 +15,7 @@ const Source = ({ name, url, date }) => {
   );
 };
 
-const IncidentList = ({ results, next, count, loadMore }) => {
+const IncidentList = ({ histogram, results, next, count, loadMore }) => {
   const containerRef = useRef(null);
 
   if (count === null) {
@@ -23,6 +25,7 @@ const IncidentList = ({ results, next, count, loadMore }) => {
   return (
     <div id="sidebar-results" ref={containerRef}>
       <div>{count} Treffer</div>
+      <div>{histogram && <Histogram data={histogram} />}</div>
       <InfiniteScroll
         useWindow={false}
         getScrollParent={() => containerRef.current}

@@ -21,7 +21,8 @@
     "react-dom": "^16.13.1",
     "react-infinite-scroller": "^1.2.4",
     "react-map-gl": "^5.2.7",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "victory": "^35.0.9"
   },
   "devDependencies": {
     "prettier": "^2.0.5"

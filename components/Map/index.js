@@ -17,6 +17,7 @@ import {
   fetchAutocomplete,
   fetchIncidents,
   fetchIncidentsNext,
+  fetchHistogramIncidents,
 } from "../../utils/networking";
 
 const GERMAN_LAT = [47, 55.4];
@@ -53,6 +54,7 @@ export default class Map extends Component {
     incidentsResults: null,
     incidentsCount: null,
     incidentsNext: null,
+    incidentsHistogram: null,
   };
 
   _sourceRef = React.createRef();
@@ -84,6 +86,17 @@ export default class Map extends Component {
     this.setState(state, this._loadAggregatedIncidents);
   };
 
+  _loadHistogram = async () => {
+    const { q, startDate, endDate, bbox } = this.state;
+    this.setState({
+      incidentsHistogram: await fetchHistogramIncidents(
+        q,
+        startDate,
+        endDate,
+        bbox
+      ),
+    });
+  };
   async _loadIncidents() {
     const { q, startDate, endDate, bbox } = this.state;
     const incidentsResult = await fetchIncidents(q, startDate, endDate, bbox);
@@ -91,11 +104,14 @@ export default class Map extends Component {
       console.error(`Could not fetch incidents. ${incidentsResult[1]}`);
     } else {
       const { count, next, results } = incidentsResult;
-      this.setState({
-        incidentsCount: count,
-        incidentsNext: next,
-        incidentsResults: results,
-      });
+      this.setState(
+        {
+          incidentsCount: count,
+          incidentsNext: next,
+          incidentsResults: results,
+        },
+        this._loadHistogram
+      );
     }
   }
 
@@ -192,6 +208,7 @@ export default class Map extends Component {
     const {
       viewport,
       aggregatedIncidents,
+      incidentsHistogram,
       incidentsResults,
       incidentsCount,
       incidentsNext,
@@ -246,6 +263,7 @@ export default class Map extends Component {
           />
         </div>
         <IncidentList
+          histogram={incidentsHistogram}
           results={incidentsResults}
           count={incidentsCount}
           next={incidentsNext}

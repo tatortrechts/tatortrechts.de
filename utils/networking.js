@@ -29,24 +29,9 @@ function buildQueryParams(q, startDate, endDate, bbox = null) {
   return "?" + params.join("&");
 }
 
-async function fetchAutocomplete(q = null, startDate = null, endDate = null) {
-  const paramsString = buildQueryParams(q, startDate, endDate);
-  const url = `${API_LOCATION}/autocomplete/${paramsString}`;
-  try {
-    const apiResponse = await ky.get(url).json();
-    return apiResponse.results.map((x) => x.option);
-  } catch (e) {
-    return [null, e];
-  }
-}
-
-async function fetchAggregatedIncidents(
-  q = null,
-  startDate = null,
-  endDate = null
-) {
-  const paramsString = buildQueryParams(q, startDate, endDate);
-  const url = `${API_LOCATION}/aggregated_incidents/${paramsString}`;
+async function _fetch(endpoint, q, startDate, endDate, bbox = null) {
+  const paramsString = buildQueryParams(q, startDate, endDate, bbox);
+  const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
     const apiResponse = await ky.get(url).json();
     return apiResponse;
@@ -55,20 +40,32 @@ async function fetchAggregatedIncidents(
   }
 }
 
-async function fetchIncidents(
+function fetchAutocomplete(q = null, startDate = null, endDate = null) {
+  const r = _fetch("autocomplete", q, startDate, endDate);
+  if (r.length === 2 && r[0] === null) return r;
+  else return r.results.map((x) => x.option);
+}
+
+function fetchAggregatedIncidents(q = null, startDate = null, endDate = null) {
+  return _fetch("aggregated_incidents", q, startDate, endDate);
+}
+
+function fetchIncidents(
   q = null,
   startDate = null,
   endDate = null,
   bbox = null
 ) {
-  const paramsString = buildQueryParams(q, startDate, endDate, bbox);
-  const url = `${API_LOCATION}/incidents/${paramsString}`;
-  try {
-    const apiResponse = await ky.get(url).json();
-    return apiResponse;
-  } catch (e) {
-    return [null, e];
-  }
+  return _fetch("incidents", q, startDate, endDate, bbox);
+}
+
+function fetchHistogramIncidents(
+  q = null,
+  startDate = null,
+  endDate = null,
+  bbox = null
+) {
+  return _fetch("histogram_incidents", q, startDate, endDate, bbox);
 }
 
 async function fetchIncidentsNext(url) {
@@ -84,5 +81,6 @@ export {
   fetchAggregatedIncidents,
   fetchAutocomplete,
   fetchIncidents,
+  fetchHistogramIncidents,
   fetchIncidentsNext,
 };
