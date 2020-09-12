@@ -28,11 +28,11 @@ a {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30rem;
+  width: 50%;
   background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
   padding: 1rem 2rem;
-  margin: 10rem 1rem;
+  margin: 3rem 0;
   line-height: 2;
   outline: none;
 }
@@ -41,12 +41,12 @@ a {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30rem;
+  width: 50%;
   height: 30rem;
   background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
   padding: 1rem 2rem;
-  margin: 30rem 1rem;
+  margin: 20rem 0;
   line-height: 2;
   outline: none;
   overflow: auto;

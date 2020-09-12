@@ -19,20 +19,22 @@ import {
   fetchIncidentsNext,
 } from "../../utils/networking";
 
-const GERMAN_LAT = [48, 53];
-const GERMAN_LNG = [6, 15];
+const GERMAN_LAT = [47, 55.4];
+const GERMAN_LNG = [4.8, 15.4];
 
 const GERMAN_BOUNDS = [
   [GERMAN_LAT[0], GERMAN_LNG[0]],
   [GERMAN_LAT[1], GERMAN_LNG[1]],
 ];
 
+const CENTER_GERMANY = [51.1657, 10.4515];
+
 export default class Map extends Component {
   state = {
     mapInitalized: false,
     viewport: {
-      latitude: 52.520645,
-      longitude: 13.409779,
+      latitude: CENTER_GERMANY[0],
+      longitude: CENTER_GERMANY[1],
       zoom: 6,
       minZoom: 6,
       bearing: 0,
@@ -115,25 +117,36 @@ export default class Map extends Component {
   };
 
   _onViewportChange = (viewport) => {
+    const { longitude, latitude } = this.state.viewport;
     const projection = new WebMercatorViewport(this.state.viewport);
     const bbox = projection.getBounds();
 
-    if (viewport.longitude < GERMAN_LNG[0]) {
-      viewport.longitude = GERMAN_LNG[0];
+    // http://visgl.github.io/react-map-gl/docs/api-reference/web-mercator-viewport#getboundsoptions
+    // Returns:
+    // [[lon, lat], [lon, lat]] as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
+
+    if (bbox[0][0] < GERMAN_LNG[0]) {
+      console.log("too much left");
+      viewport.longitude = Math.max(longitude, viewport.longitude);
     }
-    if (viewport.longitude > GERMAN_LNG[1]) {
-      viewport.longitude = GERMAN_LNG[1];
+    if (bbox[1][0] > GERMAN_LNG[1]) {
+      console.log("too much right");
+      viewport.longitude = Math.min(longitude, viewport.longitude);
     }
-    if (viewport.latitude < GERMAN_LAT[0]) {
-      viewport.latitude = GERMAN_LAT[0];
+    if (bbox[0][1] < GERMAN_LAT[0]) {
+      console.log("too much down");
+      viewport.latitude = Math.max(latitude, viewport.latitude);
     }
-    if (viewport.latitude > GERMAN_LAT[1]) {
-      viewport.latitude = GERMAN_LAT[1];
+    if (bbox[1][1] > GERMAN_LAT[1]) {
+      console.log("too much up");
+      viewport.latitude = Math.min(latitude, viewport.latitude);
     }
+
     if (this.state.mapInitalized) {
       this.setState({ viewport, bbox }, this._delayFetch);
     } else {
-      this.setState({ mapInitalized: true });
+      // initial bbox is strange
+      this.setState({ viewport, mapInitalized: true }, this._delayFetch);
     }
   };
 
@@ -197,14 +210,13 @@ export default class Map extends Component {
       <>
         <MapGL
           {...viewport}
-          width="100%"
+          width="50%"
           height="100%"
           mapStyle="mapbox://styles/mapbox/light-v10"
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
           interactiveLayerIds={[clusterLayer.id]}
           onClick={this._onClick}
-          maxBounds={GERMAN_BOUNDS}
         >
           <Source
             type="geojson"
