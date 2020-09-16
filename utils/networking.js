@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.rechtegewalt.info";
 }
 
-function buildQueryParams(q, startDate, endDate, bbox = null) {
+function buildQueryParams(q, startDate, endDate, chronicles, bbox) {
   const params = [];
   if (q != null) {
     params.push(`q=${q}`);
@@ -21,6 +21,12 @@ function buildQueryParams(q, startDate, endDate, bbox = null) {
     params.push(`end_date=${formatedDate}`);
   }
 
+  if (chronicles != null) {
+    chronicles.forEach((x) => {
+      params.push(`chronicle=${x}`);
+    });
+  }
+
   if (bbox != null) {
     bbox.flat().forEach((x) => params.push(`bbox=${x}`));
   }
@@ -29,8 +35,21 @@ function buildQueryParams(q, startDate, endDate, bbox = null) {
   return "?" + params.join("&");
 }
 
-async function _fetch(endpoint, q, startDate, endDate, bbox = null) {
-  const paramsString = buildQueryParams(q, startDate, endDate, bbox);
+async function _fetch(
+  endpoint,
+  q = null,
+  startDate = null,
+  endDate = null,
+  chronicles = null,
+  bbox = null
+) {
+  const paramsString = buildQueryParams(
+    q,
+    startDate,
+    endDate,
+    chronicles,
+    bbox
+  );
   const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
     const apiResponse = await ky.get(url).json();
@@ -46,26 +65,33 @@ function fetchAutocomplete(q = null, startDate = null, endDate = null) {
   else return r.results.map((x) => x.option);
 }
 
-function fetchAggregatedIncidents(q = null, startDate = null, endDate = null) {
-  return _fetch("aggregated_incidents", q, startDate, endDate);
+function fetchAggregatedIncidents(
+  q = null,
+  startDate = null,
+  endDate = null,
+  chronicles = null
+) {
+  return _fetch("aggregated_incidents", q, startDate, endDate, chronicles);
 }
 
 function fetchIncidents(
   q = null,
   startDate = null,
   endDate = null,
+  chronicles = null,
   bbox = null
 ) {
-  return _fetch("incidents", q, startDate, endDate, bbox);
+  return _fetch("incidents", q, startDate, endDate, chronicles, bbox);
 }
 
 function fetchHistogramIncidents(
   q = null,
   startDate = null,
   endDate = null,
+  chronicles = null,
   bbox = null
 ) {
-  return _fetch("histogram_incidents", q, startDate, endDate, bbox);
+  return _fetch("histogram_incidents", q, startDate, endDate, chronicles, bbox);
 }
 
 async function fetchIncidentsNext(url) {
@@ -77,10 +103,15 @@ async function fetchIncidentsNext(url) {
   }
 }
 
+function fetchOrganizations() {
+  return _fetch("chronicles");
+}
+
 export {
   fetchAggregatedIncidents,
   fetchAutocomplete,
   fetchIncidents,
   fetchHistogramIncidents,
   fetchIncidentsNext,
+  fetchOrganizations,
 };

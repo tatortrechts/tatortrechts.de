@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryChart, VictoryBar, VictoryAxis } from "victory";
 
-const PieChart = ({ data }) => {
+const Histogram = ({ data }) => {
   return (
     <VictoryChart height={150} scale={{ x: "time" }}>
       <VictoryAxis />
@@ -21,4 +21,4 @@ const PieChart = ({ data }) => {
   );
 };
 
-export default PieChart;
+export default Histogram;

@@ -11,6 +11,7 @@ import {
 import SearchInput from "./SearchInput";
 import DateInput from "./DateInput";
 import IncidentList from "./IncidentList";
+import OrganizationInput from "./OrganizationInput";
 
 import {
   fetchAggregatedIncidents,
@@ -23,14 +24,9 @@ import {
 const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
 
-const GERMAN_BOUNDS = [
-  [GERMAN_LAT[0], GERMAN_LNG[0]],
-  [GERMAN_LAT[1], GERMAN_LNG[1]],
-];
-
 const CENTER_GERMANY = [51.1657, 10.4515];
 
-export default class Map extends Component {
+class Map extends Component {
   state = {
     mapInitalized: false,
     viewport: {
@@ -55,6 +51,7 @@ export default class Map extends Component {
     incidentsCount: null,
     incidentsNext: null,
     incidentsHistogram: null,
+    organizationsSelected: [],
   };
 
   _sourceRef = React.createRef();
@@ -68,7 +65,8 @@ export default class Map extends Component {
     const aggregatedIncidents = await fetchAggregatedIncidents(
       q,
       startDate,
-      endDate
+      endDate,
+      this._getOrganizationIds()
     );
 
     if (aggregatedIncidents.length === 2 && aggregatedIncidents[0] === null) {
@@ -82,6 +80,13 @@ export default class Map extends Component {
     }
   }
 
+  _getOrganizationIds = () =>
+    this.state.organizationsSelected.length === 0
+      ? null
+      : this.props.organizations
+          .map((x) => x.id)
+          .filter((x) => !this.state.organizationsSelected.includes(x));
+
   _setStateAndReload = (state) => {
     this.setState(state, this._loadAggregatedIncidents);
   };
@@ -93,13 +98,21 @@ export default class Map extends Component {
         q,
         startDate,
         endDate,
+        this._getOrganizationIds(),
         bbox
       ),
     });
   };
+
   async _loadIncidents() {
     const { q, startDate, endDate, bbox } = this.state;
-    const incidentsResult = await fetchIncidents(q, startDate, endDate, bbox);
+    const incidentsResult = await fetchIncidents(
+      q,
+      startDate,
+      endDate,
+      this._getOrganizationIds(),
+      bbox
+    );
     if (incidentsResult.length === 2 && incidentsResult[0] === null) {
       console.error(`Could not fetch incidents. ${incidentsResult[1]}`);
     } else {
@@ -215,7 +228,10 @@ export default class Map extends Component {
       startDate,
       endDate,
       autocompleteOptions,
+      organizationsSelected,
     } = this.state;
+
+    const { organizations } = this.props;
 
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -261,6 +277,13 @@ export default class Map extends Component {
             startCb={(x) => this._setStateAndReload({ startDate: x })}
             endCb={(x) => this._setStateAndReload({ endDate: x })}
           />
+          <OrganizationInput
+            organizations={organizations}
+            organizationsSelected={organizationsSelected}
+            cbChange={(x) =>
+              this._setStateAndReload({ organizationsSelected: x })
+            }
+          />
         </div>
         <IncidentList
           histogram={incidentsHistogram}
@@ -273,3 +296,5 @@ export default class Map extends Component {
     );
   }
 }
+
+export default Map;
