@@ -257,6 +257,9 @@ class Map extends Component {
             cluster={true}
             clusterMaxZoom={14}
             clusterRadius={50}
+            clusterProperties={{
+              sum: ["+", ["get", "total"], ["get", "sum"]],
+            }}
             ref={this._sourceRef}
           >
             <Layer {...clusterLayer} />

@@ -6,26 +6,16 @@ export const clusterLayer = {
   paint: {
     "circle-color": [
       "step",
-      ["get", "point_count"],
+      ["get", "sum"],
       "#bdc9e1",
       50,
       "#74a9cf",
-      100,
+      500,
       "#2b8cbe",
-      300,
+      1000,
       "#045a8d",
     ],
-    "circle-radius": [
-      "step",
-      ["get", "point_count"],
-      15,
-      50,
-      25,
-      100,
-      30,
-      300,
-      40,
-    ],
+    "circle-radius": ["step", ["get", "sum"], 15, 50, 25, 500, 30, 1000, 40],
   },
 };
 
@@ -35,7 +25,7 @@ export const clusterCountLayer = {
   source: "earthquakes",
   filter: ["has", "point_count"],
   layout: {
-    "text-field": "{point_count_abbreviated}",
+    "text-field": "{sum}",
     "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
     "text-size": 12,
   },
