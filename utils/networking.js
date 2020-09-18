@@ -59,8 +59,8 @@ async function _fetch(
   }
 }
 
-function fetchAutocomplete(q = null, startDate = null, endDate = null) {
-  const r = _fetch("autocomplete", q, startDate, endDate);
+async function fetchAutocomplete(q = null, startDate = null, endDate = null) {
+  const r = await _fetch("autocomplete", q, startDate, endDate);
   if (r.length === 2 && r[0] === null) return r;
   else return r.results.map((x) => x.option);
 }
