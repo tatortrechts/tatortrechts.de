@@ -245,7 +245,8 @@ class Map extends Component {
           {...viewport}
           width="50%"
           height="100%"
-          mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
+          mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
+          // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
           // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
           onViewportChange={this._onViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
