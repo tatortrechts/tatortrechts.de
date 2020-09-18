@@ -47,7 +47,12 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
                   {x.sources.length === 1 && <div>Quelle: </div>}
                   {x.sources.length > 1 && <div>Quellen: </div>}
                   {x.sources.map((x) => (
-                    <Source name={x.name} url={x.url} date={x.date} />
+                    <Source
+                      name={x.name}
+                      url={x.url}
+                      date={x.date}
+                      key={x.name + x.date + x.url}
+                    />
                   ))}
                 </div>
                 <div className="content">Chronik: {x.chronicle.name}</div>
