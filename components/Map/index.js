@@ -12,6 +12,7 @@ import SearchInput from "./SearchInput";
 import DateInput from "./DateInput";
 import IncidentList from "./IncidentList";
 import OrganizationInput from "./OrganizationInput";
+import LocationInput from "./LocationInput";
 
 import {
   fetchAggregatedIncidents,
@@ -19,6 +20,7 @@ import {
   fetchIncidents,
   fetchIncidentsNext,
   fetchHistogramIncidents,
+  fetchLocations,
 } from "../../utils/networking";
 
 const GERMAN_LAT = [47, 55.4];
@@ -52,6 +54,9 @@ class Map extends Component {
     incidentsNext: null,
     incidentsHistogram: null,
     organizationsSelected: [],
+    location: null,
+    locationOptions: [],
+    locationSelected: null,
   };
 
   _sourceRef = React.createRef();
@@ -61,12 +66,13 @@ class Map extends Component {
   }
 
   async _loadAggregatedIncidents() {
-    const { q, startDate, endDate } = this.state;
+    const { q, startDate, endDate, location } = this.state;
     const aggregatedIncidents = await fetchAggregatedIncidents(
       q,
       startDate,
       endDate,
-      this._getOrganizationIds()
+      this._getOrganizationIds(),
+      location
     );
 
     if (aggregatedIncidents.length === 2 && aggregatedIncidents[0] === null) {
@@ -88,30 +94,36 @@ class Map extends Component {
           .filter((x) => !this.state.organizationsSelected.includes(x));
 
   _setStateAndReload = (state) => {
-    this.setState(state, this._loadAggregatedIncidents);
+    this.setState(state, () => {
+      this._loadAggregatedIncidents();
+      this._loadIncidents();
+      state.location !== null && this._loadAggregatedIncidents();
+    });
   };
 
   _loadHistogram = async () => {
-    const { q, startDate, endDate, bbox } = this.state;
+    const { q, startDate, endDate, bbox, location } = this.state;
     this.setState({
       incidentsHistogram: await fetchHistogramIncidents(
         q,
         startDate,
         endDate,
         this._getOrganizationIds(),
-        bbox
+        bbox,
+        location
       ),
     });
   };
 
   async _loadIncidents() {
-    const { q, startDate, endDate, bbox } = this.state;
+    const { q, startDate, endDate, bbox, location } = this.state;
     const incidentsResult = await fetchIncidents(
       q,
       startDate,
       endDate,
       this._getOrganizationIds(),
-      bbox
+      bbox,
+      location
     );
     if (incidentsResult.length === 2 && incidentsResult[0] === null) {
       console.error(`Could not fetch incidents. ${incidentsResult[1]}`);
@@ -183,7 +195,6 @@ class Map extends Component {
     if (event.features.length > 0) {
       const feature = event.features[0];
       const clusterId = feature.properties.cluster_id;
-
       const mapboxSource = this._sourceRef.current.getSource();
 
       mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
@@ -202,18 +213,54 @@ class Map extends Component {
     }
   };
 
-  _onSearchChange = (event) => {
-    this._setStateAndReload({ q: event.target.value });
+  _onSearchChange = (_, value) => {
+    this._setStateAndReload({ q: value });
   };
 
-  _onInputChange = async (event) => {
-    const autocompleteOptions = await fetchAutocomplete(event.target.value);
+  _onInputChange = async (_, value) => {
+    const { startDate, endDate } = this.state;
+    const autocompleteOptions = await fetchAutocomplete(
+      value,
+      startDate,
+      endDate,
+      this._getOrganizationIds()
+    );
     if (autocompleteOptions.length === 2 && autocompleteOptions[0] === null) {
       console.error(
         `Could not fetch autocompleteOptions for autocomplete. ${autocompleteOptions[1]}`
       );
     } else {
       this.setState({ autocompleteOptions });
+    }
+  };
+
+  _onLocationChange = (_, value) => {
+    this._setStateAndReload({ location: value, locationOptions: [] });
+  };
+
+  _onInputLocationChange = async (_, value, reason) => {
+    const { startDate, endDate } = this.state;
+    const locationOptions = await fetchLocations(
+      value,
+      startDate,
+      endDate,
+      this._getOrganizationIds()
+    );
+    if (locationOptions.length === 2 && locationOptions[0] === null) {
+      console.error(
+        `Could not fetch locationOptions for autocomplete. ${locationOptions[1]}`
+      );
+    } else {
+      const { location } = this.state;
+      if (reason == "clear" || value.length === 0) {
+        this.setState({ locationOptions, location: null });
+      } else {
+        if (location == null) this.setState({ locationOptions });
+        else
+          this.setState({
+            locationOptions: [],
+          });
+      }
     }
   };
 
@@ -229,6 +276,7 @@ class Map extends Component {
       endDate,
       autocompleteOptions,
       organizationsSelected,
+      locationOptions,
     } = this.state;
 
     const { organizations } = this.props;
@@ -288,6 +336,11 @@ class Map extends Component {
             cbChange={(x) =>
               this._setStateAndReload({ organizationsSelected: x })
             }
+          />
+          <LocationInput
+            options={locationOptions}
+            cbChange={this._onLocationChange}
+            cbInputChange={this._onInputLocationChange}
           />
         </div>
         <IncidentList

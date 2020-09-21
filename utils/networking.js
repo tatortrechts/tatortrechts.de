@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.rechtegewalt.info";
 }
 
-function buildQueryParams(q, startDate, endDate, chronicles, bbox) {
+function buildQueryParams(q, startDate, endDate, chronicles, bbox, location) {
   const params = [];
   if (q != null) {
     params.push(`q=${q}`);
@@ -31,6 +31,10 @@ function buildQueryParams(q, startDate, endDate, chronicles, bbox) {
     bbox.flat().forEach((x) => params.push(`bbox=${x}`));
   }
 
+  if (location != null) {
+    params.push(`location=${location}`);
+  }
+
   if (params.length === 0) return "";
   return "?" + params.join("&");
 }
@@ -41,14 +45,16 @@ async function _fetch(
   startDate = null,
   endDate = null,
   chronicles = null,
-  bbox = null
+  bbox = null,
+  location = null
 ) {
   const paramsString = buildQueryParams(
     q,
     startDate,
     endDate,
     chronicles,
-    bbox
+    bbox,
+    location
   );
   const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
@@ -59,19 +65,54 @@ async function _fetch(
   }
 }
 
-async function fetchAutocomplete(q = null, startDate = null, endDate = null) {
-  const r = await _fetch("autocomplete", q, startDate, endDate);
+async function fetchAutocomplete(
+  q = null,
+  startDate = null,
+  endDate = null,
+  chronicles = null,
+  bbox = null,
+  location = null
+) {
+  const r = await _fetch(
+    "autocomplete",
+    q,
+    startDate,
+    endDate,
+    chronicles,
+    bbox,
+    location
+  );
   if (r.length === 2 && r[0] === null) return r;
-  else return r.results.map((x) => x.option);
+  else return r.map((x) => x.option);
+}
+
+async function fetchLocations(
+  q = null,
+  startDate = null,
+  endDate = null,
+  chronicles = null
+) {
+  const r = await _fetch("locations", q, startDate, endDate, chronicles);
+  if (r.length === 2 && r[0] === null) return r;
+  else return r.map((x) => x.location_string);
 }
 
 function fetchAggregatedIncidents(
   q = null,
   startDate = null,
   endDate = null,
-  chronicles = null
+  chronicles = null,
+  location = null
 ) {
-  return _fetch("aggregated_incidents", q, startDate, endDate, chronicles);
+  return _fetch(
+    "aggregated_incidents",
+    q,
+    startDate,
+    endDate,
+    chronicles,
+    null,
+    location
+  );
 }
 
 function fetchIncidents(
@@ -79,9 +120,10 @@ function fetchIncidents(
   startDate = null,
   endDate = null,
   chronicles = null,
-  bbox = null
+  bbox = null,
+  location = null
 ) {
-  return _fetch("incidents", q, startDate, endDate, chronicles, bbox);
+  return _fetch("incidents", q, startDate, endDate, chronicles, bbox, location);
 }
 
 function fetchHistogramIncidents(
@@ -89,9 +131,18 @@ function fetchHistogramIncidents(
   startDate = null,
   endDate = null,
   chronicles = null,
-  bbox = null
+  bbox = null,
+  location = null
 ) {
-  return _fetch("histogram_incidents", q, startDate, endDate, chronicles, bbox);
+  return _fetch(
+    "histogram_incidents",
+    q,
+    startDate,
+    endDate,
+    chronicles,
+    bbox,
+    location
+  );
 }
 
 async function fetchIncidentsNext(url) {
@@ -114,4 +165,5 @@ export {
   fetchHistogramIncidents,
   fetchIncidentsNext,
   fetchOrganizations,
+  fetchLocations,
 };
