@@ -1,7 +1,7 @@
 export const clusterLayer = {
   id: "clusters",
   type: "circle",
-  source: "earthquakes",
+  source: "incidents",
   filter: ["has", "point_count"],
   paint: {
     "circle-color": [
@@ -22,7 +22,7 @@ export const clusterLayer = {
 export const clusterCountLayer = {
   id: "cluster-count",
   type: "symbol",
-  source: "earthquakes",
+  source: "incidents",
   filter: ["has", "point_count"],
   layout: {
     "text-field": "{sum}",
@@ -34,7 +34,7 @@ export const clusterCountLayer = {
 export const unclusteredPointLayer = {
   id: "unclustered-point",
   type: "circle",
-  source: "earthquakes",
+  source: "incidents",
   filter: ["!", ["has", "point_count"]],
   paint: {
     "circle-color": "#404040",
@@ -55,7 +55,7 @@ export const unclusteredPointLayer = {
 export const unclusteredPointTextLayer = {
   id: "unclustered-point-text",
   type: "symbol",
-  source: "earthquakes",
+  source: "incidents",
   filter: ["!", ["has", "point_count"]],
   layout: {
     "text-field": "{total}",

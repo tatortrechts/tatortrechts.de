@@ -54,19 +54,20 @@ class Map extends Component {
     incidentsNext: null,
     incidentsHistogram: null,
     organizationsSelected: [],
-    location: null,
+    locationId: null,
     locationOptions: [],
-    locationSelected: null,
+    locationName: null,
   };
 
   _sourceRef = React.createRef();
+  _mapRef = React.createRef();
 
   async componentDidMount() {
     this._loadAggregatedIncidents();
   }
 
   async _loadAggregatedIncidents() {
-    const { q, startDate, endDate, location } = this.state;
+    const { q, startDate, endDate, locationId: location } = this.state;
     const aggregatedIncidents = await fetchAggregatedIncidents(
       q,
       startDate,
@@ -102,7 +103,7 @@ class Map extends Component {
   };
 
   _loadHistogram = async () => {
-    const { q, startDate, endDate, bbox, location } = this.state;
+    const { q, startDate, endDate, bbox, locationId: location } = this.state;
     this.setState({
       incidentsHistogram: await fetchHistogramIncidents(
         q,
@@ -116,7 +117,7 @@ class Map extends Component {
   };
 
   async _loadIncidents() {
-    const { q, startDate, endDate, bbox, location } = this.state;
+    const { q, startDate, endDate, bbox, locationId: location } = this.state;
     const incidentsResult = await fetchIncidents(
       q,
       startDate,
@@ -137,6 +138,12 @@ class Map extends Component {
         },
         this._loadHistogram
       );
+
+      if (this.state.locationName == null && this.state.locationId != null) {
+        this.setState({
+          locationName: results[0].location.location_string,
+        });
+      }
     }
   }
 
@@ -191,28 +198,6 @@ class Map extends Component {
     }
   };
 
-  _onClick = (event) => {
-    if (event.features.length > 0) {
-      const feature = event.features[0];
-      const clusterId = feature.properties.cluster_id;
-      const mapboxSource = this._sourceRef.current.getSource();
-
-      mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
-        if (err) {
-          return;
-        }
-
-        this._onViewportChange({
-          ...this.state.viewport,
-          longitude: feature.geometry.coordinates[0],
-          latitude: feature.geometry.coordinates[1],
-          zoom,
-          transitionDuration: 500,
-        });
-      });
-    }
-  };
-
   _onSearchChange = (_, value) => {
     this._setStateAndReload({ q: value });
   };
@@ -244,7 +229,11 @@ class Map extends Component {
       locationId = filetedLocatin[0].id;
     }
 
-    this._setStateAndReload({ location: locationId, locationOptions: [] });
+    this._setStateAndReload({
+      locationId,
+      locationName: value.location_string,
+      locationOptions: [],
+    });
   };
 
   _onInputLocationChange = async (_, value, reason) => {
@@ -260,15 +249,45 @@ class Map extends Component {
         `Could not fetch locationOptions for autocomplete. ${locationOptions[1]}`
       );
     } else {
-      const { location } = this.state;
+      const { locationId } = this.state;
       if (reason == "clear" || value.length === 0) {
-        this.setState({ locationOptions, location: null });
+        this.setState({ locationOptions, locationId: null });
       } else {
-        if (location == null) this.setState({ locationOptions });
+        if (locationId == null) this.setState({ locationOptions });
         else
           this.setState({
             locationOptions: [],
           });
+      }
+    }
+  };
+
+  _onClick = (event) => {
+    const mapboxSource = this._sourceRef.current.getSource();
+    if (event.features.length > 0) {
+      const feature = event.features[0];
+      const clusterId = feature.properties.cluster_id;
+
+      mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err) {
+          return;
+        }
+
+        this._onViewportChange({
+          ...this.state.viewport,
+          longitude: feature.geometry.coordinates[0],
+          latitude: feature.geometry.coordinates[1],
+          zoom,
+          transitionDuration: 500,
+        });
+      });
+    } else {
+      const features = this._mapRef.current.queryRenderedFeatures(event.point, {
+        layers: ["unclustered-point", "unclustered-point-text"],
+      });
+      if (features.length > 0) {
+        console.log(features[0].id);
+        this._setStateAndReload({ locationId: features[0].id });
       }
     }
   };
@@ -286,6 +305,7 @@ class Map extends Component {
       autocompleteOptions,
       organizationsSelected,
       locationOptions,
+      locationName,
     } = this.state;
 
     const { organizations } = this.props;
@@ -309,8 +329,10 @@ class Map extends Component {
           mapboxApiAccessToken={MAPBOX_TOKEN}
           interactiveLayerIds={[clusterLayer.id]}
           onClick={this._onClick}
+          ref={this._mapRef}
         >
           <Source
+            id="incidents"
             type="geojson"
             data={aggregatedIncidents}
             cluster={true}
@@ -347,9 +369,16 @@ class Map extends Component {
             }
           />
           <LocationInput
+            inputValue={locationName}
             options={locationOptions}
             cbChange={this._onLocationChange}
             cbInputChange={this._onInputLocationChange}
+            clear={() =>
+              this._setStateAndReload({
+                locationId: null,
+                locationName: null,
+              })
+            }
           />
         </div>
         <IncidentList
