@@ -235,7 +235,16 @@ class Map extends Component {
   };
 
   _onLocationChange = (_, value) => {
-    this._setStateAndReload({ location: value, locationOptions: [] });
+    const { locationOptions } = this.state;
+
+    const filetedLocatin = locationOptions.filter((x) => x === value);
+
+    let locationId = null;
+    if (filetedLocatin.length !== 0) {
+      locationId = filetedLocatin[0].id;
+    }
+
+    this._setStateAndReload({ location: locationId, locationOptions: [] });
   };
 
   _onInputLocationChange = async (_, value, reason) => {

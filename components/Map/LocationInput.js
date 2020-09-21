@@ -8,6 +8,7 @@ export default function LocationInput({ options, cbChange, cbInputChange }) {
       options={options}
       onChange={cbChange}
       onInputChange={cbInputChange}
+      getOptionLabel={(x) => x.location_string}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -94,7 +94,7 @@ async function fetchLocations(
 ) {
   const r = await _fetch("locations", q, startDate, endDate, chronicles);
   if (r.length === 2 && r[0] === null) return r;
-  else return r.map((x) => x.location_string);
+  else return r;
 }
 
 function fetchAggregatedIncidents(
