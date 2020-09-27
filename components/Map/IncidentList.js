@@ -38,9 +38,12 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
             <div className="card" key={x.id}>
               <header className="card-header">
                 {dayjs(x.date).format("DD.MM.YYYY - ")}
-                {x.location.subdivisions[0][1]}{" "}
+                {x.location.house_number} {x.location.street}{" "}
+                {x.location.district} {x.location.city} ({x.location.county})
               </header>
               <div className="card-content">
+                Originale Ortsangaben aus der Chronik: {x.orig_city}{" "}
+                {x.orig_county}
                 {x.title && <p className="content">{x.title}</p>}
                 <p className="content">{x.description}</p>
                 <div className="content">
