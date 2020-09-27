@@ -330,6 +330,8 @@ class Map extends Component {
           interactiveLayerIds={[clusterLayer.id]}
           onClick={this._onClick}
           ref={this._mapRef}
+          dragRotate={false}
+          touchRotate={false}
         >
           <Source
             id="incidents"
