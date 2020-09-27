@@ -1,18 +1,18 @@
 import React from "react";
-import { DatePicker } from "@material-ui/pickers";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 
 export default function DateInput({ startDate, startCb, endDate, endCb }) {
   return (
     <div className="level">
       <div className="level-left">
-        <DatePicker
-          views={["year", "month"]}
+        <KeyboardDatePicker
+          // views={["year", "month"]}
           locale="de"
           label="Start Datum"
           value={startDate}
           onChange={startCb}
           autoOk
-          format="MMM YYYY"
+          format="DD.MM.YYYY"
           okLabel={null}
           cancelLabel="Abbrechen"
           clearLabel="Entfernen"
@@ -20,14 +20,14 @@ export default function DateInput({ startDate, startCb, endDate, endCb }) {
         />
       </div>
       <div className="level-right">
-        <DatePicker
-          views={["year", "month"]}
+        <KeyboardDatePicker
+          // views={["year", "month"]}
           locale="de"
           label="End Datum"
           value={endDate}
           onChange={endCb}
           autoOk
-          format="MMM YYYY"
+          format="DD.MM.YYYY"
           okLabel={null}
           cancelLabel="Abbrechen"
           clearLabel="Entfernen"
