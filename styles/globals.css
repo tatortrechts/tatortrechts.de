@@ -24,30 +24,41 @@ a {
   height: 100vh;
 }
 
-#sidebar-filter {
+#sidebar {
   position: absolute;
   top: 0;
   right: 0;
   width: 50%;
-  background: #fff;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
-  padding: 1rem 2rem;
-  margin: 3rem 0;
+  height: 100%;
+
+  padding: 3rem 2rem 1rem;
   line-height: 2;
   outline: none;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar-filter {
+  flex-grow: 0;
+}
+
+#sidebar-results-outer {
+  overflow: hidden;
+  flex-grow: 1;
+  position: relative;
 }
 
 #sidebar-results {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  width: 50%;
-  height: 30rem;
-  background: #fff;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
-  padding: 1rem 2rem;
-  margin: 20rem 0;
-  line-height: 2;
+  bottom: 0;
+
+  flex-grow: 1;
+  /* padding: 1rem; */
+
   outline: none;
   overflow: auto;
 }

@@ -148,6 +148,8 @@ class Map extends Component {
   }
 
   _loadMoreIncidents = async () => {
+    // This is a bug in the infinite scroller component. Normally this should not get called.
+    if (next == null) return;
     const { incidentsNext, incidentsResults } = this.state;
     const { next, results } = await fetchIncidentsNext(incidentsNext);
     this.setState({
@@ -351,45 +353,47 @@ class Map extends Component {
             <Layer {...unclusteredPointTextLayer} />
           </Source>
         </MapGL>
-        <div id="sidebar-filter">
-          <SearchInput
-            options={autocompleteOptions}
-            cbChange={this._onSearchChange}
-            cbInputChange={this._onInputChange}
-          />
-          <DateInput
-            startDate={startDate}
-            endDate={endDate}
-            startCb={(x) => this._setStateAndReload({ startDate: x })}
-            endCb={(x) => this._setStateAndReload({ endDate: x })}
-          />
-          <OrganizationInput
-            organizations={organizations}
-            organizationsSelected={organizationsSelected}
-            cbChange={(x) =>
-              this._setStateAndReload({ organizationsSelected: x })
-            }
-          />
-          <LocationInput
-            inputValue={locationName}
-            options={locationOptions}
-            cbChange={this._onLocationChange}
-            cbInputChange={this._onInputLocationChange}
-            clear={() =>
-              this._setStateAndReload({
-                locationId: null,
-                locationName: null,
-              })
-            }
+        <div id="sidebar">
+          <div id="sidebar-filter">
+            <SearchInput
+              options={autocompleteOptions}
+              cbChange={this._onSearchChange}
+              cbInputChange={this._onInputChange}
+            />
+            <DateInput
+              startDate={startDate}
+              endDate={endDate}
+              startCb={(x) => this._setStateAndReload({ startDate: x })}
+              endCb={(x) => this._setStateAndReload({ endDate: x })}
+            />
+            <OrganizationInput
+              organizations={organizations}
+              organizationsSelected={organizationsSelected}
+              cbChange={(x) =>
+                this._setStateAndReload({ organizationsSelected: x })
+              }
+            />
+            <LocationInput
+              inputValue={locationName}
+              options={locationOptions}
+              cbChange={this._onLocationChange}
+              cbInputChange={this._onInputLocationChange}
+              clear={() =>
+                this._setStateAndReload({
+                  locationId: null,
+                  locationName: null,
+                })
+              }
+            />
+          </div>
+          <IncidentList
+            histogram={incidentsHistogram}
+            results={incidentsResults}
+            count={incidentsCount}
+            next={incidentsNext}
+            loadMore={this._loadMoreIncidents}
           />
         </div>
-        <IncidentList
-          histogram={incidentsHistogram}
-          results={incidentsResults}
-          count={incidentsCount}
-          next={incidentsNext}
-          loadMore={this._loadMoreIncidents}
-        />
       </>
     );
   }
