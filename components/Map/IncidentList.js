@@ -7,11 +7,11 @@ import * as dayjs from "dayjs";
 
 const Source = ({ name, url, date }) => {
   return (
-    <div>
+    <span>
       {name}
       {date && dayjs(date).format(", DD.MM.YYYY")}
       {url.length > 0 && <a href="{url}">Link</a>}
-    </div>
+    </span>
   );
 };
 
@@ -51,9 +51,11 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
                     {x.orig_county}
                     {x.title && <p className="content">{x.title}</p>}
                     <p className="content">{x.description}</p>
-                    <div className="content">
-                      {x.sources.length === 1 && <div>Quelle: </div>}
-                      {x.sources.length > 1 && <div>Quellen: </div>}
+                  </div>
+                  <footer class="card-footer">
+                    <div className="card-footer-item">
+                      {x.sources.length === 1 && <span>Quelle: </span>}
+                      {x.sources.length > 1 && <span>Quellen: </span>}
                       {x.sources.map((x) => (
                         <Source
                           name={x.name}
@@ -63,8 +65,10 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
                         />
                       ))}
                     </div>
-                    <div className="content">Chronik: {x.chronicle.name}</div>
-                  </div>
+                    <div className="card-footer-item">
+                      Chronik: {x.chronicle.name} (<a href={x.url}>Link</a>)
+                    </div>
+                  </footer>
                 </div>
               );
             })}

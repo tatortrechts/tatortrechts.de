@@ -148,10 +148,10 @@ class Map extends Component {
   }
 
   _loadMoreIncidents = async () => {
-    // This is a bug in the infinite scroller component. Normally this should not get called.
-    if (next == null) return;
     const { incidentsNext, incidentsResults } = this.state;
     const { next, results } = await fetchIncidentsNext(incidentsNext);
+    // This is a bug in the infinite scroller component. Normally this should not get called.
+    if (next == null) return;
     this.setState({
       incidentsNext: next,
       incidentsResults: incidentsResults.concat(results),
