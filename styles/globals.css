@@ -31,16 +31,19 @@ a {
   width: 50%;
   height: 100%;
 
-  padding: 3rem 2rem 1rem;
+  padding: 3rem 1rem 1rem;
   line-height: 2;
   outline: none;
 
   display: flex;
   flex-direction: column;
+  border-left: 0.1rem solid grey;
 }
 
 #sidebar-filter {
   flex-grow: 0;
+  padding: 1rem;
+  border-bottom: 0.1rem solid grey;
 }
 
 #sidebar-results-outer {
@@ -57,8 +60,12 @@ a {
   bottom: 0;
 
   flex-grow: 1;
-  /* padding: 1rem; */
+  padding: 1rem;
 
   outline: none;
   overflow: auto;
+}
+
+#sidebar-results .card {
+  margin-bottom: 3rem;
 }

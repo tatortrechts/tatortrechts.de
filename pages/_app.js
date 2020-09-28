@@ -1,6 +1,5 @@
 import "../styles/globals.css";
-
-import "../node_modules/bulma/bulma.sass";
+import "../styles/custom-bulma.scss";
 
 import DayjsUtils from "@date-io/dayjs";
 

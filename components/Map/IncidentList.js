@@ -39,10 +39,12 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
               return (
                 <div className="card" key={x.id}>
                   <header className="card-header">
-                    {dayjs(x.date).format("DD.MM.YYYY - ")}
-                    {x.location.house_number} {x.location.street}{" "}
-                    {x.location.district} {x.location.city} ({x.location.county}
-                    )
+                    <p className="card-header-title">
+                      {dayjs(x.date).format("DD.MM.YYYY - ")}
+                      {x.location.house_number} {x.location.street}{" "}
+                      {x.location.district} {x.location.city} (
+                      {x.location.county})
+                    </p>
                   </header>
                   <div className="card-content">
                     Originale Ortsangaben aus der Chronik: {x.orig_city}{" "}
