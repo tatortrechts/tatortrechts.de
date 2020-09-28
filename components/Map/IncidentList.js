@@ -52,7 +52,7 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
                     {x.title && <p className="content">{x.title}</p>}
                     <p className="content">{x.description}</p>
                   </div>
-                  <footer class="card-footer">
+                  <footer className="card-footer">
                     <div className="card-footer-item">
                       {x.sources.length === 1 && <span>Quelle: </span>}
                       {x.sources.length > 1 && <span>Quellen: </span>}

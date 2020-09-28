@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import MapGL, { Source, Layer, WebMercatorViewport } from "react-map-gl";
+import * as dayjs from "dayjs";
+
+import { withRouter } from "next/router";
 
 import {
   clusterLayer,
@@ -29,35 +32,50 @@ const GERMAN_LNG = [4.8, 15.4];
 const CENTER_GERMANY = [51.1657, 10.4515];
 
 class Map extends Component {
-  state = {
-    mapInitalized: false,
-    viewport: {
-      latitude: CENTER_GERMANY[0],
-      longitude: CENTER_GERMANY[1],
-      zoom: 6,
-      minZoom: 6,
-      bearing: 0,
-      pitch: 0,
-    },
-    bbox: null,
-    aggregatedIncidents: {
-      type: "FeatureCollection",
-      features: [],
-    },
-    q: null,
-    autocompleteOptions: [],
-    startDate: null,
-    endDate: null,
-    incidentsTimeoutFetch: null,
-    incidentsResults: null,
-    incidentsCount: null,
-    incidentsNext: null,
-    incidentsHistogram: null,
-    organizationsSelected: [],
-    locationId: null,
-    locationOptions: [],
-    locationName: null,
-  };
+  constructor(props) {
+    super(props);
+
+    const { router } = this.props;
+
+    this.state = {
+      mapInitalized: false,
+      viewport: {
+        latitude: CENTER_GERMANY[0],
+        longitude: CENTER_GERMANY[1],
+        zoom: 6,
+        minZoom: 6,
+        bearing: 0,
+        pitch: 0,
+      },
+      bbox: router.query.bbox == null ? null : router.query.bbox.split(","),
+      aggregatedIncidents: {
+        type: "FeatureCollection",
+        features: [],
+      },
+      q: router.query.q == null ? null : router.query.q,
+      autocompleteOptions: [],
+      startDate:
+        router.query.startDate == null
+          ? null
+          : dayjs(parseInt(router.query.startDate)),
+      endDate:
+        router.query.endDate == null
+          ? null
+          : dayjs(parseInt(router.query.endDate)),
+      incidentsTimeoutFetch: null,
+      incidentsResults: null,
+      incidentsCount: null,
+      incidentsNext: null,
+      incidentsHistogram: null,
+      organizationsSelected:
+        router.query.organizationsSelected == null
+          ? []
+          : router.query.organizationsSelected.split(","),
+      locationId: null,
+      locationOptions: [],
+      locationName: null,
+    };
+  }
 
   _sourceRef = React.createRef();
   _mapRef = React.createRef();
@@ -89,13 +107,40 @@ class Map extends Component {
 
   _getOrganizationIds = () =>
     this.state.organizationsSelected.length === 0
-      ? null
+      ? []
       : this.props.organizations
           .map((x) => x.id)
           .filter((x) => !this.state.organizationsSelected.includes(x));
 
+  _stateToUrl = () => {
+    let url = "/karte";
+    const params = [];
+
+    [
+      "q",
+      "startDate",
+      "endDate",
+      "bbox",
+      "locationId",
+      "organizationsSelected",
+    ].forEach((x) => {
+      if (
+        this.state[x] != null &&
+        (!Array.isArray(this.state[x]) || x.length > 0)
+      ) {
+        params.push(x + "=" + this.state[x]);
+      }
+    });
+
+    if (params.length === 0) return url;
+    return url + "?" + params.join("&");
+  };
+
   _setStateAndReload = (state) => {
+    const { router } = this.props;
+
     this.setState(state, () => {
+      router.replace(this._stateToUrl(), undefined, { shallow: true });
       this._loadAggregatedIncidents();
       this._loadIncidents();
       state.location !== null && this._loadAggregatedIncidents();
@@ -162,7 +207,7 @@ class Map extends Component {
     let { incidentsTimeoutFetch } = this.state;
     incidentsTimeoutFetch && clearTimeout(incidentsTimeoutFetch);
 
-    incidentsTimeoutFetch = setTimeout(() => this._loadIncidents(), 2000);
+    incidentsTimeoutFetch = setTimeout(() => this._setStateAndReload({}), 2000);
     this.setState({ incidentsTimeoutFetch });
   };
 
@@ -359,6 +404,7 @@ class Map extends Component {
               options={autocompleteOptions}
               cbChange={this._onSearchChange}
               cbInputChange={this._onInputChange}
+              value={this.state.q}
             />
             <DateInput
               startDate={startDate}
@@ -399,4 +445,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default withRouter(Map);
