@@ -18,6 +18,18 @@ export default function OrganizationInput({
     cbChange(value);
   };
 
+  const renderValue = (values) => {
+    if (organizations.length === values.length)
+      return "keine Organisationen ausgewählt";
+
+    if (values.length === 0) return "alle Organistionen";
+
+    return organizations
+      .filter((x) => !values.includes(x.id))
+      .map((x) => x.name)
+      .join(", ");
+  };
+
   return (
     <FormControl>
       <Select
@@ -26,16 +38,7 @@ export default function OrganizationInput({
         onChange={handleChangeMultiple}
         input={<Input />}
         displayEmpty
-        renderValue={(values) =>
-          organizations.length === values.length
-            ? "keine Organisationen ausgewählt"
-            : values.length === 0
-            ? "alle Organistionen"
-            : organizations
-                .filter((x) => !values.includes(x.id))
-                .map((x) => x.name)
-                .join(", ")
-        }
+        renderValue={renderValue}
       >
         {organizations &&
           organizations.map((x) => (

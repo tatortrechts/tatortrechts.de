@@ -70,7 +70,7 @@ class Map extends Component {
       organizationsSelected:
         router.query.organizationsSelected == null
           ? []
-          : router.query.organizationsSelected.split(","),
+          : router.query.organizationsSelected.split(",").map(parseInt),
       locationId: null,
       locationOptions: [],
       locationName: null,
