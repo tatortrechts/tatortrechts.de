@@ -7,6 +7,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 
+// at least one org has to be selected
+
 export default function OrganizationInput({
   organizations,
   organizationsSelected,
