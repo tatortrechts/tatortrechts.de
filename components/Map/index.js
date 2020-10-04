@@ -47,7 +47,10 @@ class Map extends Component {
         bearing: 0,
         pitch: 0,
       },
-      bbox: router.query.bbox == null ? null : router.query.bbox.split(","),
+      bbox:
+        router.query.bbox == null
+          ? null
+          : router.query.bbox.split(",").map((x) => parseFloat(x)),
       aggregatedIncidents: {
         type: "FeatureCollection",
         features: [],
@@ -70,7 +73,9 @@ class Map extends Component {
       organizationsSelected:
         router.query.organizationsSelected == null
           ? []
-          : router.query.organizationsSelected.split(",").map(parseInt),
+          : router.query.organizationsSelected
+              .split(",")
+              .map((x) => parseInt(x)),
       locationId: null,
       locationOptions: [],
       locationName: null,
@@ -416,6 +421,8 @@ class Map extends Component {
               organizations={organizations}
               organizationsSelected={organizationsSelected}
               cbChange={(x) =>
+                organizations &&
+                x.length < organizations.length &&
                 this._setStateAndReload({ organizationsSelected: x })
               }
             />
