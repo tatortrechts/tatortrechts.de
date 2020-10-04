@@ -1,6 +1,7 @@
 import ky from "ky-universal";
 
 let API_LOCATION = "http://localhost:8000";
+
 if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.rechtegewalt.info";
 }
@@ -58,7 +59,7 @@ async function _fetch(
   );
   const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
-    const apiResponse = await ky.get(url).json();
+    const apiResponse = await ky.get(url, { timeout: 30000 }).json();
     return apiResponse;
   } catch (e) {
     return [null, e];
