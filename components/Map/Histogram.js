@@ -3,7 +3,7 @@ import { VictoryChart, VictoryBar, VictoryAxis } from "victory";
 
 const Histogram = ({ data }) => {
   return (
-    <VictoryChart height={150} scale={{ x: "time" }}>
+    <VictoryChart height={150} scale={{ x: "time" }} domainPadding={{ x: 10 }}>
       <VictoryAxis />
       <VictoryAxis
         dependentAxis
