@@ -20,9 +20,10 @@ class NavBar extends React.Component {
           <div className="navbar-brand">
             <a className="navbar-item" href="/">
               <img
-                src="https://bulma.io/images/bulma-logo.png"
-                width="112"
+                src="/rg_logo.svg"
+                width="200"
                 height="28"
+                alt="RECHTEGEWALT.INFO"
               />
             </a>
 
@@ -50,8 +51,7 @@ class NavBar extends React.Component {
           >
             <div className="navbar-start">
               {[
-                ["/", "Start"],
-                ["/karte", "Karte"],
+                ["/chronik", "Chronik"],
                 ["/hintergrund", "Hintergrund"],
                 ["/stories", "Stories"],
               ].map((x) => {

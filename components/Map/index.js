@@ -118,7 +118,7 @@ class Map extends Component {
           .filter((x) => !this.state.organizationsSelected.includes(x));
 
   _stateToUrl = () => {
-    let url = "/karte";
+    let url = "/chronik";
     const params = [];
 
     [
