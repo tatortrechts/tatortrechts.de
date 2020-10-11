@@ -159,6 +159,60 @@ function fetchOrganizations() {
   return _fetch("chronicles");
 }
 
+async function imageToHtml(imgId) {
+  const url = API_LOCATION + `/content/api/v2/images/${imgId}/`;
+  const apiResponse = await ky.get(url).json();
+  const src = API_LOCATION + apiResponse.meta.download_url;
+  const title = apiResponse.title;
+  return `<img src="${src}" title="${title}" />`;
+}
+
+async function transformToHtml(content) {
+  const contentList = await Promise.all(
+    content.map(async (x) => {
+      if (x.type == "heading") {
+        return `<h1 class="title">${x.value}</h1>`;
+      }
+
+      if (x.type == "image") {
+        const html = await imageToHtml(x.value);
+        return html;
+      }
+
+      if (x.type == "paragraph") {
+        return x.value;
+      }
+
+      if (x.type == "two_columns") {
+        const left = await transformToHtml(x.value.left_column);
+        const right = await transformToHtml(x.value.right_column);
+
+        return `<div class="columns is-desktop"><div class="column">${left}</div><div class="column">${right}</div></div>`;
+      }
+
+      console.error("problem with " + x);
+    })
+  );
+
+  return (
+    `<section class="section"><div class="container">` +
+    contentList.join("") +
+    `</div></section>`
+  );
+}
+
+async function fetchContent(slug) {
+  const url = API_LOCATION + `/content/api/v2/pages/?slug=${slug}`;
+  const apiResponse = await ky.get(url).json();
+  const id = apiResponse.items[0].id;
+  console.log(id);
+
+  const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;
+  const apiResponse2 = await ky.get(url2).json();
+  apiResponse2.body = await transformToHtml(apiResponse2.body);
+  return apiResponse2;
+}
+
 export {
   fetchAggregatedIncidents,
   fetchAutocomplete,
@@ -167,4 +221,5 @@ export {
   fetchIncidentsNext,
   fetchOrganizations,
   fetchLocations,
+  fetchContent,
 };
