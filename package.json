@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start -p 5000"
   },
+  "engines": {
+    "node": "15.x"
+  },
   "dependencies": {
     "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.11.0",
