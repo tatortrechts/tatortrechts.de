@@ -37,13 +37,14 @@ a {
 
   display: flex;
   flex-direction: column;
-  border-left: 0.1rem solid grey;
+  /* border-left: 0.1rem solid grey; */
 }
 
 #sidebar-filter {
   flex-grow: 0;
   padding: 1rem;
-  border-bottom: 0.1rem solid grey;
+  border-bottom: 0.1rem solid lightgray;
+  margin-bottom: 0.25rem;
 }
 
 #sidebar-results-outer {

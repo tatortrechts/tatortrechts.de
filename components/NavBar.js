@@ -15,7 +15,7 @@ class NavBar extends React.Component {
     const { router } = this.props;
 
     return (
-      <div className="container">
+      <div className="" style={{marginLeft: "50%", width: '50%'}}>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
             <a className="navbar-item" href="/">
