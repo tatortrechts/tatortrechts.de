@@ -10,9 +10,7 @@ function Karte({ organizations }) {
   return (
     <>
       <NavBar />
-      <div id="map">
-        <Map organizations={organizations} />
-      </div>
+      <Map organizations={organizations} />
     </>
   );
 }

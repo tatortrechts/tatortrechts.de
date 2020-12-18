@@ -19,17 +19,27 @@ a {
 #map {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 100vw;
+  left: 0;
+  width: 50vw;
   height: 100vh;
+}
+
+@media only screen and (max-width: 768px) {
+  #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
+  }
 }
 
 #sidebar {
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
-  height: 100%;
+  height: 100vh;
+  width: 50vw;
 
   padding: 3rem 1rem 1rem;
   line-height: 2;
@@ -37,7 +47,17 @@ a {
 
   display: flex;
   flex-direction: column;
-  /* border-left: 0.1rem solid grey; */
+}
+
+@media only screen and (max-width: 768px) {
+  #sidebar {
+    line-height: 1;
+    padding: 0.5rem;
+
+    width: 100vw;
+    height: 60vh;
+    margin-top: 40vh;
+  }
 }
 
 #sidebar-filter {

@@ -370,40 +370,42 @@ class Map extends Component {
 
     return (
       <>
-        <MapGL
-          {...viewport}
-          width="50%"
-          height="100%"
-          mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
-          // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
-          // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
-          // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
-          onViewportChange={this._onViewportChange}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
-          interactiveLayerIds={[clusterLayer.id]}
-          onClick={this._onClick}
-          ref={this._mapRef}
-          dragRotate={false}
-          touchRotate={false}
-        >
-          <Source
-            id="incidents"
-            type="geojson"
-            data={aggregatedIncidents}
-            cluster={true}
-            clusterMaxZoom={14}
-            clusterRadius={50}
-            clusterProperties={{
-              sum: ["+", ["get", "total"], ["get", "sum"]],
-            }}
-            ref={this._sourceRef}
+        <div id="map">
+          <MapGL
+            {...viewport}
+            width="100%"
+            height="100%"
+            mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
+            // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
+            // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
+            // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
+            onViewportChange={this._onViewportChange}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            interactiveLayerIds={[clusterLayer.id]}
+            onClick={this._onClick}
+            ref={this._mapRef}
+            dragRotate={false}
+            touchRotate={false}
           >
-            <Layer {...clusterLayer} />
-            <Layer {...clusterCountLayer} />
-            <Layer {...unclusteredPointLayer} />
-            <Layer {...unclusteredPointTextLayer} />
-          </Source>
-        </MapGL>
+            <Source
+              id="incidents"
+              type="geojson"
+              data={aggregatedIncidents}
+              cluster={true}
+              clusterMaxZoom={14}
+              clusterRadius={50}
+              clusterProperties={{
+                sum: ["+", ["get", "total"], ["get", "sum"]],
+              }}
+              ref={this._sourceRef}
+            >
+              <Layer {...clusterLayer} />
+              <Layer {...clusterCountLayer} />
+              <Layer {...unclusteredPointLayer} />
+              <Layer {...unclusteredPointTextLayer} />
+            </Source>
+          </MapGL>
+        </div>
         <div id="sidebar">
           <div id="sidebar-filter">
             <SearchInput
