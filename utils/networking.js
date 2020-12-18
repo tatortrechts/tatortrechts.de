@@ -3,7 +3,7 @@ import ky from "ky-universal";
 let API_LOCATION = "http://localhost:8000";
 
 if (process.env.NODE_ENV === "production") {
-  API_LOCATION = "https://api.rechtegewalt.info";
+  API_LOCATION = "https://api.tatortrechts.de";
 }
 
 function buildQueryParams(q, startDate, endDate, chronicles, bbox, location) {
