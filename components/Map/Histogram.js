@@ -2,7 +2,7 @@ import React from "react";
 import { VictoryChart, VictoryBar, VictoryAxis, VictoryTooltip } from "victory";
 import * as dayjs from "dayjs";
 
-const fontFamily = `BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;`;
+const fontFamily = `BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif`;
 
 const addTimeInterval = (x, timeInterval) => {
   if (timeInterval === "year") return x.add(1, "years");
@@ -38,7 +38,7 @@ const fillMissingData = (data, timeInterval) => {
 };
 
 const Histogram = ({ data }) => {
-  if (!data.length || data.length === 0) return null;
+  if (data == null || !data.length || data.length === 0) return null;
 
   let timeInterval = data[0].time_interval;
 

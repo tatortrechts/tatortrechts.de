@@ -213,6 +213,20 @@ async function fetchContent(slug) {
   return apiResponse2;
 }
 
+async function fetchMinMaxDate() {
+  const url = API_LOCATION + "/min_max_date/";
+
+  try {
+    const apiResponse = await ky.get(url).json();
+    return {
+      minDate: apiResponse.min_date,
+      maxDate: apiResponse.max_date,
+    };
+  } catch (e) {
+    return [null, e];
+  }
+}
+
 export {
   fetchAggregatedIncidents,
   fetchAutocomplete,
@@ -222,4 +236,5 @@ export {
   fetchOrganizations,
   fetchLocations,
   fetchContent,
+  fetchMinMaxDate,
 };

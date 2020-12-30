@@ -360,7 +360,7 @@ class Map extends Component {
       locationName,
     } = this.state;
 
-    const { organizations } = this.props;
+    const { organizations, minMaxDate } = this.props;
 
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -452,6 +452,7 @@ class Map extends Component {
             </p>
 
             <DateInput
+              minMaxDate={minMaxDate}
               startDate={startDate}
               endDate={endDate}
               startCb={(x) => this._setStateAndReload({ startDate: x })}
