@@ -408,18 +408,35 @@ class Map extends Component {
         </div>
         <div id="sidebar">
           <div id="sidebar-filter">
-            <SearchInput
-              options={autocompleteOptions}
-              cbChange={this._onSearchChange}
-              cbInputChange={this._onInputChange}
-              value={this.state.q}
-            />
-            <DateInput
-              startDate={startDate}
-              endDate={endDate}
-              startCb={(x) => this._setStateAndReload({ startDate: x })}
-              endCb={(x) => this._setStateAndReload({ endDate: x })}
-            />
+            <p>
+              Durchsuch die Taten nach Schlagworten wie z. B. Feuer oder Kopf,
+              oder such einen Ort aus.
+            </p>
+            <div className="columns">
+              <div className="column">
+                <SearchInput
+                  options={autocompleteOptions}
+                  cbChange={this._onSearchChange}
+                  cbInputChange={this._onInputChange}
+                  value={this.state.q}
+                />
+              </div>
+              <div className="column">
+                <LocationInput
+                  inputValue={locationName}
+                  options={locationOptions}
+                  cbChange={this._onLocationChange}
+                  cbInputChange={this._onInputLocationChange}
+                  clear={() =>
+                    this._setStateAndReload({
+                      locationId: null,
+                      locationName: null,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <p className="">Wähle einzelne Organisationen aus.</p>
             <OrganizationInput
               organizations={organizations}
               organizationsSelected={organizationsSelected}
@@ -429,17 +446,16 @@ class Map extends Component {
                 this._setStateAndReload({ organizationsSelected: x })
               }
             />
-            <LocationInput
-              inputValue={locationName}
-              options={locationOptions}
-              cbChange={this._onLocationChange}
-              cbInputChange={this._onInputLocationChange}
-              clear={() =>
-                this._setStateAndReload({
-                  locationId: null,
-                  locationName: null,
-                })
-              }
+
+            <p className="mt-5">
+              Wähle aus von wann bis wann die Taten aufgetreten sind.
+            </p>
+
+            <DateInput
+              startDate={startDate}
+              endDate={endDate}
+              startCb={(x) => this._setStateAndReload({ startDate: x })}
+              endCb={(x) => this._setStateAndReload({ endDate: x })}
             />
           </div>
           <IncidentList

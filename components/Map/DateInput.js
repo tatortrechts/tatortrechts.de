@@ -3,12 +3,13 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 
 export default function DateInput({ startDate, startCb, endDate, endCb }) {
   return (
-    <div className="level">
-      <div className="level-left">
+    <div className="columns">
+      <div className="column">
         <KeyboardDatePicker
+          type="small"
           // views={["year", "month"]}
           locale="de"
-          label="Start Datum"
+          label="von"
           value={startDate}
           onChange={startCb}
           autoOk
@@ -19,11 +20,12 @@ export default function DateInput({ startDate, startCb, endDate, endCb }) {
           clearable
         />
       </div>
-      <div className="level-right">
+      <div className="column">
         <KeyboardDatePicker
+          type="small"
           // views={["year", "month"]}
           locale="de"
-          label="End Datum"
+          label="bis"
           value={endDate}
           onChange={endCb}
           autoOk

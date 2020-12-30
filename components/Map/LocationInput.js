@@ -21,14 +21,16 @@ export default function LocationInput({
       )}
       {inputValue == null && (
         <Autocomplete
+          size="small"
           options={options}
           onChange={cbChange}
           onInputChange={cbInputChange}
           getOptionLabel={(x) => x.location_string}
+          noOptionsText="kein Ort gefunden"
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Location input"
+              label="Ort"
               margin="normal"
               variant="outlined"
               InputProps={{ ...params.InputProps, type: "search" }}

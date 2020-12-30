@@ -25,7 +25,17 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
   return (
     <div id="sidebar-results-outer">
       <div id="sidebar-results" ref={containerRef}>
-        <div>{count} Treffer</div>
+        {count > 1 && (
+          <div>
+            In dem Zeitraum vom <b>xx.xx.xx</b> bis <b>xx.xx.xx</b> gab es{" "}
+            <b>{count}</b> Taten.
+          </div>
+        )}
+        {count === 1 && (
+          <div>
+            Am <b>xx.xx.xx</b> gab es <b>eine</b> Tat.
+          </div>
+        )}
         <div>{histogram && <Histogram data={histogram} />}</div>
         <InfiniteScroll
           useWindow={false}

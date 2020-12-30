@@ -11,6 +11,7 @@ export default function SearchInput({
   return (
     <Autocomplete
       freeSolo
+      size="small"
       options={options}
       onChange={cbChange}
       onInputChange={cbInputChange}
@@ -18,7 +19,7 @@ export default function SearchInput({
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search input"
+          label="Schlagwort"
           margin="normal"
           variant="outlined"
           InputProps={{ ...params.InputProps, type: "search" }}
