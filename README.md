@@ -36,6 +36,10 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+### Depedencies
+
+Don't update `react-map-gl` to v6 because it includes the non-open-source version of the new `mapbox-gl-js`: <https://github.com/visgl/react-map-gl/releases/tag/v6.0.0>
+
 ## Production
 
 Right now: Confused about `MAPBOX_TOKEN` vs `NEXT_PUBLIC_MAPBOX_TOKEN`

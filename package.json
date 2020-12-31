@@ -11,22 +11,22 @@
     "node": "15.x"
   },
   "dependencies": {
-    "@date-io/dayjs": "1.x",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@date-io/dayjs": "1",
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.2.10",
-    "bulma": "^0.9.0",
+    "bulma": "^0.9.1",
     "dayjs": "^1.8.34",
-    "ky": "^0.23.0",
+    "ky": "^0.25.1",
     "ky-universal": "^0.8.1",
-    "next": "^9.5.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "next": "10",
+    "react": "17",
+    "react-dom": "17",
     "react-infinite-scroller": "^1.2.4",
-    "react-map-gl": "^5.2.7",
-    "sass": "^1.26.10",
-    "victory": "^35.0.9"
+    "react-map-gl": "5",
+    "sass": "^1.32.0",
+    "victory": "^35.4.4"
   },
   "devDependencies": {
     "prettier": "^2.0.5"
