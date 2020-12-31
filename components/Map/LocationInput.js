@@ -1,9 +1,9 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import ClearIcon from "@material-ui/icons/Clear";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import React from "react";
+
 
 export default function LocationInput({
   inputValue,

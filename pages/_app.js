@@ -1,12 +1,12 @@
-import "../styles/globals.css";
-import "../styles/custom-bulma.scss";
-
 import DayjsUtils from "@date-io/dayjs";
-
-import * as deLocale from "dayjs/locale/de";
-
-import Head from "next/head";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import * as deLocale from "dayjs/locale/de";
+import Head from "next/head";
+import "../styles/custom-bulma.scss";
+import "../styles/globals.css";
+
+
+
 
 function MyApp({ Component, pageProps }) {
   return (

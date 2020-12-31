@@ -1,5 +1,5 @@
-import React from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
+import React from "react";
 
 export default function DateInput({
   minMaxDate,

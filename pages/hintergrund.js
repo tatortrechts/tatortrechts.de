@@ -1,8 +1,8 @@
 import Head from "next/head";
-
-import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
 import { fetchContent } from "../utils/networking";
+
 
 function Hintergrund({ content }) {
   const title = content.meta.seo_title;

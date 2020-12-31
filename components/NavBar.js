@@ -1,6 +1,6 @@
 import { withRouter } from "next/router";
-
 import React from "react";
+
 
 class NavBar extends React.Component {
   constructor(props) {

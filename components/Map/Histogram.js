@@ -1,6 +1,6 @@
-import React from "react";
-import { VictoryChart, VictoryBar, VictoryAxis, VictoryTooltip } from "victory";
 import * as dayjs from "dayjs";
+import React from "react";
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryTooltip } from "victory";
 
 const fontFamily = `BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif`;
 

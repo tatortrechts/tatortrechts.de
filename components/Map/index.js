@@ -1,30 +1,32 @@
-import React, { Component } from "react";
-import MapGL, { Source, Layer, WebMercatorViewport } from "react-map-gl";
 import * as dayjs from "dayjs";
-
 import { withRouter } from "next/router";
-
-import {
-  clusterLayer,
-  clusterCountLayer,
-  unclusteredPointLayer,
-  unclusteredPointTextLayer,
-} from "./layers";
-
-import SearchInput from "./SearchInput";
-import DateInput from "./DateInput";
-import IncidentList from "./IncidentList";
-import OrganizationInput from "./OrganizationInput";
-import LocationInput from "./LocationInput";
-
+import React, { Component } from "react";
+import MapGL, { Layer, Source, WebMercatorViewport } from "react-map-gl";
 import {
   fetchAggregatedIncidents,
   fetchAutocomplete,
-  fetchIncidents,
+
+
+  fetchHistogramIncidents, fetchIncidents,
   fetchIncidentsNext,
-  fetchHistogramIncidents,
-  fetchLocations,
+
+  fetchLocations
 } from "../../utils/networking";
+import DateInput from "./DateInput";
+import IncidentList from "./IncidentList";
+import {
+  clusterCountLayer, clusterLayer,
+
+  unclusteredPointLayer,
+  unclusteredPointTextLayer
+} from "./layers";
+import LocationInput from "./LocationInput";
+import OrganizationInput from "./OrganizationInput";
+import SearchInput from "./SearchInput";
+
+
+
+
 
 const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
