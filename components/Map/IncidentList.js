@@ -22,6 +22,7 @@ const IncidentList = ({
   next,
   count,
   loadMore,
+  setHighlight
 }) => {
   const containerRef = useRef(null);
 
@@ -55,7 +56,9 @@ const IncidentList = ({
           {results &&
             results.map((x) => {
               return (
-                <div className="card" key={x.id}>
+                <div className="card" key={x.id}    
+                onMouseEnter={() => setHighlight(x.location.geolocation.coordinates)}
+                onMouseLeave={() => setHighlight(null)}>
                   <header className="card-header">
                     <p className="card-header-title">
                       {dayjs(x.date).format("DD.MM.YYYY - ")}

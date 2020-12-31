@@ -1,22 +1,20 @@
 import * as dayjs from "dayjs";
 import { withRouter } from "next/router";
 import React, { Component } from "react";
-import MapGL, { Layer, Source, WebMercatorViewport } from "react-map-gl";
+import MapGL, { CanvasOverlay, Layer, Source, WebMercatorViewport } from "react-map-gl";
 import {
   fetchAggregatedIncidents,
   fetchAutocomplete,
-
-
-  fetchHistogramIncidents, fetchIncidents,
+  fetchHistogramIncidents,
+  fetchIncidents,
   fetchIncidentsNext,
-
   fetchLocations
 } from "../../utils/networking";
 import DateInput from "./DateInput";
 import IncidentList from "./IncidentList";
 import {
-  clusterCountLayer, clusterLayer,
-
+  clusterCountLayer,
+  clusterLayer,
   unclusteredPointLayer,
   unclusteredPointTextLayer
 } from "./layers";
@@ -24,13 +22,8 @@ import LocationInput from "./LocationInput";
 import OrganizationInput from "./OrganizationInput";
 import SearchInput from "./SearchInput";
 
-
-
-
-
 const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
-
 const CENTER_GERMANY = [51.1657, 10.4515];
 
 class Map extends Component {
@@ -81,6 +74,7 @@ class Map extends Component {
       locationId: null,
       locationOptions: [],
       locationName: null,
+      highlightPointMap: null
     };
   }
 
@@ -315,6 +309,37 @@ class Map extends Component {
       }
     }
   };
+  
+
+  _redraw = ({width, height, ctx, isDragging, project, unproject}) => {
+    function round(x, n) {
+      const tenN = Math.pow(10, n);
+      return Math.round(x * tenN) / tenN;
+    }
+
+    const {highlightPointMap} = this.state;
+    
+    ctx.clearRect(0, 0, width, height);
+    const dotRadius = 10;
+    const dotFill = 'orange'
+    if (highlightPointMap) {
+      for (const location of [highlightPointMap]) {
+        const pixel = project(location);
+        const pixelRounded = [round(pixel[0], 1), round(pixel[1], 1)];
+        if (
+          pixelRounded[0] + dotRadius >= 0 &&
+          pixelRounded[0] - dotRadius < width &&
+          pixelRounded[1] + dotRadius >= 0 &&
+          pixelRounded[1] - dotRadius < height
+        ) {
+          ctx.fillStyle = dotFill;
+          ctx.beginPath();
+          ctx.arc(pixelRounded[0], pixelRounded[1], dotRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+  };
 
   _onClick = (event) => {
     const mapboxSource = this._sourceRef.current.getSource();
@@ -360,6 +385,7 @@ class Map extends Component {
       organizationsSelected,
       locationOptions,
       locationName,
+      highlightPointMap
     } = this.state;
 
     const { organizations, minMaxDate } = this.props;
@@ -461,6 +487,7 @@ class Map extends Component {
               <Layer {...unclusteredPointLayer} />
               <Layer {...unclusteredPointTextLayer} />
             </Source>
+            {highlightPointMap && <CanvasOverlay redraw={this._redraw} />}
           </MapGL>
         </div>
         <div id="sidebar">
@@ -471,6 +498,7 @@ class Map extends Component {
             count={incidentsCount}
             next={incidentsNext}
             loadMore={this._loadMoreIncidents}
+            setHighlight={(x) => this.setState({highlightPointMap: x})}
           />
         </div>
       </>
