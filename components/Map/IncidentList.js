@@ -15,7 +15,14 @@ const Source = ({ name, url, date }) => {
   );
 };
 
-const IncidentList = ({ histogram, results, next, count, loadMore }) => {
+const IncidentList = ({
+  sideBarFilter,
+  histogram,
+  results,
+  next,
+  count,
+  loadMore,
+}) => {
   const containerRef = useRef(null);
 
   if (count === null) {
@@ -25,6 +32,7 @@ const IncidentList = ({ histogram, results, next, count, loadMore }) => {
   return (
     <div id="sidebar-results-outer">
       <div id="sidebar-results" ref={containerRef}>
+        {sideBarFilter}
         {count > 1 && (
           <div>
             In dem Zeitraum vom <b>xx.xx.xx</b> bis <b>xx.xx.xx</b> gab es{" "}

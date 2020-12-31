@@ -62,9 +62,9 @@ a {
 
 #sidebar-filter {
   flex-grow: 0;
-  padding: 1rem;
   border-bottom: 0.1rem solid lightgray;
-  margin-bottom: 0.25rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 #sidebar-results-outer {
