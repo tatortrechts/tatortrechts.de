@@ -369,8 +369,14 @@ class Map extends Component {
         layers: ["unclustered-point", "unclustered-point-text"],
       });
       if (features.length > 0) {
-        console.log(features[0].id);
-        this._setStateAndReload({ locationId: features[0].id });
+        const feature = features[0];
+        this._onViewportChange({
+          ...this.state.viewport,
+          longitude: feature.geometry.coordinates[0],
+          latitude: feature.geometry.coordinates[1],
+          zoom: this.state.viewport.zoom + 1,
+          transitionDuration: 500,
+        });
       }
     }
   };
