@@ -90,3 +90,14 @@ a {
 #sidebar-results .card {
   margin-bottom: 3rem;
 }
+
+.tooltip {
+  font-size: 0.8rem;
+  position: absolute;
+  height: auto;
+  background-color: white;
+  opacity: 0.9;
+  border-radius: 0.1rem;
+  padding: 0.4rem;
+  z-index: 10;
+}

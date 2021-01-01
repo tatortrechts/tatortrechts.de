@@ -80,6 +80,8 @@ class Map extends Component {
       locationOptions: [],
       locationName: null,
       highlightPointMap: null,
+      hoverInfo: null,
+      hoverClusters: null,
     };
   }
 
@@ -346,9 +348,13 @@ class Map extends Component {
   };
 
   _onClick = (event) => {
+    this._clearHover();
     const mapboxSource = this._sourceRef.current.getSource();
-    if (event.features.length > 0) {
-      const feature = event.features[0];
+    const feature = event.features[0];
+
+    if (feature == null) return;
+
+    if ("cluster_id" in feature.properties) {
       const clusterId = feature.properties.cluster_id;
 
       mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
@@ -365,20 +371,113 @@ class Map extends Component {
         });
       });
     } else {
-      const features = this._mapRef.current.queryRenderedFeatures(event.point, {
-        layers: ["unclustered-point", "unclustered-point-text"],
+      this._onViewportChange({
+        ...this.state.viewport,
+        longitude: feature.geometry.coordinates[0],
+        latitude: feature.geometry.coordinates[1],
+        zoom: this.state.viewport.zoom + 1,
+        transitionDuration: 500,
       });
-      if (features.length > 0) {
-        const feature = features[0];
-        this._onViewportChange({
-          ...this.state.viewport,
-          longitude: feature.geometry.coordinates[0],
-          latitude: feature.geometry.coordinates[1],
-          zoom: this.state.viewport.zoom + 1,
-          transitionDuration: 500,
-        });
-      }
     }
+  };
+
+  // don't use onHover for perf reasons
+  _onMouseEnter = (event) => {
+    const {
+      srcEvent: { offsetX, offsetY },
+    } = event;
+
+    const features = this._mapRef.current.queryRenderedFeatures(event.point, {
+      layers: [clusterLayer.id, unclusteredPointLayer.id],
+    });
+
+    const hoveredFeature = features && features[0];
+    this.setState({
+      hoverInfo: hoveredFeature
+        ? {
+            feature: hoveredFeature,
+            x: offsetX + 10,
+            y: offsetY,
+          }
+        : null,
+    });
+  };
+
+  _clearHover = () => {
+    this.setState({ hoverInfo: null, hoverClusters: null });
+  };
+
+  _extractShortAddress = (obj) => {
+    let strArr = [];
+    if (obj.street && obj.street !== "null") strArr.push(obj.street);
+    if (obj.house_number && obj.house_number !== "null")
+      strArr.push(obj.house_number);
+    if (obj.city && obj.city !== "null") strArr.push(obj.city);
+    if (obj.district && obj.district !== "null")
+      strArr.push(`(${obj.district})`);
+    if (strArr.length === 0) strArr.push(obj.county);
+    return strArr.join(" ");
+  };
+
+  _renderTooltip = (hoverInfo) => {
+    let notShownRows = [];
+    let tableRows = [];
+    if ("cluster_id" in hoverInfo.feature.properties) {
+      const mapboxSource = this._sourceRef.current.getSource();
+      const clusterId = hoverInfo.feature.properties.cluster_id;
+
+      mapboxSource.getClusterLeaves(
+        clusterId,
+        100000000,
+        0,
+        (err, clusters) => {
+          this.setState({
+            hoverClusters: clusters
+              .map((x) => x.properties)
+              .sort((a, b) => b.total - a.total),
+          });
+        }
+      );
+
+      if (!this.state.hoverClusters) return null;
+
+      tableRows = this.state.hoverClusters.slice(0, 5);
+      notShownRows = this.state.hoverClusters.slice(5);
+    } else {
+      tableRows = [hoverInfo.feature.properties];
+    }
+
+    return (
+      <div className="tooltip" style={{ left: hoverInfo.x, top: hoverInfo.y }}>
+        <div>
+          <table className="table is-narrow">
+            <thead>
+              <tr>
+                <th>Taten</th>
+                <th>Ort</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.map((x) => {
+                return (
+                  <tr>
+                    <td>{x.total}</td>
+                    <td>{this._extractShortAddress(x)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {notShownRows.length > 0 && (
+            <p>
+              ...und weitere{" "}
+              {notShownRows.map((x) => x.total).reduce((a, b) => a + b)} Taten
+              an {notShownRows.length} Orten.
+            </p>
+          )}
+        </div>
+      </div>
+    );
   };
 
   render() {
@@ -396,6 +495,7 @@ class Map extends Component {
       locationOptions,
       locationName,
       highlightPointMap,
+      hoverInfo,
     } = this.state;
 
     const { organizations, minMaxDate } = this.props;
@@ -474,8 +574,10 @@ class Map extends Component {
             // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-            interactiveLayerIds={[clusterLayer.id]}
+            interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
             onClick={this._onClick}
+            onMouseEnter={this._onMouseEnter}
+            onMouseLeave={this._clearHover}
             ref={this._mapRef}
             dragRotate={false}
             touchRotate={false}
@@ -486,7 +588,7 @@ class Map extends Component {
               data={aggregatedIncidents}
               cluster={true}
               clusterMaxZoom={14}
-              clusterRadius={50}
+              clusterRadius={40}
               clusterProperties={{
                 sum: ["+", ["get", "total"], ["get", "sum"]],
               }}
@@ -497,6 +599,7 @@ class Map extends Component {
               <Layer {...unclusteredPointLayer} />
               <Layer {...unclusteredPointTextLayer} />
             </Source>
+            {hoverInfo && this._renderTooltip(hoverInfo)}
             {highlightPointMap && <CanvasOverlay redraw={this._redraw} />}
           </MapGL>
         </div>
