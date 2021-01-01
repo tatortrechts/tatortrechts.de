@@ -3,8 +3,6 @@ import { useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import Histogram from "./Histogram";
 
-
-
 const Source = ({ name, url, date }) => {
   return (
     <span>
@@ -22,7 +20,7 @@ const IncidentList = ({
   next,
   count,
   loadMore,
-  setHighlight
+  setHighlight,
 }) => {
   const containerRef = useRef(null);
 
@@ -56,9 +54,14 @@ const IncidentList = ({
           {results &&
             results.map((x) => {
               return (
-                <div className="card" key={x.id}    
-                onMouseEnter={() => setHighlight(x.location.geolocation.coordinates)}
-                onMouseLeave={() => setHighlight(null)}>
+                <div
+                  className="card"
+                  key={x.id}
+                  onMouseEnter={() =>
+                    setHighlight(x.location.geolocation.coordinates)
+                  }
+                  onMouseLeave={() => setHighlight(null)}
+                >
                   <header className="card-header">
                     <p className="card-header-title">
                       {dayjs(x.date).format("DD.MM.YYYY - ")}
