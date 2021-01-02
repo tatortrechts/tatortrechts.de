@@ -79,7 +79,8 @@ class Map extends React.Component {
           ? []
           : router.query.organizationsSelected
               .split(",")
-              .map((x) => parseInt(x)),
+              .map((x) => parseInt(x))
+              .filter((x) => x),
       locationId: null,
       locationOptions: [],
       locationName: null,
@@ -414,11 +415,13 @@ class Map extends React.Component {
       const clusterId = hoverInfo.feature.properties.cluster_id;
 
       mapboxSource.getClusterLeaves(clusterId, 100000000, 0, (_, clusters) => {
-        this.setState({
-          hoverClusters: clusters
-            .map((x) => x.properties)
-            .sort((a, b) => b.total - a.total),
-        });
+        if (clusters != null) {
+          this.setState({
+            hoverClusters: clusters
+              .map((x) => x.properties)
+              .sort((a, b) => b.total - a.total),
+          });
+        }
       });
 
       if (!this.state.hoverClusters) return null;

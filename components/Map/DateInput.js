@@ -13,6 +13,7 @@ export default function DateInput({
     <div className="columns">
       <div className="column">
         <KeyboardDatePicker
+          initialFocusedDate={minDate}
           minDate={minDate}
           maxDate={maxDate}
           type="small"
