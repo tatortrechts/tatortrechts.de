@@ -1,12 +1,14 @@
 import * as dayjs from "dayjs";
 import { withRouter } from "next/router";
-import React, { Component } from "react";
+import React from "react";
 import MapGL, {
   CanvasOverlay,
   Layer,
   Source,
   WebMercatorViewport,
 } from "react-map-gl";
+import { extractShortAddress } from "../../utils/labels";
+import { round } from "../../utils/math";
 import {
   fetchAggregatedIncidents,
   fetchAutocomplete,
@@ -31,7 +33,9 @@ const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
 const CENTER_GERMANY = [51.1657, 10.4515];
 
-class Map extends Component {
+// TODO: re-structure in more components
+
+class Map extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,7 +47,7 @@ class Map extends Component {
         latitude: CENTER_GERMANY[0],
         longitude: CENTER_GERMANY[1],
         zoom: 6,
-        minZoom: 6,
+        minZoom: 5,
         bearing: 0,
         pitch: 0,
       },
@@ -317,12 +321,7 @@ class Map extends Component {
     }
   };
 
-  _redraw = ({ width, height, ctx, isDragging, project, unproject }) => {
-    function round(x, n) {
-      const tenN = Math.pow(10, n);
-      return Math.round(x * tenN) / tenN;
-    }
-
+  _redrawHighlight = ({ width, height, ctx, project }) => {
     const { highlightPointMap } = this.state;
 
     ctx.clearRect(0, 0, width, height);
@@ -407,18 +406,6 @@ class Map extends Component {
     this.setState({ hoverInfo: null, hoverClusters: null });
   };
 
-  _extractShortAddress = (obj) => {
-    let strArr = [];
-    if (obj.street && obj.street !== "null") strArr.push(obj.street);
-    if (obj.house_number && obj.house_number !== "null")
-      strArr.push(obj.house_number);
-    if (obj.city && obj.city !== "null") strArr.push(obj.city);
-    if (obj.district && obj.district !== "null")
-      strArr.push(`(${obj.district})`);
-    if (strArr.length === 0) strArr.push(obj.county);
-    return strArr.join(" ");
-  };
-
   _renderTooltip = (hoverInfo) => {
     let notShownRows = [];
     let tableRows = [];
@@ -426,18 +413,13 @@ class Map extends Component {
       const mapboxSource = this._sourceRef.current.getSource();
       const clusterId = hoverInfo.feature.properties.cluster_id;
 
-      mapboxSource.getClusterLeaves(
-        clusterId,
-        100000000,
-        0,
-        (err, clusters) => {
-          this.setState({
-            hoverClusters: clusters
-              .map((x) => x.properties)
-              .sort((a, b) => b.total - a.total),
-          });
-        }
-      );
+      mapboxSource.getClusterLeaves(clusterId, 100000000, 0, (_, clusters) => {
+        this.setState({
+          hoverClusters: clusters
+            .map((x) => x.properties)
+            .sort((a, b) => b.total - a.total),
+        });
+      });
 
       if (!this.state.hoverClusters) return null;
 
@@ -458,11 +440,11 @@ class Map extends Component {
               </tr>
             </thead>
             <tbody>
-              {tableRows.map((x) => {
+              {tableRows.map((x, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>{x.total}</td>
-                    <td>{this._extractShortAddress(x)}</td>
+                    <td>{extractShortAddress(x)}</td>
                   </tr>
                 );
               })}
@@ -500,8 +482,8 @@ class Map extends Component {
 
     const { organizations, minMaxDate } = this.props;
 
+    // FIXME
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
     if (MAPBOX_TOKEN == null || MAPBOX_TOKEN.length < 3) {
       MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
     }
@@ -600,7 +582,9 @@ class Map extends Component {
               <Layer {...unclusteredPointTextLayer} />
             </Source>
             {hoverInfo && this._renderTooltip(hoverInfo)}
-            {highlightPointMap && <CanvasOverlay redraw={this._redraw} />}
+            {highlightPointMap && (
+              <CanvasOverlay redraw={this._redrawHighlight} />
+            )}
           </MapGL>
         </div>
         <div id="sidebar">

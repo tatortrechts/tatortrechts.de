@@ -1,8 +1,8 @@
+import { zip } from "../../utils/lists";
+
 const stepsCount = [100, 500, 1000];
 const stepsSize = [12, 15, 19, 23];
 const stepsColor = ["#bdc9e1", "#74a9cf", "#2b8cbe", "#045a8d"];
-
-const zip = (a, b) => a.map((k, i) => [k, b[i]]);
 
 export const clusterLayer = {
   // beforeId: 'settlement-minor-label',

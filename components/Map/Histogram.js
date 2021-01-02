@@ -23,7 +23,6 @@ const fillMissingData = (data, timeInterval) => {
     if (prevDate !== null) {
       while (true) {
         const addedTime = addTimeInterval(prevDate, timeInterval);
-        // console.log(newDate.diff(addedTime, "day"));
         if (newDate.diff(addedTime, "day") !== 0) {
           transformedData.push({ x: addedTime.toDate(), y: 0 });
           prevDate = addedTime;
