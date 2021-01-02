@@ -73,8 +73,21 @@ const IncidentList = ({
                   <div className="card-content">
                     Originale Ortsangaben aus der Chronik: {x.orig_city}{" "}
                     {x.orig_county}
-                    {x.title && <p className="content">{x.title}</p>}
-                    <p className="content">{x.description}</p>
+                    {x.title ||
+                      (x.title_highlighted && (
+                        <p
+                          className="content"
+                          dangerouslySetInnerHTML={{
+                            __html: x.title || x.title_highlighted,
+                          }}
+                        ></p>
+                      ))}
+                    <p
+                      className="content"
+                      dangerouslySetInnerHTML={{
+                        __html: x.description || x.description_highlighted,
+                      }}
+                    ></p>
                   </div>
                   <footer className="card-footer">
                     <div className="card-footer-item">
