@@ -6,7 +6,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import React from "react";
 
-
 // at least one org has to be selected
 
 export default function OrganizationInput({
@@ -15,16 +14,15 @@ export default function OrganizationInput({
   cbChange,
 }) {
   const handleChangeMultiple = (event) => {
-    console.log(value);
     const { value } = event.target;
     cbChange(value);
   };
 
   const renderValue = (values) => {
     if (organizations.length === values.length)
-      return "keine Organisationen ausgewählt";
+      return "keine Organisation ausgewählt";
 
-    if (values.length === 0) return "alle Organistionen";
+    if (values.length === 0) return "alle";
 
     return organizations
       .filter((x) => !values.includes(x.id))

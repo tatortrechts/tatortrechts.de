@@ -83,7 +83,6 @@ class Map extends React.Component {
               .filter((x) => x),
       locationId: null,
       locationOptions: [],
-      locationName: null,
       highlightPointMap: null,
       hoverInfo: null,
       hoverClusters: null,
@@ -196,12 +195,6 @@ class Map extends React.Component {
         },
         this._loadHistogram
       );
-
-      if (this.state.locationName == null && this.state.locationId != null) {
-        this.setState({
-          locationName: results[0].location.location_string,
-        });
-      }
     }
   }
 
@@ -281,22 +274,24 @@ class Map extends React.Component {
 
   _onLocationChange = (_, value) => {
     const { locationOptions } = this.state;
+    const { initLocationOptions } = this.props;
 
-    const filetedLocatin = locationOptions.filter((x) => x === value);
+    const selectedLocation = locationOptions
+      .concat(initLocationOptions)
+      .filter((x) => x === value);
 
     let locationId = null;
-    if (filetedLocatin.length !== 0) {
-      locationId = filetedLocatin[0].id;
+    if (selectedLocation.length !== 0) {
+      locationId = selectedLocation[0].id;
     }
 
     this._setStateAndReload({
       locationId,
-      locationName: value.location_string,
       locationOptions: [],
     });
   };
 
-  _onInputLocationChange = async (_, value, reason) => {
+  _fetchLocations = async (value) => {
     const { startDate, endDate } = this.state;
     const locationOptions = await fetchLocations(
       value,
@@ -304,6 +299,11 @@ class Map extends React.Component {
       endDate,
       this._getOrganizationIds()
     );
+    return locationOptions;
+  };
+
+  _onInputLocationChange = async (_, value, reason) => {
+    const locationOptions = await this._fetchLocations(value);
     if (locationOptions.length === 2 && locationOptions[0] === null) {
       console.error(
         `Could not fetch locationOptions for autocomplete. ${locationOptions[1]}`
@@ -478,12 +478,11 @@ class Map extends React.Component {
       autocompleteOptions,
       organizationsSelected,
       locationOptions,
-      locationName,
       highlightPointMap,
       hoverInfo,
     } = this.state;
 
-    const { organizations, minMaxDate } = this.props;
+    const { organizations, minMaxDate, initLocationOptions } = this.props;
 
     // FIXME
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -508,16 +507,13 @@ class Map extends React.Component {
           </div>
           <div className="column">
             <LocationInput
-              inputValue={locationName}
-              options={locationOptions}
+              options={
+                locationOptions.length > 0
+                  ? locationOptions
+                  : initLocationOptions
+              }
               cbChange={this._onLocationChange}
               cbInputChange={this._onInputLocationChange}
-              clear={() =>
-                this._setStateAndReload({
-                  locationId: null,
-                  locationName: null,
-                })
-              }
             />
           </div>
         </div>
