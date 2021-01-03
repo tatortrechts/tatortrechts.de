@@ -1,10 +1,17 @@
 html,
 body {
+  background-color: #fefefe;
   min-height: 100vh;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  line-height: 1.5;
+}
+
+.navbar {
+  background-color: #fefefe;
 }
 
 a {
@@ -41,8 +48,7 @@ a {
   height: 100vh;
   width: 50vw;
 
-  padding: 3rem 1rem 1rem;
-  line-height: 2;
+  padding: 3rem 1rem 1rem 0;
   outline: none;
 
   display: flex;
@@ -91,6 +97,10 @@ a {
   margin-bottom: 3rem;
 }
 
+#sidebar-results .card .card-content {
+  padding: 0.5rem 1rem 1.5rem;
+}
+
 #sidebar-results .card .card-content b {
   background-color: rgba(255, 191, 0, 0.2);
   padding-left: 0.2rem;
@@ -106,4 +116,8 @@ a {
   border-radius: 0.1rem;
   padding: 0.4rem;
   z-index: 10;
+}
+
+.tor-date-input .MuiFormControl-root.MuiTextField-root {
+  max-width: 9rem;
 }

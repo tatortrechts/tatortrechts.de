@@ -221,6 +221,7 @@ async function fetchMinMaxDate() {
     return {
       minDate: apiResponse.min_date,
       maxDate: apiResponse.max_date,
+      total: apiResponse.total,
     };
   } catch (e) {
     return [null, e];

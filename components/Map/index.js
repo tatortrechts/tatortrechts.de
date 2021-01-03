@@ -497,9 +497,9 @@ class Map extends React.Component {
 
     const sideBarFilter = (
       <div id="sidebar-filter">
-        <p>
-          Durchsuch die Taten nach Schlagworten wie z. B. Feuer oder Kopf, oder
-          such einen Ort aus.
+        <p className="is-size-7">
+          Durchsuch die Taten nach Schlagworten wie z. B. "Feuer" oder "Schlag",
+          oder wähl einen Ort aus.
         </p>
         <div className="columns">
           <div className="column">
@@ -526,28 +526,31 @@ class Map extends React.Component {
             />
           </div>
         </div>
-        <p className="">Wähle einzelne Organisationen aus.</p>
-        <OrganizationInput
-          organizations={organizations}
-          organizationsSelected={organizationsSelected}
-          cbChange={(x) =>
-            organizations &&
-            x.length < organizations.length &&
-            this._setStateAndReload({ organizationsSelected: x })
-          }
-        />
+        <div className="columns">
+          <div className="column">
+            <p className="is-size-7">Zeitraum eingrenzen</p>
 
-        <p className="mt-5">
-          Wähle aus von wann bis wann die Taten aufgetreten sind.
-        </p>
-
-        <DateInput
-          minMaxDate={minMaxDate}
-          startDate={startDate}
-          endDate={endDate}
-          startCb={(x) => this._setStateAndReload({ startDate: x })}
-          endCb={(x) => this._setStateAndReload({ endDate: x })}
-        />
+            <DateInput
+              minMaxDate={minMaxDate}
+              startDate={startDate}
+              endDate={endDate}
+              startCb={(x) => this._setStateAndReload({ startDate: x })}
+              endCb={(x) => this._setStateAndReload({ endDate: x })}
+            />
+          </div>
+          <div className="column">
+            <p className="is-size-7 mb-4">Organisationen auswählen</p>
+            <OrganizationInput
+              organizations={organizations}
+              organizationsSelected={organizationsSelected}
+              cbChange={(x) =>
+                organizations &&
+                x.length < organizations.length &&
+                this._setStateAndReload({ organizationsSelected: x })
+              }
+            />
+          </div>
+        </div>
       </div>
     );
 
@@ -602,6 +605,8 @@ class Map extends React.Component {
             results={incidentsResults}
             count={incidentsCount}
             next={incidentsNext}
+            minMaxDate={minMaxDate}
+            numOrganizations={organizations.length}
             loadMore={this._loadMoreIncidents}
             setHighlight={(x) => this.setState({ highlightPointMap: x })}
           />

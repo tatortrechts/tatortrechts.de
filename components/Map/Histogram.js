@@ -78,14 +78,14 @@ const Histogram = ({ data }) => {
     <VictoryChart height={150} scale={{ x: "time" }} domainPadding={{ x: 10 }}>
       <VictoryAxis
         tickCount={3}
-        style={{ tickLabels: { fontSize: 10, fontFamily } }}
+        style={{ tickLabels: { fontSize: 8, fontFamily } }}
         tickFormat={genTimeFormat}
       />
       <VictoryAxis
         label="Taten"
         style={{
-          tickLabels: { fontSize: 10, fontFamily },
-          axisLabel: { fontSize: 8, padding: 40, fontFamily },
+          tickLabels: { fontSize: 8, fontFamily },
+          axisLabel: { fontSize: 7, padding: 40, fontFamily },
         }}
         dependentAxis
         tickCount={3}
