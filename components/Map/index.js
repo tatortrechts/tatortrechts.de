@@ -482,7 +482,12 @@ class Map extends React.Component {
       hoverInfo,
     } = this.state;
 
-    const { organizations, minMaxDate, initLocationOptions } = this.props;
+    const {
+      organizations,
+      minMaxDate,
+      initLocationOptions,
+      initAutocompleteOptions,
+    } = this.props;
 
     // FIXME
     let MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -499,7 +504,11 @@ class Map extends React.Component {
         <div className="columns">
           <div className="column">
             <SearchInput
-              options={autocompleteOptions}
+              options={
+                autocompleteOptions.length > 0
+                  ? autocompleteOptions
+                  : initAutocompleteOptions
+              }
               cbChange={this._onSearchChange}
               cbInputChange={this._onInputChange}
               value={this.state.q}

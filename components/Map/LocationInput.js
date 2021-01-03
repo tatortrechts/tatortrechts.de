@@ -3,12 +3,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import React from "react";
 import { extractShortAddress } from "../../utils/labels";
 
-export default function LocationInput({
-  options,
-  cbChange,
-  cbInputChange,
-  clear,
-}) {
+export default function LocationInput({ options, cbChange, cbInputChange }) {
   return (
     <div>
       <Autocomplete
