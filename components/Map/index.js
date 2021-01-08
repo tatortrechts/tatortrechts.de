@@ -387,17 +387,25 @@ class Map extends React.Component {
       srcEvent: { offsetX, offsetY },
     } = event;
 
+    const w = window.innerWidth;
+
     const features = this._mapRef.current.queryRenderedFeatures(event.point, {
       layers: [clusterLayer.id, unclusteredPointLayer.id],
     });
 
     const hoveredFeature = features && features[0];
+
+    // show toolip bottom if mouse is too much right (because it would overlap)
+
+    const x = offsetX / (w / 2) < 0.8 ? offsetX + 10 : offsetX - 100;
+    const y = offsetX / (w / 2) < 0.8 ? offsetY : offsetY + 20;
+
     this.setState({
       hoverInfo: hoveredFeature
         ? {
             feature: hoveredFeature,
-            x: offsetX + 10,
-            y: offsetY,
+            x,
+            y,
           }
         : null,
     });
