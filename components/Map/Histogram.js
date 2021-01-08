@@ -75,7 +75,12 @@ const Histogram = ({ data }) => {
   const transformedData = fillMissingData(data, timeInterval);
 
   return (
-    <VictoryChart height={150} scale={{ x: "time" }} domainPadding={{ x: 10 }}>
+    <VictoryChart
+      padding={{ left: 50, top: 30, bottom: 20, right: 10 }}
+      height={100}
+      scale={{ x: "time" }}
+      domainPadding={{ x: 10 }}
+    >
       <VictoryAxis
         tickCount={3}
         style={{ tickLabels: { fontSize: 8, fontFamily } }}

@@ -7,11 +7,13 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .navbar {
-  background-color: #fefefe;
+  margin-left: 50%;
+  width: 50%;
+  /* background-color: #fefefe; */
 }
 
 a {
@@ -31,16 +33,6 @@ a {
   height: 100vh;
 }
 
-@media only screen and (max-width: 768px) {
-  #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 40vh;
-  }
-}
-
 #sidebar {
   position: absolute;
   top: 0;
@@ -56,6 +48,11 @@ a {
 }
 
 @media only screen and (max-width: 768px) {
+  .navbar {
+    margin-left: 0%;
+    width: 100%;
+  }
+
   #sidebar {
     line-height: 1;
     padding: 0.5rem;
@@ -63,6 +60,14 @@ a {
     width: 100vw;
     height: 60vh;
     margin-top: 40vh;
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
   }
 }
 
