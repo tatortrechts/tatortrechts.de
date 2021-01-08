@@ -205,7 +205,6 @@ async function fetchContent(slug) {
   const url = API_LOCATION + `/content/api/v2/pages/?slug=${slug}`;
   const apiResponse = await ky.get(url).json();
   const id = apiResponse.items[0].id;
-  console.log(id);
 
   const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;
   const apiResponse2 = await ky.get(url2).json();

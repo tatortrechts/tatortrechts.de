@@ -83,8 +83,8 @@ const IncidentList = ({
                     </p>
                   </header>
                   <div className="card-content">
-                    <div class="columns">
-                      <div class="column">
+                    <div className="columns">
+                      <div className="column">
                         {(x.title || x.title_highlighted) && (
                           <p
                             className="content mb-3"
@@ -100,7 +100,7 @@ const IncidentList = ({
                           }}
                         ></p>
                       </div>
-                      <div class="column">
+                      <div className="column">
                         {x.sources.length === 1 && <span>Quelle: </span>}
                         {x.sources.length > 1 && <span>Quellen: </span>}
                         {x.sources.map((x) => (

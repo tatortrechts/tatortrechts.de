@@ -227,19 +227,19 @@ class Map extends React.Component {
     // [[lon, lat], [lon, lat]] as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
 
     if (bbox[0][0] < GERMAN_LNG[0]) {
-      console.log("too much left");
+      process.env.NODE_ENV === "development" && console.log("too much left");
       viewport.longitude = Math.max(longitude, viewport.longitude);
     }
     if (bbox[1][0] > GERMAN_LNG[1]) {
-      console.log("too much right");
+      process.env.NODE_ENV === "development" && console.log("too much right");
       viewport.longitude = Math.min(longitude, viewport.longitude);
     }
     if (bbox[0][1] < GERMAN_LAT[0]) {
-      console.log("too much down");
+      process.env.NODE_ENV === "development" && console.log("too much down");
       viewport.latitude = Math.max(latitude, viewport.latitude);
     }
     if (bbox[1][1] > GERMAN_LAT[1]) {
-      console.log("too much up");
+      process.env.NODE_ENV === "development" && console.log("too much up");
       viewport.latitude = Math.min(latitude, viewport.latitude);
     }
 
