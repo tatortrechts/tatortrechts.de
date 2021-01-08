@@ -9,7 +9,11 @@ const Source = ({ name, url, date }) => {
     <span>
       {name}
       {date && dayjs(date).format(", DD.MM.YYYY")}
-      {url.length > 0 && <a href="{url}">Link</a>}
+      {url.length > 0 && (
+        <a href={url} className="is-link">
+          Link
+        </a>
+      )}
     </span>
   );
 };
@@ -100,23 +104,47 @@ const IncidentList = ({
                           }}
                         ></p>
                       </div>
-                      <div className="column">
-                        {x.sources.length === 1 && <span>Quelle: </span>}
-                        {x.sources.length > 1 && <span>Quellen: </span>}
-                        {x.sources.map((x) => (
-                          <Source
-                            name={x.name}
-                            url={x.url}
-                            date={x.date}
-                            key={x.name + x.date + x.url}
-                          />
-                        ))}
-                        Chronik: {x.chronicle.name} (<a href={x.url}>Link</a>)
-                        Originale Ortsangaben aus der Chronik: {x.orig_city}{" "}
-                        {x.orig_county}
-                        {x.location.house_number} {x.location.street}{" "}
-                        {x.location.district} {x.location.city} (
-                        {x.location.county})
+                      <div className="column content is-size-7">
+                        <div className="has-background-info-light p-3">
+                          {x.location.house_number && (
+                            <div>Hausnummer: {x.location.house_number}</div>
+                          )}
+                          {x.location.street && (
+                            <div>Straße: {x.location.street}</div>
+                          )}
+                          {x.location.city && <div>Ort: {x.location.city}</div>}
+                          {x.location.district && (
+                            <div>Ortsteil: {x.location.district}</div>
+                          )}
+                          {x.location.county && (
+                            <div>Landkreis: {x.location.county}</div>
+                          )}
+                          <div>
+                            {x.sources.length === 1 && (
+                              <span>Quelle (aus Chronik): </span>
+                            )}
+                            {x.sources.length > 1 && (
+                              <span>Quellen (aus Chronik): </span>
+                            )}
+                            {x.sources.map((x) => (
+                              <Source
+                                name={x.name}
+                                url={x.url}
+                                date={x.date}
+                                key={x.name + x.date + x.url}
+                              />
+                            ))}
+                          </div>
+
+                          <div>
+                            Chronik: {x.chronicle.name} (
+                            <a href={x.url}>Link</a>)
+                          </div>
+                          <br></br>
+                          <div>
+                            <div>Ortsangaben aus Chronik: {x.orig_city}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

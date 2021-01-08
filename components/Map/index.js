@@ -222,6 +222,9 @@ class Map extends React.Component {
     const projection = new WebMercatorViewport(this.state.viewport);
     const bbox = projection.getBounds();
 
+    bbox[0] = bbox[0].map((x) => x.toFixed(5));
+    bbox[1] = bbox[1].map((x) => x.toFixed(5));
+
     // http://visgl.github.io/react-map-gl/docs/api-reference/web-mercator-viewport#getboundsoptions
     // Returns:
     // [[lon, lat], [lon, lat]] as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
