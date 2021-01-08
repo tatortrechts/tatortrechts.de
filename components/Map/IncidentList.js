@@ -35,27 +35,29 @@ const IncidentList = ({
     <div id="sidebar-results-outer">
       <div id="sidebar-results" ref={containerRef}>
         {sideBarFilter}
-        {minMaxDate.total === count && (
-          <div className="is-size-7">
-            Für den Zeitraum vom{" "}
-            <b>{dayjs(minMaxDate.minDate).format("DD.MM.YYYY")}</b> bis{" "}
-            <b>{dayjs(minMaxDate.maxDate).format("DD.MM.YYYY")}</b> haben{" "}
-            <b>{numOrganizations}</b> Organisationen <b>{count}</b> rechte Taten
-            registriert.
-          </div>
-        )}
-        {minMaxDate.total !== count && (
-          <div className="is-size-7">
-            Auf deine Auwahl entfallen <b>{count}</b> von {minMaxDate.total}{" "}
-            registrierte Taten. <a href="#">Auswahl zurücksetzen.</a>
-          </div>
-        )}
-        {count === 1 && (
-          <div>
-            Am <b>xx.xx.xx</b> gab es <b>eine</b> Tat.
-          </div>
-        )}
-        <div>{histogram && <Histogram data={histogram} />}</div>
+        <div className="box tor-histogram">
+          {minMaxDate.total === count && (
+            <div className="is-size-7">
+              Für den Zeitraum vom{" "}
+              <b>{dayjs(minMaxDate.minDate).format("DD.MM.YYYY")}</b> bis{" "}
+              <b>{dayjs(minMaxDate.maxDate).format("DD.MM.YYYY")}</b> haben{" "}
+              <b>{numOrganizations}</b> Organisationen <b>{count}</b> rechte
+              Taten registriert.
+            </div>
+          )}
+          {minMaxDate.total !== count && (
+            <div className="is-size-7">
+              Auf deine Auwahl entfallen <b>{count}</b> von {minMaxDate.total}{" "}
+              registrierte Taten. <a href="#">Auswahl zurücksetzen.</a>
+            </div>
+          )}
+          {count === 1 && (
+            <div>
+              Am <b>xx.xx.xx</b> gab es <b>eine</b> Tat.
+            </div>
+          )}
+          <div>{histogram && <Histogram data={histogram} />}</div>
+        </div>
         <InfiniteScroll
           useWindow={false}
           getScrollParent={() => containerRef.current}

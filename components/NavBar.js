@@ -1,7 +1,6 @@
 import { withRouter } from "next/router";
 import React from "react";
 
-
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +14,7 @@ class NavBar extends React.Component {
     const { router } = this.props;
 
     return (
-      <div className="" style={{marginLeft: "50%", width: '50%'}}>
+      <div className="" style={{ marginLeft: "50%", width: "50%" }}>
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
             <a className="navbar-item" href="/">
@@ -51,7 +50,7 @@ class NavBar extends React.Component {
           >
             <div className="navbar-start">
               {[
-                ["/chronik", "Chronik"],
+                ["/chronik", "Taten"],
                 ["/hintergrund", "Hintergrund"],
                 ["/stories", "Stories"],
               ].map((x) => {

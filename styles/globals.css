@@ -7,7 +7,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .navbar {
@@ -68,9 +68,12 @@ a {
 
 #sidebar-filter {
   flex-grow: 0;
-  border-bottom: 0.1rem solid lightgray;
+  /* border-bottom: 0.1rem solid lightgray; */
   padding-bottom: 2rem;
   margin-bottom: 2rem;
+  /* padding: 2rem; */
+  /* background-color: #f1f1f1; */
+  /* border-radius: 0.1rem; */
 }
 
 #sidebar-results-outer {
@@ -120,4 +123,12 @@ a {
 
 .tor-date-input .MuiFormControl-root.MuiTextField-root {
   max-width: 9rem;
+}
+
+.tor-histogram {
+}
+
+.navbar {
+  box-shadow: 0 0.75em 1.5em -0.2em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
 }

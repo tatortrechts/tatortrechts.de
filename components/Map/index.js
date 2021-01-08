@@ -496,7 +496,7 @@ class Map extends React.Component {
     }
 
     const sideBarFilter = (
-      <div id="sidebar-filter">
+      <div className="box" id="sidebar-filter">
         <p className="is-size-7">
           Durchsuch die Taten nach Schlagworten wie z. B. "Feuer" oder "Schlag",
           oder wähl einen Ort aus.
