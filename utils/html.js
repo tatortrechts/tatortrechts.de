@@ -43,7 +43,7 @@ async function fixHtml(html) {
   return $.html();
 }
 
-async function transformToHtml(content) {
+async function transformToHtml(content, layout = null) {
   const contentList = await Promise.all(
     content.map(async (x) => {
       if (x.type == "heading") {
@@ -61,7 +61,6 @@ async function transformToHtml(content) {
       }
 
       if (x.type == "quote") {
-        console.log(x);
         const fixedHtml = await fixHtml(x.value.quote);
         let optauthor = "";
         if (x.value.author)
@@ -80,11 +79,24 @@ async function transformToHtml(content) {
     })
   );
 
-  return (
-    `<section class="section"><div class="container">` +
-    contentList.join("") +
-    `</div></section>`
-  );
+  if (layout === "FC") {
+    return `<section class="section"><div class="container">
+      ${contentList.join("")}
+      </div></section>`;
+  }
+
+  if (layout === "CM") {
+    return `
+    <section class="section">
+    <div class="container">
+    <div class="columns is-centered">
+    <div class="column is-7">
+    ${contentList.join("")}
+    </div>
+    </div>
+    </div>
+    </section>`;
+  }
 }
 
 export { transformToHtml };

@@ -167,7 +167,8 @@ async function fetchContent(slug) {
 
   const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;
   const apiResponse2 = await ky.get(url2).json();
-  apiResponse2.body = await transformToHtml(apiResponse2.body);
+  const { layout, body } = apiResponse2;
+  apiResponse2.body = await transformToHtml(body, layout);
   return apiResponse2;
 }
 
