@@ -125,7 +125,7 @@ class Map extends React.Component {
           .filter((x) => !this.state.organizationsSelected.includes(x));
 
   _stateToUrl = () => {
-    let url = "/chronik";
+    let url = "/karte";
     const params = [];
 
     [

@@ -62,9 +62,9 @@ class NavBar extends React.Component {
           </a> */}
           <div className="navbar-start">
             {[
-              ["/chronik", "Karte"],
-              ["/stories", "Blog"],
-              ["/hintergrund", "Über uns"],
+              ["/karte", "Karte"],
+              ["/blog", "Blog"],
+              ["/ueber", "Über uns"],
               ["/kontakt", "Kontakt"],
             ].map((x) => {
               return (
