@@ -180,7 +180,7 @@ async function transformToHtml(content) {
       }
 
       if (x.type == "paragraph") {
-        return x.value;
+        return `<h1 class="content">${x.value}</h1>`;
       }
 
       if (x.type == "two_columns") {
