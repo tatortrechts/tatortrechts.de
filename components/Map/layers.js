@@ -2,7 +2,11 @@ import { zip } from "../../utils/lists";
 
 const stepsCount = [100, 500, 1000];
 const stepsSize = [12, 15, 19, 23];
-const stepsColor = ["#bdc9e1", "#74a9cf", "#2b8cbe", "#045a8d"];
+// const stepsColor = ["#bdc9e1", "#74a9cf", "#2b8cbe", "#045a8d"];
+// const stepsColor = ["red", "red", "red", "red"];
+// const stepsColor = ["grey", "grey", "grey", "grey"];
+// const stepsColor = [#ef3b2c", "#cb181d", "#a50f15", "#67000d"];
+const stepsColor = ["#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15"];
 
 export const clusterLayer = {
   // beforeId: 'settlement-minor-label',

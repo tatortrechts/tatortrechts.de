@@ -22,9 +22,9 @@ class NavBar extends React.Component {
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
             <img
-              src="/rg_logo.svg"
-              width="200"
-              height="28"
+              src="/tor_logo2.jpg"
+              // width="200"
+              // height="28"
               alt="RECHTEGEWALT.INFO"
             />
           </a>
@@ -51,11 +51,21 @@ class NavBar extends React.Component {
           id="tor-navbar"
           className={isActive ? "navbar-menu is-active" : "navbar-menu"}
         >
+          {/* <a className="navbar-item" href="/">
+            <img
+              src="tor_logo2.jpg"
+              // src="/rg_logo.svg"
+              // width="200"
+              // height="28"
+              alt="RECHTEGEWALT.INFO"
+            />
+          </a> */}
           <div className="navbar-start">
             {[
-              ["/chronik", "Taten"],
-              ["/hintergrund", "Hintergrund"],
-              ["/stories", "Stories"],
+              ["/chronik", "Karte"],
+              ["/stories", "Blog"],
+              ["/hintergrund", "Über das Projekt"],
+              ["/kontakt", "Kontakt"],
             ].map((x) => {
               return (
                 <a
@@ -71,7 +81,7 @@ class NavBar extends React.Component {
                 </a>
               );
             })}
-            <div className="navbar-item has-dropdown is-hoverable">
+            {/* <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link">Mehr</a>
 
               <div className="navbar-dropdown">
@@ -81,7 +91,7 @@ class NavBar extends React.Component {
                 <a className="navbar-item">Impressum</a>
                 <a className="navbar-item">Datenschutzerklärung</a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </nav>

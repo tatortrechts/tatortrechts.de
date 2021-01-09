@@ -105,7 +105,10 @@ const IncidentList = ({
                         ></p>
                       </div>
                       <div className="column content is-size-7">
-                        <div className="has-background-info-light p-3">
+                        <div
+                          className="p-3"
+                          style={{ backgroundColor: "#fee0d2" }}
+                        >
                           {x.location.house_number && (
                             <div>Hausnummer: {x.location.house_number}</div>
                           )}

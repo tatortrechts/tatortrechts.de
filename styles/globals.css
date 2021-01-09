@@ -11,9 +11,22 @@ body {
 }
 
 .navbar {
-  margin-left: 50%;
-  width: 50%;
+  /* width: auto; */
+  /* display: inline-flexbox; */
+  /* margin-right: auto; */
+  margin-left: 50.5%;
+  width: 30rem;
+  /* display: inline-block; */
   /* background-color: #fefefe; */
+}
+
+/* .navbar a {
+  color: inherit;
+} */
+
+a {
+  /* color: #67000d; */
+  color: red;
 }
 
 /* a {
@@ -40,7 +53,7 @@ body {
   height: 100vh;
   width: 50vw;
 
-  padding: 3rem 1rem 1rem 0;
+  padding: 0rem 1rem 1rem 0;
   outline: none;
 
   display: flex;
@@ -73,6 +86,7 @@ body {
 }
 
 #sidebar-filter {
+  margin-top: 3rem;
   flex-grow: 0;
   /* border-bottom: 0.1rem solid lightgray; */
   padding-bottom: 2rem;

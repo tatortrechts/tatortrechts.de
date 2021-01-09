@@ -99,7 +99,7 @@ const Histogram = ({ data }) => {
       <VictoryBar
         barRatio={0.8}
         style={{
-          data: { fill: "#045a8d" },
+          data: { fill: "#fc9272" },
         }}
         data={transformedData}
         labels={({ datum }) => genLabelText(datum.x, datum.y)}
