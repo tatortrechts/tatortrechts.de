@@ -64,7 +64,7 @@ class NavBar extends React.Component {
             {[
               ["/chronik", "Karte"],
               ["/stories", "Blog"],
-              ["/hintergrund", "Über das Projekt"],
+              ["/hintergrund", "Über uns"],
               ["/kontakt", "Kontakt"],
             ].map((x) => {
               return (
