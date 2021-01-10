@@ -27,7 +27,6 @@ async function fixHtml(html) {
     $("embed").map(async function () {
       const imageId = $(this).attr("id");
       const className = $(this).attr("format");
-      console.log(className);
       let fixedClass = null;
       //   if (className === "left") fixedClass = "is-pulled-left";
       //   if (className === "right") fixedClass = "is-pulled-right";
@@ -78,7 +77,7 @@ async function transformToHtml(content, layout = null) {
       if (x.type == "centered_column") {
         const column = await transformToHtml(x.value.column);
         const columnSize = x.value.column_size;
-        return `<div class="columns is-desktop is-centered"><div class="column is-${columnSize}">${column}</div></div>`;
+        return `<div class="columns is-centered"><div class="column is-${columnSize}">${column}</div></div>`;
       }
 
       console.error("problem with " + x);
