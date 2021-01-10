@@ -40,7 +40,7 @@ async function fixHtml(html) {
     })
   );
 
-  return $.html();
+  return $("body").html();
 }
 
 async function transformToHtml(content, layout = null) {
@@ -75,6 +75,12 @@ async function transformToHtml(content, layout = null) {
         return `<div class="columns is-desktop"><div class="column">${left}</div><div class="column">${right}</div></div>`;
       }
 
+      if (x.type == "centered_column") {
+        const column = await transformToHtml(x.value.column);
+        const columnSize = x.value.column_size;
+        return `<div class="columns is-desktop is-centered"><div class="column is-${columnSize}">${column}</div></div>`;
+      }
+
       console.error("problem with " + x);
     })
   );
@@ -97,6 +103,9 @@ async function transformToHtml(content, layout = null) {
     </div>
     </section>`;
   }
+
+  //   for inner column content
+  return contentList.join("");
 }
 
 export { transformToHtml };
