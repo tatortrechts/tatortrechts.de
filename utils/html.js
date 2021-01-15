@@ -6,11 +6,15 @@ async function imageToHtml(imgId, className = null) {
   const url = API_LOCATION + `/content/api/v2/images/${imgId}/`;
   const apiResponse = await ky.get(url).json();
   const src = API_LOCATION + apiResponse.meta.download_url;
-  const { title } = apiResponse;
-  const { caption } = apiResponse.meta;
+  const {
+    title,
+    meta: { caption },
+  } = apiResponse;
+
+  if (className === null) className = "";
   //   if (className === null) return `<img src="${src}" alt="${title}" />`;
   return `<div class="level">
-  <div class="level-item has-text-centered">
+  <div class="level-item has-text-centered" style="max-width: 100%">
     <figure class='image'>
     <img src="${src}" alt="${title}" class="${className}" />
     <figcaption>${caption}</figcaption>
@@ -68,7 +72,7 @@ async function renderListChildPages(parentPageId) {
 function renderArticleHeader(article) {
   const { title, teaser, date, image_url, caption } = article;
   return `<div class>
-    <figure class="image">
+    <figure class="image has-text-centered">
       <img src="${image_url}" alt="${title}">
       <figcaption>${caption}</figcaption>
     </figure>
