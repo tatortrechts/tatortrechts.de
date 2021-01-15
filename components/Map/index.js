@@ -51,6 +51,7 @@ class Map extends React.Component {
         bearing: 0,
         pitch: 0,
       },
+      lastViewport: null,
       bbox:
         router.query.bbox == null
           ? null
@@ -211,18 +212,19 @@ class Map extends React.Component {
   };
 
   _viewPointCheck = () => {
-    const { viewport } = this.state;
+    const { viewport, lastViewport } = this.state;
 
-    if (viewport == null) return;
+    if (viewport == lastViewport) return;
 
-    const { longitude, latitude } = viewport;
+    // const { longitude, latitude } = viewport;
+
     const projection = new WebMercatorViewport(viewport);
     const bbox = projection.getBounds();
 
     bbox[0] = bbox[0].map((x) => x.toFixed(5));
     bbox[1] = bbox[1].map((x) => x.toFixed(5));
 
-    this._setStateAndReload({ bbox });
+    this._setStateAndReload({ bbox, lastViewport: viewport });
 
     // http://visgl.github.io/react-map-gl/docs/api-reference/web-mercator-viewport#getboundsoptions
     // Returns:
