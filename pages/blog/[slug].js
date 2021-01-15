@@ -4,15 +4,24 @@ import NavBar from "../../components/NavBar";
 import { fetchContent } from "../../utils/networking";
 
 function Post({ content }) {
-  const title = content.meta.seo_title;
-  const description = content.meta.search_description;
+  const {
+    title,
+    article_teaser: description,
+    article_image_thumbnail: { url },
+  } = content;
 
   return (
     <>
       <Head>
         <title>{title}</title>
+        <meta property="og:title" content={title}></meta>
         <meta name="description" content={description} />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          property="og:image"
+          content={"https://api.tatortrechts.de" + url}
+          key="preview-image"
+        />
+        <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
       <div dangerouslySetInnerHTML={{ __html: content.body }} />

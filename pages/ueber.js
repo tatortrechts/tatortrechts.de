@@ -3,17 +3,21 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { fetchContent } from "../utils/networking";
 
-
 function Hintergrund({ content }) {
-  const title = content.meta.seo_title;
-  const description = content.meta.search_description;
+  const { seo_title: title, search_description: description } = content.meta;
 
   return (
     <>
       <Head>
         <title>{title}</title>
+        <meta property="og:title" content={title}></meta>
         <meta name="description" content={description} />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          property="og:image"
+          content="http://euro-travel-example.com/thumbnail.jpg"
+          key="preview-image"
+        />
+        <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
       <div dangerouslySetInnerHTML={{ __html: content.body }} />
