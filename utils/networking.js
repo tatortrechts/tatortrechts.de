@@ -167,8 +167,28 @@ async function fetchContent(slug) {
 
   const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;
   const apiResponse2 = await ky.get(url2).json();
-  const { layout, body } = apiResponse2;
-  apiResponse2.body = await transformToHtml(body, layout);
+  const {
+    layout,
+    body,
+    article_date,
+    article_teaser,
+    title,
+    article_image_caption,
+    meta: { article_image },
+  } = apiResponse2;
+
+  let article = null;
+
+  if (article_image != null) {
+    article = {};
+    article.image_url = API_LOCATION + article_image.meta.download_url;
+    article.title = title;
+    article.teaser = article_teaser;
+    article.date = article_date;
+    article.caption = article_image_caption;
+  }
+
+  apiResponse2.body = await transformToHtml(body, layout, article);
   return apiResponse2;
 }
 

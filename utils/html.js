@@ -65,7 +65,21 @@ async function renderListChildPages(parentPageId) {
   return `<div class="columns is-multiline">${posts.join("")}</div>`;
 }
 
-async function transformToHtml(content, layout = null) {
+function renderArticleHeader(article) {
+  const { title, teaser, date, image_url, caption } = article;
+  return `<div class>
+    <figure class="image">
+      <img src="${image_url}" alt="${title}">
+      <figcaption>${caption}</figcaption>
+    </figure>
+    <h1 class="title is-1 mt-3">${title}</h1>
+    <h2 class="subtitle is-5">${teaser}</h2>
+    <p>${date}</p>
+    <hr>
+  </div>`;
+}
+
+async function transformToHtml(content, layout = null, article = null) {
   const contentList = await Promise.all(
     content.map(async (x) => {
       if (x.type === "heading") {
@@ -114,9 +128,16 @@ async function transformToHtml(content, layout = null) {
     })
   );
 
+  let allContent = [];
+
+  if (article != null) {
+    allContent.push(renderArticleHeader(article));
+  }
+  allContent = allContent.concat(contentList);
+
   if (layout === "FC") {
     return `<section class="section"><div class="container">
-      ${contentList.join("")}
+      ${allContent.join("")}
       </div></section>`;
   }
 
@@ -126,7 +147,7 @@ async function transformToHtml(content, layout = null) {
     <div class="container">
     <div class="columns is-centered">
     <div class="column is-7">
-    ${contentList.join("")}
+    ${allContent.join("")}
     </div>
     </div>
     </div>
@@ -134,7 +155,7 @@ async function transformToHtml(content, layout = null) {
   }
 
   // for inner column content, this is important! Do not remove!
-  return contentList.join("");
+  return allContent.join("");
 }
 
 export { transformToHtml };
