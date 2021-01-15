@@ -1,6 +1,9 @@
 import cheerio from "cheerio";
+import * as dayjs from "dayjs";
 import ky from "ky-universal";
 import { API_LOCATION, fetchChildPages } from "./networking";
+
+dayjs.locale("de");
 
 async function imageToHtml(imgId, className = null) {
   const url = API_LOCATION + `/content/api/v2/images/${imgId}/`;
@@ -57,7 +60,7 @@ async function renderListChildPages(parentPageId) {
       </figure>
     </div>
     <div class="card-content">
-    <p class="">${date}</p>
+    <p class="">${dayjs(date).format("D. MMMM YYYY")}</p>
       <p class="title is-3">${title}</p>
     </div>
     <div class="card-content">
@@ -78,7 +81,7 @@ function renderArticleHeader(article) {
     </figure>
     <h1 class="title is-1 mt-3">${title}</h1>
     <h2 class="subtitle is-5">${teaser}</h2>
-    <p>${date}</p>
+    <p>${dayjs(date).format("D. MMMM YYYY")}</p>
     <hr>
   </div>`;
 }
