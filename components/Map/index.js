@@ -3,6 +3,7 @@ import { withRouter } from "next/router";
 import React from "react";
 import MapGL, {
   CanvasOverlay,
+  FlyToInterpolator,
   Layer,
   Source,
   WebMercatorViewport,
@@ -33,6 +34,15 @@ const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
 const CENTER_GERMANY = [51.1657, 10.4515];
 
+const initialViewport = {
+  latitude: CENTER_GERMANY[0],
+  longitude: CENTER_GERMANY[1],
+  zoom: 6,
+  minZoom: 5,
+  bearing: 0,
+  pitch: 0,
+};
+
 // TODO: re-structure in more components
 
 class Map extends React.Component {
@@ -42,15 +52,7 @@ class Map extends React.Component {
     const { router } = this.props;
 
     this.state = {
-      mapInitalized: false,
-      viewport: {
-        latitude: CENTER_GERMANY[0],
-        longitude: CENTER_GERMANY[1],
-        zoom: 6,
-        minZoom: 5,
-        bearing: 0,
-        pitch: 0,
-      },
+      viewport: initialViewport,
       lastViewport: null,
       bbox:
         router.query.bbox == null
@@ -118,6 +120,28 @@ class Map extends React.Component {
       });
     }
   }
+
+  _reset = () => {
+    const newViewport = {
+      ...initialViewport,
+      ...{
+        transitionDuration: 5000,
+        transitionInterpolator: new FlyToInterpolator(),
+      },
+    };
+
+    this._setStateAndReload({
+      viewport: newViewport,
+      lastViewport: null,
+      bbox: null,
+      q: null,
+      startDate: null,
+      endDate: null,
+      organizationsSelected: [],
+      locationId: null,
+      hoverInfo: null,
+    });
+  };
 
   _getOrganizationIds = () =>
     this.state.organizationsSelected.length === 0
@@ -481,7 +505,7 @@ class Map extends React.Component {
             <thead>
               <tr>
                 <th>Taten</th>
-                <th>Ort</th>
+                <th>Orte</th>
               </tr>
             </thead>
             <tbody>
@@ -608,7 +632,7 @@ class Map extends React.Component {
             // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
             // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
             onViewportChange={this._onViewportChange}
-            onTransitionEnd={this._viewPointCheck}
+            // onTransitionEnd={this._viewPointCheck}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
             onClick={this._onClick}
@@ -652,6 +676,7 @@ class Map extends React.Component {
             numOrganizations={organizations.length}
             loadMore={this._loadMoreIncidents}
             setHighlight={(x) => this.setState({ highlightPointMap: x })}
+            reset={this._reset}
           />
         </div>
       </>

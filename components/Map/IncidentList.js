@@ -28,6 +28,7 @@ const IncidentList = ({
   setHighlight,
   minMaxDate,
   numOrganizations,
+  reset,
 }) => {
   const containerRef = useRef(null);
 
@@ -52,7 +53,8 @@ const IncidentList = ({
           {minMaxDate.total !== count && (
             <div className="is-size-7">
               Auf deine Auwahl entfallen <b>{count}</b> von {minMaxDate.total}{" "}
-              registrierte Taten. <a href="#">Auswahl zurücksetzen.</a>
+              registrierte Taten.{" "}
+              <a onClick={() => reset()}>Auswahl zurücksetzen.</a>
             </div>
           )}
           {count === 1 && (
