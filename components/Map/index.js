@@ -94,6 +94,7 @@ class Map extends React.Component {
 
   async componentDidMount() {
     this._loadAggregatedIncidents();
+    setInterval(this._viewPointCheck, 1000);
   }
 
   async _loadAggregatedIncidents() {
@@ -209,49 +210,68 @@ class Map extends React.Component {
     });
   };
 
-  _delayFetch = () => {
-    let { incidentsTimeoutFetch } = this.state;
-    incidentsTimeoutFetch && clearTimeout(incidentsTimeoutFetch);
+  _viewPointCheck = () => {
+    const { viewport } = this.state;
 
-    incidentsTimeoutFetch = setTimeout(() => this._setStateAndReload({}), 2000);
-    this.setState({ incidentsTimeoutFetch });
-  };
+    if (viewport == null) return;
 
-  _onViewportChange = (viewport) => {
-    const { longitude, latitude } = this.state.viewport;
-    const projection = new WebMercatorViewport(this.state.viewport);
+    const { longitude, latitude } = viewport;
+    const projection = new WebMercatorViewport(viewport);
     const bbox = projection.getBounds();
 
     bbox[0] = bbox[0].map((x) => x.toFixed(5));
     bbox[1] = bbox[1].map((x) => x.toFixed(5));
 
+    this._setStateAndReload({ bbox });
+
     // http://visgl.github.io/react-map-gl/docs/api-reference/web-mercator-viewport#getboundsoptions
     // Returns:
     // [[lon, lat], [lon, lat]] as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
 
-    if (bbox[0][0] < GERMAN_LNG[0]) {
-      process.env.NODE_ENV === "development" && console.log("too much left");
-      viewport.longitude = Math.max(longitude, viewport.longitude);
-    }
-    if (bbox[1][0] > GERMAN_LNG[1]) {
-      process.env.NODE_ENV === "development" && console.log("too much right");
-      viewport.longitude = Math.min(longitude, viewport.longitude);
-    }
-    if (bbox[0][1] < GERMAN_LAT[0]) {
-      process.env.NODE_ENV === "development" && console.log("too much down");
-      viewport.latitude = Math.max(latitude, viewport.latitude);
-    }
-    if (bbox[1][1] > GERMAN_LAT[1]) {
-      process.env.NODE_ENV === "development" && console.log("too much up");
-      viewport.latitude = Math.min(latitude, viewport.latitude);
-    }
+    // let allCool = true;
+    // if (bbox[0][0] < GERMAN_LNG[0]) {
+    //   process.env.NODE_ENV === "development" && console.log("too much left");
+    //   allCool = false;
+    //   // viewport.longitude = Math.max(longitude, viewport.longitude);
+    // }
+    // if (bbox[1][0] > GERMAN_LNG[1]) {
+    //   process.env.NODE_ENV === "development" && console.log("too much right");
+    //   allCool = false;
+    //   // viewport.longitude = Math.min(longitude, viewport.longitude);
+    // }
+    // if (bbox[0][1] < GERMAN_LAT[0]) {
+    //   process.env.NODE_ENV === "development" && console.log("too much down");
+    //   allCool = false;
+    //   // viewport.latitude = Math.max(latitude, viewport.latitude);
+    // }
+    // if (bbox[1][1] > GERMAN_LAT[1]) {
+    //   process.env.NODE_ENV === "development" && console.log("too much up");
+    //   allCool = false;
+    //   // viewport.latitude = Math.min(latitude, viewport.latitude);
+    // }
 
-    if (this.state.mapInitalized) {
-      this.setState({ viewport, bbox }, this._delayFetch);
-    } else {
-      // initial bbox is strange
-      this.setState({ viewport, mapInitalized: true }, this._delayFetch);
-    }
+    // if (allCool) {
+    //   this._setStateAndReload({ bbox, goodViewport: viewport });
+    // } else {
+    //   const projection2 = new WebMercatorViewport(this.state.goodViewport);
+    //   const bbox2 = projection2.getBounds();
+
+    //   this._setStateAndReload({
+    //     viewport: this.state.goodViewport,
+    //     bbox: bbox2,
+    //   });
+    // }
+
+    // if (this.state.mapInitalized) {
+    //   this._setStateAndReload({ viewport, bbox });
+    // } else {
+    //   // initial bbox is strange
+    //   this._setStateAndReload({ viewport, mapInitalized: true });
+    // }
+  };
+
+  _onViewportChange = (viewport) => {
+    this.setState({ viewport });
   };
 
   _onSearchChange = (_, value) => {
@@ -352,36 +372,45 @@ class Map extends React.Component {
 
   _onClick = (event) => {
     this._clearHover();
-    const mapboxSource = this._sourceRef.current.getSource();
     const feature = event.features[0];
-
     if (feature == null) return;
 
-    if ("cluster_id" in feature.properties) {
-      const clusterId = feature.properties.cluster_id;
+    // removing this for now, because the behavior was strange
 
-      mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
-        if (err) {
-          return;
-        }
+    // if ("cluster_id" in feature.properties) {
+    // const mapboxSource = this._sourceRef.current.getSource();
+    //   const clusterId = feature.properties.cluster_id;
 
-        this._onViewportChange({
-          ...this.state.viewport,
-          longitude: feature.geometry.coordinates[0],
-          latitude: feature.geometry.coordinates[1],
-          zoom,
-          transitionDuration: 500,
-        });
-      });
-    } else {
-      this._onViewportChange({
-        ...this.state.viewport,
-        longitude: feature.geometry.coordinates[0],
-        latitude: feature.geometry.coordinates[1],
-        zoom: this.state.viewport.zoom + 1,
-        transitionDuration: 500,
-      });
-    }
+    //   mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+    //     if (err) {
+    //       return;
+    //     }
+
+    //     this._onViewportChange({
+    //       ...this.state.viewport,
+    //       longitude: feature.geometry.coordinates[0],
+    //       latitude: feature.geometry.coordinates[1],
+    //       zoom,
+    //       transitionDuration: 500,
+    //     });
+    //   });
+    // } else {
+    //   this._onViewportChange({
+    //     ...this.state.viewport,
+    //     longitude: feature.geometry.coordinates[0],
+    //     latitude: feature.geometry.coordinates[1],
+    //     zoom: this.state.viewport.zoom + 1,
+    //     transitionDuration: 500,
+    //   });
+    // }
+
+    this._onViewportChange({
+      ...this.state.viewport,
+      longitude: feature.geometry.coordinates[0],
+      latitude: feature.geometry.coordinates[1],
+      zoom: this.state.viewport.zoom + 1,
+      transitionDuration: 1000,
+    });
   };
 
   // don't use onHover for perf reasons
@@ -577,6 +606,7 @@ class Map extends React.Component {
             // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
             // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
             onViewportChange={this._onViewportChange}
+            onTransitionEnd={this._viewPointCheck}
             mapboxApiAccessToken={MAPBOX_TOKEN}
             interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
             onClick={this._onClick}
