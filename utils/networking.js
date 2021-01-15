@@ -172,6 +172,28 @@ async function fetchContent(slug) {
   return apiResponse2;
 }
 
+async function fetchChildPages(pageId) {
+  const url = API_LOCATION + `/content/api/v2/pages/?child_of=${pageId}`;
+  const apiResponse = await ky.get(url).json();
+  const items = apiResponse.items.map((x) => {
+    const {
+      meta: { slug },
+      title,
+      article_date: date,
+      article_teaser: teaser,
+      article_image_thumbnail: { url: thumbnail_url },
+    } = x;
+    return {
+      url: "/blog/" + slug,
+      teaser,
+      title,
+      date,
+      thumbnail_url: API_LOCATION + thumbnail_url,
+    };
+  });
+  return items;
+}
+
 async function fetchMinMaxDate() {
   const url = API_LOCATION + "/min_max_date/";
 
@@ -197,5 +219,6 @@ export {
   fetchOrganizations,
   fetchLocations,
   fetchContent,
+  fetchChildPages,
   fetchMinMaxDate,
 };

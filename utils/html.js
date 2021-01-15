@@ -1,6 +1,6 @@
 import cheerio from "cheerio";
 import ky from "ky-universal";
-import { API_LOCATION } from "./networking";
+import { API_LOCATION, fetchChildPages } from "./networking";
 
 async function imageToHtml(imgId, className = null) {
   const url = API_LOCATION + `/content/api/v2/images/${imgId}/`;
@@ -19,6 +19,7 @@ async function imageToHtml(imgId, className = null) {
 </div>`;
 }
 
+// the HTML provided by wagtail is garbage, need to replace the images
 async function fixHtml(html) {
   const $ = cheerio.load(html);
 
@@ -42,45 +43,74 @@ async function fixHtml(html) {
   return $("body").html();
 }
 
+async function renderListChildPages(parentPageId) {
+  const items = await fetchChildPages(parentPageId);
+  const posts = items.map(({ title, url, thumbnail_url, date, teaser }) => {
+    return `<div class="column is-6"><a href="${url}"><div class="card">
+    <div class="card-image">
+      <figure class="image is-2by1">
+        <img src="${thumbnail_url}" alt="${title}">
+      </figure>
+    </div>
+    <div class="card-content">
+    <p class="">${date}</p>
+      <p class="title is-3">${title}</p>
+    </div>
+    <div class="card-content">
+    ${teaser}
+    </div>
+  </div></a></div>`;
+  });
+  // const tposts = [posts[0], posts[0], posts[0], posts[0], posts[0], posts[0]];
+  return `<div class="columns is-multiline">${posts.join("")}</div>`;
+}
+
 async function transformToHtml(content, layout = null) {
   const contentList = await Promise.all(
     content.map(async (x) => {
-      if (x.type == "heading") {
+      if (x.type === "heading") {
         return `<h1 class="title">${x.value}</h1>`;
       }
 
-      if (x.type == "image") {
-        const html = await imageToHtml(x.value);
-        return html;
+      if (x.type === "image") {
+        return imageToHtml(x.value);
       }
 
-      if (x.type == "paragraph") {
+      if (x.type === "paragraph") {
         const fixedHtml = await fixHtml(x.value);
         return `<div class="content">${fixedHtml}</div>`;
       }
 
-      if (x.type == "quote") {
+      if (x.type === "raw_html") {
+        return x.value;
+      }
+
+      if (x.type === "list_child_pages") {
+        return renderListChildPages(x.value);
+      }
+
+      if (x.type === "quote") {
         const fixedHtml = await fixHtml(x.value.quote);
         let optauthor = "";
         if (x.value.author)
-          optauthor = `<p class="has-text-right">– ${x.value.author}</p>`;
+          optauthor = `<p class="has-text-right">${x.value.author}</p>`;
         return `<div class="content"><blockquote>${fixedHtml}</blockquote>${optauthor}</div>`;
       }
 
-      if (x.type == "two_columns") {
+      if (x.type === "two_columns") {
         const left = await transformToHtml(x.value.left_column);
         const right = await transformToHtml(x.value.right_column);
 
         return `<div class="columns is-desktop"><div class="column">${left}</div><div class="column">${right}</div></div>`;
       }
 
-      if (x.type == "centered_column") {
+      if (x.type === "centered_column") {
         const column = await transformToHtml(x.value.column);
         const columnSize = x.value.column_size;
         return `<div class="columns is-centered"><div class="column is-${columnSize}">${column}</div></div>`;
       }
 
-      console.error("problem with " + x);
+      console.error("problem with " + x.type);
     })
   );
 
@@ -103,7 +133,7 @@ async function transformToHtml(content, layout = null) {
     </section>`;
   }
 
-  //   for inner column content
+  // for inner column content, this is important! Do not remove!
   return contentList.join("");
 }
 

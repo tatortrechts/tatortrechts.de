@@ -50,4 +50,4 @@ NEXT_TELEMETRY_DISABLED:   1
 
 ## License
 
-GPL v3
+Affero General Public License 3.0
