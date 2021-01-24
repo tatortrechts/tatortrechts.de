@@ -1,6 +1,12 @@
 import * as dayjs from "dayjs";
 import React from "react";
-import { VictoryAxis, VictoryBar, VictoryChart, VictoryTooltip } from "victory";
+import {
+  Bar,
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryTooltip,
+} from "victory";
 
 const fontFamily = `BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif`;
 
@@ -97,6 +103,7 @@ const Histogram = ({ data }) => {
         tickFormat={(x) => Math.floor(x)}
       />
       <VictoryBar
+        dataComponent={<Bar transform="translate(0, -1)" />}
         barRatio={0.8}
         style={{
           data: { fill: "#fc9272" },

@@ -9,7 +9,7 @@ const Source = ({ name, url, date }) => {
     <span>
       {name}
       {date && dayjs(date).format(", DD.MM.YYYY")}
-      {url.length > 0 && (
+      {url && url.length > 0 && (
         <a href={url} className="is-link">
           Link
         </a>
@@ -52,7 +52,7 @@ const IncidentList = ({
           )}
           {minMaxDate.total !== count && (
             <div className="is-size-7">
-              Auf deine Auwahl entfallen <b>{count}</b> von {minMaxDate.total}{" "}
+              Auf deine Auswahl entfallen <b>{count}</b> von {minMaxDate.total}{" "}
               registrierte Taten.{" "}
               <a onClick={() => reset()}>Auswahl zurücksetzen.</a>
             </div>
@@ -149,6 +149,10 @@ const IncidentList = ({
                           <div>
                             <div>Ortsangaben aus Chronik: {x.orig_city}</div>
                           </div>
+                          {x.tags && <div>Tags: {x.tags}</div>}
+                          {x.contexts && <div>Kontext: {x.contexts}</div>}
+                          {x.factums && <div>Handlung: {x.factums}</div>}
+                          {x.motives && <div>Motiv: {x.motives}</div>}
                         </div>
                       </div>
                     </div>

@@ -248,7 +248,12 @@ class Map extends React.Component {
     bbox[0] = bbox[0].map((x) => x.toFixed(5));
     bbox[1] = bbox[1].map((x) => x.toFixed(5));
 
-    this._setStateAndReload({ bbox, lastViewport: viewport });
+    this._setStateAndReload({
+      bbox,
+      lastViewport: viewport,
+      hoverInfo: null,
+      hoverClusters: null,
+    });
 
     // http://visgl.github.io/react-map-gl/docs/api-reference/web-mercator-viewport#getboundsoptions
     // Returns:
@@ -375,9 +380,27 @@ class Map extends React.Component {
     const { highlightPointMap } = this.state;
 
     ctx.clearRect(0, 0, width, height);
-    const dotRadius = 10;
-    const dotFill = "orange";
+    let dotRadius = 10;
+    let dotFill = "black";
     if (highlightPointMap) {
+      for (const location of [highlightPointMap]) {
+        const pixel = project(location);
+        const pixelRounded = [round(pixel[0], 1), round(pixel[1], 1)];
+        if (
+          pixelRounded[0] + dotRadius >= 0 &&
+          pixelRounded[0] - dotRadius < width &&
+          pixelRounded[1] + dotRadius >= 0 &&
+          pixelRounded[1] - dotRadius < height
+        ) {
+          ctx.fillStyle = dotFill;
+          ctx.beginPath();
+          ctx.arc(pixelRounded[0], pixelRounded[1], dotRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      dotRadius = 5;
+      dotFill = "white";
       for (const location of [highlightPointMap]) {
         const pixel = project(location);
         const pixelRounded = [round(pixel[0], 1), round(pixel[1], 1)];
@@ -594,7 +617,7 @@ class Map extends React.Component {
         </div>
         <div className="columns">
           <div className="column">
-            <p className="is-size-7">Zeitraum eingrenzen</p>
+            <p className="is-size-7">Zeitraum</p>
 
             <DateInput
               minMaxDate={minMaxDate}
@@ -605,7 +628,7 @@ class Map extends React.Component {
             />
           </div>
           <div className="column">
-            <p className="is-size-7 mb-4">Organisationen auswählen</p>
+            <p className="is-size-7 mb-4">Datenquellen</p>
             <OrganizationInput
               organizations={organizations}
               organizationsSelected={organizationsSelected}

@@ -26,8 +26,13 @@ body {
 } */
 
 a {
-  /* color: #67000d; */
-  color: red;
+  font-weight: bold;
+}
+
+.navbar a {
+  /* font-weight: inherit; */
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 /* a {
@@ -112,6 +117,7 @@ a {
 
   flex-grow: 1;
   padding: 1rem;
+  padding-left: 1%;
 
   outline: none;
   overflow: auto;
