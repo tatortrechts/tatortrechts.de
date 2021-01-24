@@ -64,18 +64,20 @@ const IncidentList = ({
           )}
           <div>{histogram && <Histogram data={histogram} />}</div>
         </div>
+        {/* pageStart has to be 1, otherwise there is bug with some left over item. */}
         <InfiniteScroll
           useWindow={false}
           getScrollParent={() => containerRef.current}
-          pageStart={0}
+          pageStart={1}
           loadMore={loadMore}
+          threshold={500}
           hasMore={next != null}
         >
           {results &&
             results.map((x) => {
               return (
                 <div
-                  className="card"
+                  className="card has-text-dark"
                   key={x.id}
                   onMouseEnter={() =>
                     setHighlight(x.location.geolocation.coordinates)
@@ -90,10 +92,10 @@ const IncidentList = ({
                   </header>
                   <div className="card-content">
                     <div className="columns">
-                      <div className="column">
+                      <div className="column is-two-thirds">
                         {(x.title || x.title_highlighted) && (
                           <p
-                            className="content mb-3"
+                            className="content mb-3 has-text-weight-semibold"
                             dangerouslySetInnerHTML={{
                               __html: x.title || x.title_highlighted,
                             }}

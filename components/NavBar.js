@@ -81,17 +81,6 @@ class NavBar extends React.Component {
                 </a>
               );
             })}
-            {/* <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">Mehr</a>
-
-              <div className="navbar-dropdown">
-                <a className="navbar-item">Daten</a>
-                <a className="navbar-item">Kontakt</a>
-                <hr className="navbar-divider" />
-                <a className="navbar-item">Impressum</a>
-                <a className="navbar-item">Datenschutzerklärung</a>
-              </div>
-            </div> */}
           </div>
         </div>
       </nav>

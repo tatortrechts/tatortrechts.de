@@ -11,28 +11,34 @@ body {
   word-wrap: break-word;
 }
 
-.navbar {
-  /* width: auto; */
-  /* display: inline-flexbox; */
-  /* margin-right: auto; */
-  margin-left: 50.5%;
-  width: 30rem;
-  /* display: inline-block; */
-  /* background-color: #fefefe; */
-}
-
-/* .navbar a {
-  color: inherit;
-} */
-
 a {
   font-weight: bold;
 }
 
+.navbar {
+  margin-left: 50.4%;
+  width: max-content;
+}
+
 .navbar a {
-  /* font-weight: inherit; */
   text-transform: uppercase;
   font-size: 0.8rem;
+}
+
+.navbar-item img {
+  max-height: 3rem;
+}
+
+.navbar-brand .navbar-item {
+  padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+}
+
+.navbar-start {
+  margin-right: 0;
+}
+
+.navbar-menu {
+  flex-grow: unset;
 }
 
 /* a {
@@ -66,32 +72,13 @@ a {
   flex-direction: column;
 }
 
-@media only screen and (max-width: 768px) {
-  .navbar {
-    margin-left: 0%;
-    width: 100%;
-    opacity: 0.9;
-  }
-
-  #sidebar {
-    line-height: 1;
-    padding: 0.5rem;
-
-    width: 100vw;
-    height: 60vh;
-    margin-top: 40vh;
-  }
-
-  #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 40vh;
-  }
-}
-
 #sidebar-filter {
+  background-color: #f1f1f1;
+  /* background-color: lightgrey; */
+  color: black;
+  /* background-color: #a50f15; */
+  /* color: white; */
+  /* filter: invert(1); */
   margin-top: 3rem;
   flex-grow: 0;
   /* border-bottom: 0.1rem solid lightgray; */
@@ -124,7 +111,7 @@ a {
 }
 
 #sidebar-results .card {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 #sidebar-results .card .card-content {
@@ -153,9 +140,37 @@ a {
 }
 
 .tor-histogram {
+  margin-bottom: 2rem !important;
 }
 
 .navbar {
   box-shadow: 0 0.75em 1.5em -0.2em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+@media only screen and (max-width: 1024px) {
+  .navbar {
+    margin-left: 0%;
+    width: 100%;
+    opacity: 0.8;
+  }
+
+  #sidebar {
+    padding: 0 0.5rem;
+    width: 100vw;
+    height: 60vh;
+    margin-top: 40vh;
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
+  }
+
+  #sidebar-filter {
+    margin-top: 0;
+  }
 }

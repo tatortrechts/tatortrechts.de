@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@material-ui/core/styles";
 import * as dayjs from "dayjs";
 import { withRouter } from "next/router";
 import React from "react";
@@ -18,6 +19,7 @@ import {
   fetchIncidentsNext,
   fetchLocations,
 } from "../../utils/networking";
+import { theme } from "../../utils/style";
 import DateInput from "./DateInput";
 import IncidentList from "./IncidentList";
 import {
@@ -644,65 +646,67 @@ class Map extends React.Component {
     );
 
     return (
-      <>
-        <div id="map">
-          <MapGL
-            {...viewport}
-            width="100%"
-            height="100%"
-            mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
-            // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
-            // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
-            // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
-            onViewportChange={this._onViewportChange}
-            // onTransitionEnd={this._viewPointCheck}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-            interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
-            onClick={this._onClick}
-            onMouseEnter={this._onMouseEnter}
-            onMouseLeave={this._clearHover}
-            ref={this._mapRef}
-            dragRotate={false}
-            touchRotate={false}
-          >
-            <Source
-              id="incidents"
-              type="geojson"
-              data={aggregatedIncidents}
-              cluster={true}
-              clusterMaxZoom={14}
-              clusterRadius={40}
-              clusterProperties={{
-                sum: ["+", ["get", "total"], ["get", "sum"]],
-              }}
-              ref={this._sourceRef}
+      <ThemeProvider theme={theme}>
+        <>
+          <div id="map">
+            <MapGL
+              {...viewport}
+              width="100%"
+              height="100%"
+              mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
+              // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
+              // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
+              // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
+              onViewportChange={this._onViewportChange}
+              // onTransitionEnd={this._viewPointCheck}
+              mapboxApiAccessToken={MAPBOX_TOKEN}
+              interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
+              onClick={this._onClick}
+              onMouseEnter={this._onMouseEnter}
+              onMouseLeave={this._clearHover}
+              ref={this._mapRef}
+              dragRotate={false}
+              touchRotate={false}
             >
-              <Layer {...clusterLayer} />
-              <Layer {...clusterCountLayer} />
-              <Layer {...unclusteredPointLayer} />
-              <Layer {...unclusteredPointTextLayer} />
-            </Source>
-            {hoverInfo && this._renderTooltip(hoverInfo)}
-            {highlightPointMap && (
-              <CanvasOverlay redraw={this._redrawHighlight} />
-            )}
-          </MapGL>
-        </div>
-        <div id="sidebar">
-          <IncidentList
-            sideBarFilter={sideBarFilter}
-            histogram={incidentsHistogram}
-            results={incidentsResults}
-            count={incidentsCount}
-            next={incidentsNext}
-            minMaxDate={minMaxDate}
-            numOrganizations={organizations.length}
-            loadMore={this._loadMoreIncidents}
-            setHighlight={(x) => this.setState({ highlightPointMap: x })}
-            reset={this._reset}
-          />
-        </div>
-      </>
+              <Source
+                id="incidents"
+                type="geojson"
+                data={aggregatedIncidents}
+                cluster={true}
+                clusterMaxZoom={14}
+                clusterRadius={40}
+                clusterProperties={{
+                  sum: ["+", ["get", "total"], ["get", "sum"]],
+                }}
+                ref={this._sourceRef}
+              >
+                <Layer {...clusterLayer} />
+                <Layer {...clusterCountLayer} />
+                <Layer {...unclusteredPointLayer} />
+                <Layer {...unclusteredPointTextLayer} />
+              </Source>
+              {hoverInfo && this._renderTooltip(hoverInfo)}
+              {highlightPointMap && (
+                <CanvasOverlay redraw={this._redrawHighlight} />
+              )}
+            </MapGL>
+          </div>
+          <div id="sidebar">
+            <IncidentList
+              sideBarFilter={sideBarFilter}
+              histogram={incidentsHistogram}
+              results={incidentsResults}
+              count={incidentsCount}
+              next={incidentsNext}
+              minMaxDate={minMaxDate}
+              numOrganizations={organizations.length}
+              loadMore={this._loadMoreIncidents}
+              setHighlight={(x) => this.setState({ highlightPointMap: x })}
+              reset={this._reset}
+            />
+          </div>
+        </>
+      </ThemeProvider>
     );
   }
 }
