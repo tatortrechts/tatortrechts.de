@@ -1,4 +1,7 @@
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
 import { ThemeProvider } from "@material-ui/core/styles";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import * as dayjs from "dayjs";
 import { withRouter } from "next/router";
 import React from "react";
@@ -91,6 +94,7 @@ class Map extends React.Component {
       highlightPointMap: null,
       hoverInfo: null,
       hoverClusters: null,
+      filterExpaned: false,
     };
   }
 
@@ -571,6 +575,7 @@ class Map extends React.Component {
       locationOptions,
       highlightPointMap,
       hoverInfo,
+      filterExpaned,
     } = this.state;
 
     const {
@@ -592,8 +597,8 @@ class Map extends React.Component {
           Durchsuch die Taten nach Schlagworten wie z. B. "Feuer" oder "Schlag",
           oder wähl einen Ort aus.
         </p>
-        <div className="columns">
-          <div className="column">
+        <div className="columns is-mobile is-multiline">
+          <div className="column is-7-tablet is-12-mobile">
             <SearchInput
               options={
                 autocompleteOptions.length > 0
@@ -616,32 +621,53 @@ class Map extends React.Component {
               cbInputChange={this._onInputLocationChange}
             />
           </div>
+          <div className="column is-narrow level" style={{ display: "flex" }}>
+            <div className="level-item">
+              <IconButton
+                size="small"
+                className="tor-collapse is-size-7"
+                onClick={() => this.setState({ filterExpaned: !filterExpaned })}
+                aria-expanded={filterExpaned}
+                aria-label="show more"
+              >
+                erweitert
+                <ExpandMoreIcon
+                  className={
+                    filterExpaned ? "tor-expanded" : "tor-not-expanded"
+                  }
+                />
+              </IconButton>
+            </div>
+          </div>
         </div>
-        <div className="columns">
-          <div className="column">
-            <p className="is-size-7">Zeitraum</p>
 
-            <DateInput
-              minMaxDate={minMaxDate}
-              startDate={startDate}
-              endDate={endDate}
-              startCb={(x) => this._setStateAndReload({ startDate: x })}
-              endCb={(x) => this._setStateAndReload({ endDate: x })}
-            />
+        <Collapse in={filterExpaned} timeout="auto">
+          <div className="columns is-mobile" style={{ paddingBottom: "2rem" }}>
+            <div className="column is-7-desktop">
+              <p className="is-size-7">Zeitraum</p>
+
+              <DateInput
+                minMaxDate={minMaxDate}
+                startDate={startDate}
+                endDate={endDate}
+                startCb={(x) => this._setStateAndReload({ startDate: x })}
+                endCb={(x) => this._setStateAndReload({ endDate: x })}
+              />
+            </div>
+            <div className="column is-narrow ml-1">
+              <p className="is-size-7 mb-4 pb-1">Datenquellen</p>
+              <OrganizationInput
+                organizations={organizations}
+                organizationsSelected={organizationsSelected}
+                cbChange={(x) =>
+                  organizations &&
+                  x.length < organizations.length &&
+                  this._setStateAndReload({ organizationsSelected: x })
+                }
+              />
+            </div>
           </div>
-          <div className="column">
-            <p className="is-size-7 mb-4">Datenquellen</p>
-            <OrganizationInput
-              organizations={organizations}
-              organizationsSelected={organizationsSelected}
-              cbChange={(x) =>
-                organizations &&
-                x.length < organizations.length &&
-                this._setStateAndReload({ organizationsSelected: x })
-              }
-            />
-          </div>
-        </div>
+        </Collapse>
       </div>
     );
 

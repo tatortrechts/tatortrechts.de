@@ -17,7 +17,7 @@ a {
 
 .navbar {
   margin-left: 50.4%;
-  width: max-content;
+  width: fit-content;
 }
 
 .navbar a {
@@ -82,11 +82,12 @@ a {
   margin-top: 3rem;
   flex-grow: 0;
   /* border-bottom: 0.1rem solid lightgray; */
-  padding-bottom: 2rem;
+  /* padding-bottom: 2rem; */
   margin-bottom: 2rem;
   /* padding: 2rem; */
   /* background-color: #f1f1f1; */
   /* border-radius: 0.1rem; */
+  padding-bottom: 0;
 }
 
 #sidebar-results-outer {
@@ -119,7 +120,8 @@ a {
 }
 
 #sidebar-results .card .card-content b {
-  background-color: rgba(255, 191, 0, 0.2);
+  background-color: #fee0d2;
+  /* background-color: rgba(255, 191, 0, 0.2); */
   padding-left: 0.2rem;
   padding-right: 0.2rem;
 }
@@ -136,7 +138,8 @@ a {
 }
 
 .tor-date-input .MuiFormControl-root.MuiTextField-root {
-  max-width: 9rem;
+  /* max-width: 9rem; */
+  max-width: 48%;
 }
 
 .tor-histogram {
@@ -146,6 +149,16 @@ a {
 .navbar {
   box-shadow: 0 0.75em 1.5em -0.2em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+svg.tor-not-expanded {
+  transform: rotate(0deg);
+  transition: transform 300ms ease;
+}
+
+svg.tor-expanded {
+  transform: rotate(180deg);
+  transition: transform 300ms ease;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -172,5 +185,14 @@ a {
 
   #sidebar-filter {
     margin-top: 0;
+  }
+
+  .tor-date-input .MuiFormControl-root.MuiTextField-root {
+    /* max-width: 9rem; */
+    max-width: 100%;
+  }
+
+  .is-12-mobile {
+    padding-bottom: 0;
   }
 }

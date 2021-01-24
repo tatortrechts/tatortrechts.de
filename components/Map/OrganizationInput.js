@@ -22,17 +22,20 @@ export default function OrganizationInput({
     if (organizations.length === values.length)
       return "keine Organisation ausgewählt";
 
-    if (values.length === 0) return "alle";
+    if (values.length === 0) return "alle Quellen";
 
-    return organizations
-      .filter((x) => !values.includes(x.id))
-      .map((x) => x.name)
-      .join(", ");
+    const orgFiltered = organizations.filter((x) => !values.includes(x.id));
+
+    if (orgFiltered.length <= 2) {
+      return orgFiltered.map((x) => x.name).join(", ");
+    }
+    return orgFiltered.length + " Quellen";
   };
 
   return (
     <FormControl>
       <Select
+        className="is-size-7"
         multiple
         value={organizationsSelected}
         onChange={handleChangeMultiple}
