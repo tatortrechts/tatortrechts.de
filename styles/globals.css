@@ -165,14 +165,14 @@ svg.tor-expanded {
   .navbar {
     margin-left: 0%;
     width: 100%;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   #sidebar {
     padding: 0 0.5rem;
     width: 100vw;
-    height: 60vh;
-    margin-top: 40vh;
+    height: 50vh;
+    margin-top: 50vh;
   }
 
   #map {
@@ -180,7 +180,7 @@ svg.tor-expanded {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 40vh;
+    height: 50vh;
   }
 
   #sidebar-filter {

@@ -39,16 +39,32 @@ const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
 const CENTER_GERMANY = [51.1657, 10.4515];
 
-const initialViewport = {
+const baseInitialViewport = {
   latitude: CENTER_GERMANY[0],
   longitude: CENTER_GERMANY[1],
-  zoom: 6,
-  minZoom: 5,
+  zoom: 5.5,
+  minZoom: 5.5,
   bearing: 0,
   pitch: 0,
 };
 
 // TODO: re-structure in more components
+// I'm really sorry if you have to deal with this mess. ;/
+
+const widthToViewport = (width) => {
+  console.log(width);
+  if (width < 500) {
+    return { ...baseInitialViewport, zoom: 4, minZoom: 4 };
+  }
+  if (width < 1000) {
+    return { ...baseInitialViewport, zoom: 4.6, minZoom: 4.6 };
+  }
+
+  if (width < 1600) {
+    return { ...baseInitialViewport, zoom: 5.2, minZoom: 5.2 };
+  }
+  return baseInitialViewport;
+};
 
 class Map extends React.Component {
   constructor(props) {
@@ -57,7 +73,8 @@ class Map extends React.Component {
     const { router } = this.props;
 
     this.state = {
-      viewport: initialViewport,
+      initialViewport: null,
+      viewport: null,
       lastViewport: null,
       bbox:
         router.query.bbox == null
@@ -102,8 +119,22 @@ class Map extends React.Component {
   _mapRef = React.createRef();
 
   async componentDidMount() {
-    this._loadAggregatedIncidents();
-    setInterval(this._viewPointCheck, 1000);
+    // wait some seconds before displaying results
+    if (typeof window !== "undefined") {
+      this.setState(
+        {
+          windowWidth: window.innerWidth,
+          viewport: widthToViewport(window.innerWidth),
+          initialViewport: widthToViewport(window.innerWidth),
+        },
+        () => {
+          setTimeout(() => {
+            this._loadAggregatedIncidents();
+            setInterval(this._viewPointCheck, 1000);
+          }, 2000);
+        }
+      );
+    }
   }
 
   async _loadAggregatedIncidents() {
@@ -129,7 +160,7 @@ class Map extends React.Component {
 
   _reset = () => {
     const newViewport = {
-      ...initialViewport,
+      ...this.state.initialViewport,
       ...{
         transitionDuration: 5000,
         transitionInterpolator: new FlyToInterpolator(),
@@ -575,6 +606,7 @@ class Map extends React.Component {
       locationOptions,
       highlightPointMap,
       hoverInfo,
+      initialViewport,
       filterExpaned,
     } = this.state;
 
@@ -675,47 +707,52 @@ class Map extends React.Component {
       <ThemeProvider theme={theme}>
         <>
           <div id="map">
-            <MapGL
-              {...viewport}
-              width="100%"
-              height="100%"
-              mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
-              // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
-              // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
-              // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
-              onViewportChange={this._onViewportChange}
-              // onTransitionEnd={this._viewPointCheck}
-              mapboxApiAccessToken={MAPBOX_TOKEN}
-              interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
-              onClick={this._onClick}
-              onMouseEnter={this._onMouseEnter}
-              onMouseLeave={this._clearHover}
-              ref={this._mapRef}
-              dragRotate={false}
-              touchRotate={false}
-            >
-              <Source
-                id="incidents"
-                type="geojson"
-                data={aggregatedIncidents}
-                cluster={true}
-                clusterMaxZoom={14}
-                clusterRadius={40}
-                clusterProperties={{
-                  sum: ["+", ["get", "total"], ["get", "sum"]],
-                }}
-                ref={this._sourceRef}
+            {initialViewport !== null && (
+              <MapGL
+                {...viewport}
+                width="100%"
+                height="100%"
+                mapStyle="mapbox://styles/jfilter/ckiuq9h8713g119mq52rus073"
+                // mapStyle="mapbox://styles/jfilter/ckf80h3h2521o19pfe9sam2cq"
+                // mapStyle="mapbox://styles/jfilter/ckf7yh70g01i11ao1uo2ozug0"
+                // mapStyle="http://168.119.114.9:8080/styles/positron/style.json"
+                onViewportChange={this._onViewportChange}
+                // onTransitionEnd={this._viewPointCheck}
+                mapboxApiAccessToken={MAPBOX_TOKEN}
+                interactiveLayerIds={[
+                  clusterLayer.id,
+                  unclusteredPointLayer.id,
+                ]}
+                onClick={this._onClick}
+                onMouseEnter={this._onMouseEnter}
+                onMouseLeave={this._clearHover}
+                ref={this._mapRef}
+                dragRotate={false}
+                touchRotate={false}
               >
-                <Layer {...clusterLayer} />
-                <Layer {...clusterCountLayer} />
-                <Layer {...unclusteredPointLayer} />
-                <Layer {...unclusteredPointTextLayer} />
-              </Source>
-              {hoverInfo && this._renderTooltip(hoverInfo)}
-              {highlightPointMap && (
-                <CanvasOverlay redraw={this._redrawHighlight} />
-              )}
-            </MapGL>
+                <Source
+                  id="incidents"
+                  type="geojson"
+                  data={aggregatedIncidents}
+                  cluster={true}
+                  clusterMaxZoom={14}
+                  clusterRadius={40}
+                  clusterProperties={{
+                    sum: ["+", ["get", "total"], ["get", "sum"]],
+                  }}
+                  ref={this._sourceRef}
+                >
+                  <Layer {...clusterLayer} />
+                  <Layer {...clusterCountLayer} />
+                  <Layer {...unclusteredPointLayer} />
+                  <Layer {...unclusteredPointTextLayer} />
+                </Source>
+                {hoverInfo && this._renderTooltip(hoverInfo)}
+                {highlightPointMap && (
+                  <CanvasOverlay redraw={this._redrawHighlight} />
+                )}
+              </MapGL>
+            )}
           </div>
           <div id="sidebar">
             <IncidentList

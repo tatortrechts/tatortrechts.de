@@ -14,8 +14,8 @@ function Karte({
   locationOptions,
   autocompleteOptions,
 }) {
-  const title = "Karte tatort rechts";
-  const description = "Karte tatort rechts";
+  const title = "Karte - Tatort Rechts";
+  const description = "Karte - Tatort Rechts";
   return (
     <>
       <Head>
