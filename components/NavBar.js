@@ -22,10 +22,10 @@ class NavBar extends React.Component {
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
             <img
-              src="/tor_logo2.jpg"
-              // width="200"
-              // height="28"
-              alt="RECHTEGEWALT.INFO"
+              src="/tor_logo.svg"
+              width="80"
+              height="28"
+              alt="tatortrechts.de"
             />
           </a>
 
