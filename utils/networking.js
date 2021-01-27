@@ -201,8 +201,14 @@ async function fetchChildPages(pageId) {
       title,
       article_date: date,
       article_teaser: teaser,
-      article_image_thumbnail: { url: thumbnail_url },
+      article_image_thumbnail,
     } = x;
+    let thumbnail_url = "/changme.jpg";
+
+    if (article_image_thumbnail != null) {
+      thumbnail_url = article_image_thumbnail.url;
+    }
+
     return {
       url: "/blog/" + slug,
       teaser,
