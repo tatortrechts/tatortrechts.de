@@ -629,7 +629,7 @@ class Map extends React.Component {
           oder wähl einen Ort aus.
         </p>
         <div className="columns is-mobile is-multiline">
-          <div className="column is-7-tablet is-12-mobile">
+          <div className="column is-6-tablet is-12-mobile">
             <SearchInput
               options={
                 autocompleteOptions.length > 0
@@ -674,7 +674,7 @@ class Map extends React.Component {
 
         <Collapse in={filterExpaned} timeout="auto">
           <div className="columns is-mobile" style={{ paddingBottom: "2rem" }}>
-            <div className="column is-7-desktop">
+            <div className="column is-6-desktop">
               <p className="is-size-7">Zeitraum</p>
 
               <DateInput
