@@ -1,21 +1,32 @@
 import * as dayjs from "dayjs";
-import { extractShortAddress } from "../../utils/labels";
+import { shortTitle } from "../../utils/labels";
 
 const Source = ({ name, url, date }) => {
   return (
-    <span>
-      {name}
-      {date && dayjs(date).format(", DD.MM.YYYY")}
+    <li>
       {url && url.length > 0 && (
-        <a href={url} className="is-link">
-          Link
+        <a target="_blank" href={url}>
+          <span>{name}</span>
         </a>
       )}
-    </span>
+      {!(url && url.length > 0) && <span> {name} </span>}
+      {date && dayjs(date).format("(DD.MM.YYYY)")}
+    </li>
   );
 };
 
-const IncidentBox = ({ x, setHighlight }) => {
+const TableRow = ({ value, label }) => {
+  if (!value) return null;
+
+  return (
+    <>
+      <div className="column is-6">{label}:</div>{" "}
+      <div className="column is-6">{value}</div>
+    </>
+  );
+};
+
+const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
   return (
     <div
       className="card has-text-dark"
@@ -24,14 +35,11 @@ const IncidentBox = ({ x, setHighlight }) => {
       onMouseLeave={() => setHighlight(null)}
     >
       <header className="card-header">
-        <p className="card-header-title">
-          {extractShortAddress(x.location)},{" "}
-          {dayjs(x.date).format("DD.MM.YYYY")}
-        </p>
+        <p className="card-header-title">{shortTitle(x)}</p>
       </header>
       <div className="card-content">
         <div className="columns">
-          <div className="column is-two-thirds">
+          <div className="column is-three-fifths">
             {(x.title || x.title_highlighted) && (
               <p
                 className="content mb-3 has-text-weight-semibold"
@@ -48,40 +56,100 @@ const IncidentBox = ({ x, setHighlight }) => {
             ></p>
           </div>
           <div className="column content is-size-7">
-            <div className="p-3" style={{ backgroundColor: "#fee0d2" }}>
-              {x.location.house_number && (
-                <div>Hausnummer: {x.location.house_number}</div>
-              )}
-              {x.location.street && <div>Straße: {x.location.street}</div>}
-              {x.location.city && <div>Ort: {x.location.city}</div>}
-              {x.location.district && (
-                <div>Ortsteil: {x.location.district}</div>
-              )}
-              {x.location.county && <div>Landkreis: {x.location.county}</div>}
-              <div>
-                {x.sources.length === 1 && <span>Quelle (aus Chronik): </span>}
-                {x.sources.length > 1 && <span>Quellen (aus Chronik): </span>}
-                {x.sources.map((x) => (
-                  <Source
-                    name={x.name}
-                    url={x.url}
-                    date={x.date}
-                    key={x.name + x.date + x.url}
-                  />
-                ))}
+            <div
+              className="columns is-multiline is-2  is-variable"
+              style={{ backgroundColor: "#fee0d2", borderRadius: "3px" }}
+            >
+              {[
+                [x.location.house_number, "Hausnummer"],
+                [x.location.street, "Straße"],
+                [x.location.city, "Ort"],
+                [x.location.district, "Ortsteil"],
+                [x.location.county, "Landkreis"],
+                [
+                  <a href={x.url} target="_blank">
+                    {x.chronicle.name}
+                  </a>,
+                  "Chronik",
+                ],
+                [x.chronicle.tags, "Stichwörter"],
+                [x.chronicle.factums, "Handlungen"],
+                [x.chronicle.motives, "Motive"],
+                [x.chronicle.contexts, "Kontexte"],
+              ].map((xx) => (
+                <TableRow value={xx[0]} label={xx[1]} />
+              ))}
+
+              <div
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderTopWidth: "0.1rem",
+                  borderTopStyle: "solid",
+                  width: "100%",
+                  margin: "0 1rem",
+                }}
+              ></div>
+
+              <div className="column is-12">
+                Quellen:
+                <ul className="dashed">
+                  {x.sources.map((x) => (
+                    <Source
+                      name={x.name}
+                      url={x.url}
+                      date={x.date}
+                      key={x.name + x.date + x.url}
+                    />
+                  ))}
+                </ul>
               </div>
 
-              <div>
-                Chronik: {x.chronicle.name} (<a href={x.url}>Link</a>)
+              <div
+                style={{
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderTopWidth: "0.1rem",
+                  borderTopStyle: "solid",
+                  width: "100%",
+                  margin: "0 1rem",
+                }}
+              ></div>
+
+              <div
+                className="p-3 pr-5 is-flex"
+                style={{ "margin-left": "auto" }}
+              >
+                <div className="pr-5" title="Link kopieren">
+                  <a
+                    target="_blank"
+                    href={"/tat/" + (rg_id === null ? btoa(x.rg_id) : rg_id)}
+                    style={{ color: "inherit" }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="is-clickable"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div title="Problem melden">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="is-clickable"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z" />
+                  </svg>
+                </div>
               </div>
-              <br></br>
-              <div>
-                <div>Ortsangaben aus Chronik: {x.orig_city}</div>
-              </div>
-              {x.tags && <div>Tags: {x.tags}</div>}
-              {x.contexts && <div>Kontext: {x.contexts}</div>}
-              {x.factums && <div>Handlung: {x.factums}</div>}
-              {x.motives && <div>Motiv: {x.motives}</div>}
             </div>
           </div>
         </div>

@@ -6,9 +6,23 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-
   line-height: 1.5;
-  word-wrap: break-word;
+
+  /* https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/ */
+  word-break: break-word;
+  hyphens: auto;
+}
+
+ul.dashed {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 1em;
+}
+ul.dashed > li:before {
+  display: inline-block;
+  content: "-";
+  width: 1em;
+  margin-left: -1em;
 }
 
 a {
