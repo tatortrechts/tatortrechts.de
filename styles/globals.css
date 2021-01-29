@@ -162,11 +162,55 @@ svg.tor-expanded {
   transition: transform 300ms ease;
 }
 
+.tor-onboarding-up {
+  opacity: 0;
+  animation: fadein 2s ease-in 1s;
+  animation-fill-mode: forwards;
+}
+
+.tor-onboarding-left {
+  opacity: 0;
+  animation: fadein 2s ease-in 2s;
+  animation-fill-mode: forwards;
+}
+
+.tor-onboarding-remove {
+  opacity: 0;
+  animation: fadein 2s ease-in 4s;
+  animation-fill-mode: forwards;
+}
+
+#tor-historesults {
+  opacity: 0;
+  animation: fadein 0.5s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.tor-onboarding-mobile-up {
+  opacity: 0;
+  animation: fadein 2s ease-in;
+  animation-fill-mode: forwards;
+}
+
+.tor-onboarding-mobile-down {
+  opacity: 0;
+  animation: fadein 2s ease-in 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media only screen and (max-width: 1024px) {
   .navbar {
     margin-left: 0%;
     width: 100%;
-    /* opacity: 0.7; */
     background: rgba(255, 255, 255, 0.5);
   }
 
@@ -186,15 +230,40 @@ svg.tor-expanded {
   }
 
   #sidebar-filter {
-    margin-top: 0;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  #sidebar-results .card {
+    margin-bottom: 1rem;
+  }
+
+  .tor-histogram {
+    margin-bottom: 1rem !important;
+  }
+
+  #sidebar-filter {
+    margin-bottom: 1rem;
   }
 
   .tor-date-input .MuiFormControl-root.MuiTextField-root {
-    /* max-width: 9rem; */
     max-width: 100%;
   }
 
   .is-12-mobile {
     padding-bottom: 0;
+  }
+
+  #sidebar-results {
+    padding: 0.2rem;
+  }
+
+  #sidebar-filter > div.columns.is-mobile.is-multiline {
+    margin-bottom: 0;
+  }
+
+  #sidebar-filter > div.columns.is-mobile.is-multiline > div {
+    padding-bottom: 0;
+    padding-top: 0;
   }
 }
