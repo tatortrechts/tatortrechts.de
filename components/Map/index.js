@@ -44,6 +44,7 @@ const baseInitialViewport = {
   longitude: CENTER_GERMANY[1],
   zoom: 5.5,
   minZoom: 5.5,
+  maxZoom: 12,
   bearing: 0,
   pitch: 0,
 };
@@ -128,10 +129,8 @@ class Map extends React.Component {
           initialViewport: widthToViewport(window.innerWidth),
         },
         () => {
-          setTimeout(() => {
-            this._loadAggregatedIncidents();
-            setInterval(this._viewPointCheck, 1000);
-          }, 2000);
+          this._loadAggregatedIncidents();
+          setInterval(this._viewPointCheck, 1000);
         }
       );
     }

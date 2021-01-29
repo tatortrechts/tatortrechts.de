@@ -203,8 +203,9 @@ async function fetchChildPages(pageId) {
       article_teaser: teaser,
       article_image_thumbnail,
     } = x;
-    let thumbnail_url = "/changme.jpg";
 
+    // dummy image if the page does not have a image set yet
+    let thumbnail_url = "/changme.jpg";
     if (article_image_thumbnail != null) {
       thumbnail_url = article_image_thumbnail.url;
     }
