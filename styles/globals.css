@@ -198,6 +198,11 @@ svg.tor-expanded {
   animation-fill-mode: forwards;
 }
 
+/* the negative margin made the links of the previous elements unclickable */
+#sidebar-filter > div.columns.is-mobile.is-multiline {
+  margin-top: 0;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
