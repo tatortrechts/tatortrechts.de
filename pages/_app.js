@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import "../styles/custom-bulma.scss";
 import "../styles/globals.css";
+import "../styles/mapbox-gl.css";
 
 // https://nextjs.org/docs/api-reference/next/head
 
