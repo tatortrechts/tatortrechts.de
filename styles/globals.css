@@ -17,6 +17,14 @@ body {
   box-sizing: border-box;
 }
 
+/* the cancel button appeared twice in Chrome, this removes this, via https://stackoverflow.com/a/9422689 */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
 a {
   font-weight: bold;
 }
