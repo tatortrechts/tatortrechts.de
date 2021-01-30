@@ -36,7 +36,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ### Depedencies
 
-Don't update `react-map-gl` to v6 because it includes the non-open-source version of the new `mapbox-gl-js`: <https://github.com/visgl/react-map-gl/releases/tag/v6.0.0>
+Don't updgrade:
+
+- ky and ky-universal (there problems with how next.js's wepback config)
+- `react-map-gl` (v6 requires `mapbox-gl-js` v2 which is [not open source anymore](https://github.com/visgl/react-map-gl/releases/tag/v6.0.0), `react-map-gl` v5.3 adds backwards-incometable changes and this breaks everything)
+- @date-io/dayjs (there were some erros with v2, can't recall details)
 
 ## Production
 
