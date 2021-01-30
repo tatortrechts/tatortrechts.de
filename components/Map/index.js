@@ -44,7 +44,7 @@ const baseInitialViewport = {
   longitude: CENTER_GERMANY[1],
   zoom: 5.5,
   minZoom: 5.5,
-  maxZoom: 12,
+  maxZoom: 15,
   bearing: 0,
   pitch: 0,
 };
@@ -53,7 +53,7 @@ const baseInitialViewport = {
 // I'm really sorry if you have to deal with this mess. ;/
 
 const widthToViewport = (width) => {
-  console.log(width);
+  // console.log(width);
   if (width < 500) {
     return { ...baseInitialViewport, zoom: 4, minZoom: 4 };
   }

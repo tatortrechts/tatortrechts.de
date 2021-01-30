@@ -2,7 +2,7 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import * as dayjs from "dayjs";
-import { useState } from "react";
+import React, { useState } from "react";
 import { shortTitle } from "../../utils/labels";
 
 const Source = ({ name, url, date }) => {
@@ -20,8 +20,6 @@ const Source = ({ name, url, date }) => {
 };
 
 const TableRow = ({ value, label }) => {
-  if (!value) return null;
-
   return (
     <>
       <div className="column is-6">{label}:</div>{" "}
@@ -36,7 +34,7 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
   if (!expanded && isDetailsView) setExpanded(true);
 
   return (
-    <>
+    <React.Fragment key={x.rg_id}>
       <div
         className="card has-text-dark"
         key={x.id}
@@ -86,9 +84,15 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                     [x.factums, "Handlungen"],
                     [x.motives, "Motive"],
                     [x.contexts, "Kontexte"],
-                  ].map((xx) => (
-                    <TableRow value={xx[0]} label={xx[1]} />
-                  ))}
+                  ]
+                    .filter((xx) => xx[0] != null)
+                    .map((xx) => (
+                      <TableRow
+                        key={xx[0] + xx[1]}
+                        value={xx[0]}
+                        label={xx[1]}
+                      />
+                    ))}
 
                   <div
                     style={{
@@ -103,8 +107,9 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                   <div className="column is-12">
                     Quellen:
                     <ul className="dashed">
-                      {x.sources.map((x) => (
+                      {x.sources.map((x, i) => (
                         <Source
+                          key={i}
                           name={x.name}
                           url={x.url}
                           date={x.date}
@@ -126,7 +131,7 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
 
                   <div
                     className="p-3 pr-5 is-flex"
-                    style={{ "margin-left": "auto" }}
+                    style={{ marginLeft: "auto" }}
                   >
                     <div className="pr-5" title="Link kopieren">
                       <a
@@ -198,7 +203,7 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
           </IconButton>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 
