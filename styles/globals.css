@@ -160,7 +160,7 @@ svg.tor-expanded {
 }
 
 #sidebar-results .card .card-content {
-  padding: 0.5rem 1rem 1.5rem;
+  padding: 0.5rem 1rem 1rem;
 }
 
 #sidebar-results .card .card-content b {
@@ -203,6 +203,11 @@ svg.tor-expanded {
   padding: 0.5rem;
 }
 
+.tor-info-table {
+  margin-right: 0;
+  margin-bottom: 0 !important;
+}
+
 .tor-histogram {
   margin-bottom: 2rem !important;
 }
@@ -222,19 +227,19 @@ svg.tor-expanded {
 
 .tor-onboarding-up {
   opacity: 0;
-  animation: fadein 2s ease-in 1s;
+  animation: fadein 0.5s ease-in 0.5s;
   animation-fill-mode: forwards;
 }
 
 .tor-onboarding-left {
   opacity: 0;
-  animation: fadein 2s ease-in 2s;
+  animation: fadein 0.5s ease-in 1s;
   animation-fill-mode: forwards;
 }
 
 .tor-onboarding-remove {
   opacity: 0;
-  animation: fadein 2s ease-in 4s;
+  animation: fadein 0.5s ease-in 2s;
   animation-fill-mode: forwards;
 }
 
@@ -246,7 +251,7 @@ svg.tor-expanded {
 
 .tor-onboarding-mobile-up {
   opacity: 0;
-  animation: fadein 2s ease-in;
+  animation: fadein 0.5s ease-in;
   animation-fill-mode: forwards;
 }
 
