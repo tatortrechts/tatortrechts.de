@@ -100,6 +100,10 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                       [x.contexts, "Kontexte"],
                     ]
                       .filter((xx) => xx[0] != null)
+                      .filter(
+                        (xx) =>
+                          xx[1] !== "Landkreis" || xx[0] !== x.location.city
+                      )
                       .map((xx) => (
                         <TableRow
                           key={xx[0] + xx[1]}
