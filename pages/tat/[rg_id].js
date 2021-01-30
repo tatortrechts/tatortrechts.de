@@ -29,7 +29,9 @@ function IncidentDetail({ incident, rg_id }) {
               setHighlight={() => console.log("todo")}
             />
             <div className="buttons is-centered mt-5">
-              <a className="button a is-primary">zur Karte</a>
+              <a href="/karte" className="button a is-primary">
+                zur Karte
+              </a>
             </div>
           </div>
         </div>
