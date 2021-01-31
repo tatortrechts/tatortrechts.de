@@ -11,11 +11,11 @@ import {
 const fontFamily = `BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif`;
 
 const addTimeInterval = (x, timeInterval) => {
-  if (timeInterval === "year") return x.add(1, "years");
-  if (timeInterval === "quarter") return x.add(3, "months");
-  if (timeInterval === "month") return x.add(1, "months");
-  if (timeInterval === "week") return x.add(1, "weeks");
-  if (timeInterval === "day") return x.add(1, "days");
+  if (timeInterval === "year") return dayjs(x).add(1, "years");
+  if (timeInterval === "quarter") return dayjs(x).add(3, "months");
+  if (timeInterval === "month") return dayjs(x).add(1, "months");
+  if (timeInterval === "week") return dayjs(x).add(1, "weeks");
+  if (timeInterval === "day") return dayjs(x).add(1, "days");
 };
 
 const fillMissingData = (data, timeInterval) => {
@@ -42,7 +42,7 @@ const fillMissingData = (data, timeInterval) => {
   return transformedData;
 };
 
-const Histogram = ({ data }) => {
+const Histogram = ({ data, yMax = null, width = 450, height = 100 }) => {
   if (data == null || !data.length || data.length === 0) return null;
 
   let timeInterval = data[0].time_interval;
@@ -83,8 +83,10 @@ const Histogram = ({ data }) => {
   return (
     <VictoryChart
       padding={{ left: 50, top: 30, bottom: 20, right: 10 }}
-      height={100}
+      height={height}
+      width={width}
       scale={{ x: "time" }}
+      domain={yMax == null ? {} : { y: [0, yMax] }}
       domainPadding={{ x: 10 }}
     >
       <VictoryAxis

@@ -248,6 +248,18 @@ async function fetchIncident(rg_id) {
   }
 }
 
+async function fetchChroHisto() {
+  const url = API_LOCATION + "/chronicles_histogram/";
+
+  try {
+    const apiResponse = await ky.get(url).json();
+    // if (apiResponse.results.length !== 1) return null;
+    return apiResponse.result;
+  } catch (e) {
+    return [null, e];
+  }
+}
+
 export {
   API_LOCATION,
   fetchAggregatedIncidents,
@@ -261,4 +273,5 @@ export {
   fetchChildPages,
   fetchMinMaxDate,
   fetchIncident,
+  fetchChroHisto,
 };
