@@ -24,6 +24,7 @@ function Post({ content }) {
         <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
+      <div className="tor-margin-top"></div>
       <div dangerouslySetInnerHTML={{ __html: content.body }} />
       <Footer />
     </>

@@ -20,6 +20,7 @@ function IncidentDetail({ incident, rg_id }) {
         <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
+      <div className="tor-margin-top"></div>
       <div className="container">
         <div className="columns is-centered m-5">
           <div className="column is-7">

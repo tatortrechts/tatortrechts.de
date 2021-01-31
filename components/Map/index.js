@@ -649,14 +649,14 @@ class Map extends React.Component {
         <div className="is-size-7">
           Durchsuch die Taten nach Schlagworten wie z. B.{" "}
           <a
-            className="is-clickable"
+            className="is-clickable no-underline"
             onClick={() => this._setStateAndReload({ q: "Hakenkreuz" })}
           >
             Hakenkreuz
           </a>{" "}
           oder{" "}
           <a
-            className="is-clickable"
+            className="is-clickable no-underline"
             onClick={() => this._setStateAndReload({ q: '"Brand"' })}
           >
             "Brand"

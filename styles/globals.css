@@ -27,9 +27,18 @@ input[type="search"]::-webkit-search-results-decoration {
 
 a {
   font-weight: bold;
+  text-decoration: underline;
 }
 
+.no-underline,
+nav a {
+  text-decoration: inherit;
+}
 /* utility classes */
+
+.tor-margin-top {
+  margin-top: 5rem;
+}
 
 ul.dashed {
   list-style: none;
@@ -67,6 +76,8 @@ svg.tor-expanded {
 .navbar {
   margin-left: 50.4%;
   width: fit-content;
+  border-radius: 0.1rem;
+  padding-left: 0.1rem;
 }
 
 .navbar a {
@@ -326,5 +337,9 @@ svg.tor-expanded {
   #sidebar-filter > div.columns.is-mobile.is-multiline > div {
     padding-bottom: 0;
     padding-top: 0;
+  }
+
+  .tor-margin-top {
+    margin-top: 2rem;
   }
 }

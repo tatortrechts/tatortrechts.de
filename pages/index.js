@@ -25,6 +25,7 @@ function Home({ content, histoData, orgs }) {
         <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
+      <div className="tor-margin-top"></div>
       <div dangerouslySetInnerHTML={{ __html: content.body }} />
       <HistogramSmallMultiple histoData={histoData} orgs={orgs} />
       <Footer />
