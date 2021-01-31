@@ -1,4 +1,5 @@
 module.exports = {
+  poweredByHeader: false,
   headers() {
     return [
       {
@@ -6,7 +7,7 @@ module.exports = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, stale-while-revalidate",
+            value: "public, max-age=900, stale-while-revalidate=3600",
           },
         ],
       },
