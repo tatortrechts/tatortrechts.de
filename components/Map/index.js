@@ -790,6 +790,16 @@ class Map extends React.Component {
           </div>
           <div id="sidebar">
             <IncidentList
+              setStartDate={(x) =>
+                this._setStateAndReload({ startDate: x, filterExpaned: true })
+              }
+              setStartEndDate={(x, y) =>
+                this._setStateAndReload({
+                  startDate: x,
+                  endDate: y,
+                  filterExpaned: true,
+                })
+              }
               sideBarFilter={sideBarFilter}
               histogram={incidentsHistogram}
               results={incidentsResults}

@@ -48,6 +48,7 @@ const Histogram = ({
   width = 450,
   height = 100,
   padding = { left: 50, top: 30, bottom: 20, right: 10 },
+  barOnClick = null,
 }) => {
   if (data == null || !data.length || data.length === 0) return null;
 
@@ -119,10 +120,23 @@ const Histogram = ({
         tickFormat={(x) => Math.floor(x)}
       />
       <VictoryBar
+        events={[
+          barOnClick === null
+            ? {}
+            : {
+                target: "data",
+                eventHandlers: {
+                  onClick: barOnClick,
+                },
+              },
+        ]}
         dataComponent={<Bar transform="translate(0, -1)" />}
         barRatio={0.8}
         style={{
-          data: { fill: "#fc9272" },
+          data: {
+            fill: "#fc9272",
+            cursor: barOnClick === null ? "inherit" : "pointer",
+          },
         }}
         data={transformedData}
         labels={({ datum }) => genLabelText(datum.x, datum.y)}

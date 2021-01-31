@@ -85,6 +85,8 @@ const OnboardingMobile = ({ hideOnboarding }) => {
 };
 
 const IncidentList = ({
+  setStartDate,
+  setStartEndDate,
   sideBarFilter,
   histogram,
   results,
@@ -144,7 +146,23 @@ const IncidentList = ({
                   <a onClick={() => reset()}>Auswahl zurücksetzen.</a>
                 </div>
               )}
-              <div>{histogram && <Histogram data={histogram} />}</div>
+              <div>
+                {histogram && (
+                  <Histogram
+                    data={histogram}
+                    barOnClick={(event, x) => {
+                      if (x.index + 1 !== x.data.length) {
+                        setStartEndDate(
+                          dayjs(x.data[x.index].x),
+                          dayjs(x.data[x.index + 1].x)
+                        );
+                      } else {
+                        setStartDate(dayjs(x.data[x.index].x));
+                      }
+                    }}
+                  />
+                )}
+              </div>
             </div>
             {/* pageStart has to be 1, otherwise there is bug with some left over item. */}
             <InfiniteScroll
