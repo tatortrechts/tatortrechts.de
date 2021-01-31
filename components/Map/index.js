@@ -366,17 +366,38 @@ class Map extends React.Component {
     const { locationOptions } = this.state;
     const { initLocationOptions } = this.props;
 
-    const selectedLocation = locationOptions
+    const selectedLocations = locationOptions
       .concat(initLocationOptions)
       .filter((x) => x === value);
 
-    let locationId = null;
-    if (selectedLocation.length !== 0) {
-      locationId = selectedLocation[0].id;
+    let selectedLocation = null;
+    if (selectedLocations.length !== 0) {
+      selectedLocation = selectedLocations[0];
     }
 
+    if (selectedLocation === null) {
+      this._setStateAndReload({
+        locationOptions: [],
+      });
+      return;
+    }
+
+    const longitude = selectedLocation["geolocation"]["coordinates"][0];
+    const latitude = selectedLocation["geolocation"]["coordinates"][1];
+
+    const newViewport = {
+      ...this.state.viewport,
+      ...{
+        zoom: 10,
+        latitude,
+        longitude,
+        transitionDuration: 3000,
+        transitionInterpolator: new FlyToInterpolator(),
+      },
+    };
+
     this._setStateAndReload({
-      locationId,
+      viewport: newViewport,
       locationOptions: [],
     });
   };
@@ -393,22 +414,23 @@ class Map extends React.Component {
   };
 
   _onInputLocationChange = async (_, value, reason) => {
+    if (value == null || value == "") return;
     const locationOptions = await this._fetchLocations(value);
     if (locationOptions.length === 2 && locationOptions[0] === null) {
       console.error(
         `Could not fetch locationOptions for autocomplete. ${locationOptions[1]}`
       );
     } else {
-      const { locationId } = this.state;
-      if (reason == "clear" || value.length === 0) {
-        this.setState({ locationOptions, locationId: null });
-      } else {
-        if (locationId == null) this.setState({ locationOptions });
-        else
-          this.setState({
-            locationOptions: [],
-          });
-      }
+      this.setState({ locationOptions });
+      // const { locationId } = this.state;
+      // if (reason == "clear" || value.length === 0) {
+      // } else {
+      //   if (locationId == null) this.setState({ locationOptions });
+      //   else
+      //     this.setState({
+      //       locationOptions: [],
+      //     });
+      // }
     }
   };
 

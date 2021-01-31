@@ -7,7 +7,15 @@ if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.tatortrechts.de";
 }
 
-function buildQueryParams(q, startDate, endDate, chronicles, bbox, location) {
+function buildQueryParams(
+  q,
+  startDate,
+  endDate,
+  chronicles,
+  bbox,
+  location,
+  q_location
+) {
   const params = [];
   if (q != null) {
     params.push(`q=${q}`);
@@ -37,6 +45,10 @@ function buildQueryParams(q, startDate, endDate, chronicles, bbox, location) {
     params.push(`location=${location}`);
   }
 
+  if (q_location != null) {
+    params.push(`q_location=${q_location}`);
+  }
+
   if (params.length === 0) return "";
   return "?" + params.join("&");
 }
@@ -48,7 +60,8 @@ async function _fetch(
   endDate = null,
   chronicles = null,
   bbox = null,
-  location = null
+  location = null,
+  q_location = null
 ) {
   const paramsString = buildQueryParams(
     q,
@@ -56,7 +69,8 @@ async function _fetch(
     endDate,
     chronicles,
     bbox,
-    location
+    location,
+    q_location
   );
   const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
@@ -89,12 +103,22 @@ async function fetchAutocomplete(
 }
 
 async function fetchLocations(
-  q = null,
+  q_location,
+  // q = null,
   startDate = null,
   endDate = null,
   chronicles = null
 ) {
-  const r = await _fetch("locations", q, startDate, endDate, chronicles);
+  const r = await _fetch(
+    "locations",
+    null,
+    startDate,
+    endDate,
+    chronicles,
+    null,
+    null,
+    q_location
+  );
   if (r.length === 2 && r[0] === null) return r;
   else return r;
 }
