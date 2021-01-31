@@ -42,7 +42,13 @@ const fillMissingData = (data, timeInterval) => {
   return transformedData;
 };
 
-const Histogram = ({ data, yMax = null, width = 450, height = 100 }) => {
+const Histogram = ({
+  data,
+  yMax = null,
+  width = 450,
+  height = 100,
+  padding = { left: 50, top: 30, bottom: 20, right: 10 },
+}) => {
   if (data == null || !data.length || data.length === 0) return null;
 
   let timeInterval = data[0].time_interval;
@@ -82,7 +88,7 @@ const Histogram = ({ data, yMax = null, width = 450, height = 100 }) => {
 
   return (
     <VictoryChart
-      padding={{ left: 50, top: 30, bottom: 20, right: 10 }}
+      padding={padding}
       height={height}
       width={width}
       scale={{ x: "time" }}
@@ -91,7 +97,12 @@ const Histogram = ({ data, yMax = null, width = 450, height = 100 }) => {
     >
       <VictoryAxis
         tickCount={3}
-        style={{ tickLabels: { fontSize: 8, fontFamily } }}
+        style={{
+          tickLabels: { fontSize: 8, fontFamily },
+          axis: {
+            stroke: "grey",
+          },
+        }}
         tickFormat={genTimeFormat}
       />
       <VictoryAxis
@@ -99,6 +110,9 @@ const Histogram = ({ data, yMax = null, width = 450, height = 100 }) => {
         style={{
           tickLabels: { fontSize: 8, fontFamily },
           axisLabel: { fontSize: 7, padding: 40, fontFamily },
+          axis: {
+            stroke: "grey",
+          },
         }}
         dependentAxis
         tickCount={3}

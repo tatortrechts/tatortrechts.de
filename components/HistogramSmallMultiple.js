@@ -64,10 +64,31 @@ export default function HistogramSmallMultiple({ histoData, orgs }) {
     <>
       <div className="columns is-centered is-multiline">
         {dataFinal.map((x) => (
-          <div className="column is-3">
-            <div>{orgs.filter((xx) => x[0].chronicle == xx.id)[0].name}</div>
+          <div className="column is-3 box m-3 has-text-centered">
+            <h3 className="is-size-5">
+              {orgs.filter((xx) => x[0].chronicle == xx.id)[0].name}
+            </h3>
+            <p className="is-size-7">
+              {sum(x)} registrierte Taten in{" "}
+              {orgs.filter((xx) => x[0].chronicle == xx.id)[0].region} (
+              <a
+                href={
+                  orgs.filter((xx) => x[0].chronicle == xx.id)[0]
+                    .chronicle_source
+                }
+              >
+                Chronik
+              </a>
+              )
+            </p>
             <br />
-            <Histogram data={x} yMax={maxForYear} height={200} width={300} />
+            <Histogram
+              data={x}
+              yMax={maxForYear}
+              height={150}
+              width={250}
+              padding={{ left: 50, bottom: 40 }}
+            />
           </div>
         ))}
       </div>

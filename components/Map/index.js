@@ -39,12 +39,12 @@ const GERMAN_LAT = [47, 55.4];
 const GERMAN_LNG = [4.8, 15.4];
 const CENTER_GERMANY = [51.1657, 10.4515];
 
+// no max zoom to stay flexible (useful in cities)
 const baseInitialViewport = {
   latitude: CENTER_GERMANY[0],
   longitude: CENTER_GERMANY[1],
   zoom: 5.5,
   minZoom: 5.5,
-  maxZoom: 15,
   bearing: 0,
   pitch: 0,
 };
