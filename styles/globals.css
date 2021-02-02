@@ -343,3 +343,79 @@ svg.tor-expanded {
     margin-top: 2rem;
   }
 }
+
+.ele.ratio {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+}
+
+.ele .inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.ele .box {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  line-height: 3rem;
+  color: #333;
+  font-weight: bold;
+  background: #fb6a4a;
+  opacity: 0.5;
+}
+
+.parallax {
+  width: 10rem;
+  height: 10rem;
+}
+
+.small {
+  width: 10%;
+  margin: 6rem;
+}
+
+.smallLinear {
+  margin: 0.2rem;
+  width: 5rem;
+}
+
+.elements {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.elementsHorizontal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-flow: column nowrap;
+}
+
+.linear {
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
+.linearHorizontal {
+  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+}
