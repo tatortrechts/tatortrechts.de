@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Footer from "../components/Footer";
-import HistogramSmallMultiple from "../components/HistogramSmallMultiple";
 import NavBar from "../components/NavBar";
 import {
   fetchChroHisto,
@@ -27,7 +26,7 @@ function Home({ content, histoData, orgs }) {
       <NavBar />
       <div className="tor-margin-top"></div>
       <div dangerouslySetInnerHTML={{ __html: content.body }} />
-      <HistogramSmallMultiple histoData={histoData} orgs={orgs} />
+      {/* <HistogramSmallMultiple histoData={histoData} orgs={orgs} /> */}
       <Footer />
     </>
   );
