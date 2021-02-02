@@ -28,12 +28,22 @@ input[type="search"]::-webkit-search-results-decoration {
 a {
   font-weight: bold;
   text-decoration: underline;
+  color: inherit;
+}
+
+a:hover {
+  color: #a50f15;
 }
 
 .no-underline,
 nav a {
   text-decoration: inherit;
 }
+
+#sidebar a {
+  color: #a50f15;
+}
+
 /* utility classes */
 
 .tor-margin-top {

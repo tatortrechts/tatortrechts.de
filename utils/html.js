@@ -53,7 +53,7 @@ async function fixHtml(html) {
 async function renderListChildPages(parentPageId) {
   const items = await fetchChildPages(parentPageId);
   const posts = items.map(({ title, url, thumbnail_url, date, teaser }) => {
-    return `<div class="column is-6"><a href="${url}"><div class="card">
+    return `<div class="column is-6"><a className="no-underline" style="text-decoration: none" href="${url}"><div class="card">
     <div class="card-image">
       <figure class="image is-2by1">
         <img src="${thumbnail_url}" alt="${title}">
