@@ -1,10 +1,11 @@
 import Head from "next/head";
+import ContentMiddle from "../components/ContentMiddle";
 import Footer from "../components/Footer";
 import HistogramSmallMultiple from "../components/HistogramSmallMultiple";
 import NavBar from "../components/NavBar";
 import { fetchChroHisto, fetchOrganizations } from "../utils/networking";
 
-function Chroniken({ content, histoData, orgs }) {
+function Chroniken({ histoData, orgs }) {
   // const { seo_title: title, search_description: description } = content.meta;
   const title = "Chroniken";
   const description = "";
@@ -19,15 +20,32 @@ function Chroniken({ content, histoData, orgs }) {
       </Head>
       <NavBar />
       <div className="tor-margin-top"></div>
-      {/* <div dangerouslySetInnerHTML={{ __html: content.body }} /> */}
+      <ContentMiddle>
+        <h1 className="is-size-1">Chroniken</h1>
+        <p>
+          Auf Tatort Rechts sind Daten von {orgs.length} Organisationen. Eine
+          Übersicht über die Anzahl und Zeiträume der Daten.
+          <br />
+          <br />
+          Wir sind immer interessiert weitere Datenquellen zu erschließen. Bitte{" "}
+          <a href="/kontakt">
+            nehmt mit uns Kontakt auf, um weitere Daten hinzuzufügen.
+          </a>
+        </p>
+      </ContentMiddle>
+
       <HistogramSmallMultiple histoData={histoData} orgs={orgs} />
+      <ContentMiddle>
+        {/* {orgs.map((x) => {
+          return <div>{x.name}</div>;
+        })} */}
+      </ContentMiddle>
       <Footer />
     </>
   );
 }
 
 export async function getServerSideProps() {
-  // const content = await fetchContent("home");
   const histo = await fetchChroHisto();
   const orgs = await fetchOrganizations();
 
