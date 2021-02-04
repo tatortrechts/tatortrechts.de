@@ -4,6 +4,7 @@ import {
   ParallaxBanner,
   ParallaxProvider,
 } from "react-scroll-parallax";
+import ContentMiddle from "../components/ContentMiddle";
 import Element from "../components/Element";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
@@ -297,6 +298,24 @@ function Home({ content }) {
         </p>
       </ParallaxProvider>
 
+      <ContentMiddle>
+        <div>
+          <small>
+            Das Vorhaben wurde mit Mitteln des Bundesministeriums für Bildung
+            und Forschung unter dem Förderkennzeichen 01IS20S43 gefördert. Die
+            Verantwortung für den Inhalt dieser Veröffentlichung liegt beim
+            Autor.
+          </small>
+        </div>
+        <div className="columns is-centered level mt-5">
+          <div className="column is-4">
+            <img src="/logo-bmbf.svg" />
+          </div>
+          <div className="column is-3">
+            <img src="/logo-ptf.svg" />
+          </div>
+        </div>
+      </ContentMiddle>
       <Footer />
     </>
   );
