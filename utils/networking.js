@@ -217,7 +217,9 @@ async function fetchContent(slug) {
 }
 
 async function fetchChildPages(pageId) {
-  const url = API_LOCATION + `/content/api/v2/pages/?child_of=${pageId}`;
+  const url =
+    API_LOCATION +
+    `/content/api/v2/pages/?child_of=${pageId}&order=-article_date&live=true`;
   const apiResponse = await ky.get(url).json();
   const items = apiResponse.items.map((x) => {
     const {
