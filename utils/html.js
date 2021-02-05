@@ -53,18 +53,16 @@ async function fixHtml(html) {
 async function renderListChildPages(parentPageId) {
   const items = await fetchChildPages(parentPageId);
   const posts = items.map(({ title, url, thumbnail_url, date, teaser }) => {
-    return `<div class="column is-6"><a className="no-underline" style="text-decoration: none" href="${url}"><div class="card">
+    return `<div class="column is-6"><a className="no-underline" style="text-decoration: none; font-weight: inherit;" href="${url}"><div class="card">
     <div class="card-image">
       <figure class="image is-2by1">
         <img src="${thumbnail_url}" alt="${title}">
       </figure>
     </div>
     <div class="card-content">
-    <p class="">${dayjs(date).format("D. MMMM YYYY")}</p>
-      <p class="title is-3">${title}</p>
-    </div>
-    <div class="card-content">
-    ${teaser}
+    <p class="has-text-grey">${dayjs(date).format("D. MMMM YYYY")}</p>
+    <h2 class="title is-2">${title}</h2>
+    <h3 class="subtitle is-5">${teaser}</h3>
     </div>
   </div></a></div>`;
   });
@@ -78,10 +76,10 @@ function renderArticleHeader(article) {
     <figure class="image has-text-centered">
       <img src="${image_url}" alt="${title}">
       <figcaption>${caption}</figcaption>
-    </figure>
+      </figure>
+    <p class="text-color-grey mt-5">${dayjs(date).format("D. MMMM YYYY")}</p>
     <h1 class="title is-1 mt-3">${title}</h1>
-    <h2 class="subtitle is-5">${teaser}</h2>
-    <p>${dayjs(date).format("D. MMMM YYYY")}</p>
+    <h2 class="subtitle is-4">${teaser}</h2>
     <hr>
   </div>`;
 }

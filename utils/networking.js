@@ -198,6 +198,7 @@ async function fetchContent(slug) {
     article_teaser,
     title,
     article_image_caption,
+    article_image_thumbnail,
     meta: { article_image },
   } = apiResponse2;
 
@@ -205,7 +206,7 @@ async function fetchContent(slug) {
 
   if (article_image != null) {
     article = {};
-    article.image_url = API_LOCATION + article_image.meta.download_url;
+    article.image_url = API_LOCATION + article_image_thumbnail.url;
     article.title = title;
     article.teaser = article_teaser;
     article.date = article_date;

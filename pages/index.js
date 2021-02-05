@@ -20,11 +20,6 @@ function Home({ content }) {
         <title>{title}</title>
         <meta property="og:title" content={title}></meta>
         <meta name="description" content={description} />
-        <meta
-          property="og:image"
-          content="http://euro-travel-example.com/thumbnail.jpg"
-          key="preview-image"
-        />
         <meta property="og:description" content={description}></meta>
       </Head>
       <NavBar />
