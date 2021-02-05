@@ -138,18 +138,24 @@ function Home({ content }) {
             })}
           </div>
         </div> */}
-        <section className="hero">
+        <section className="hero is-primary" style={{ marginBottom: "4rem" }}>
           <ContentMiddle>
             {/* <h4 className="title is-4">Rechte Gewalt vor deiner Haustür</h4> */}
-            <h1 className="title is-1">Fast 16.000 rechte Gewalttaten</h1>
-            <h1 className="title is-1">haben 12 Organisationen</h1>
-            <h1 className="title is-1">seit dem Jahr 2000 registriert.</h1>
+            <h1 className="title is-1">
+              Fast <b>16.000</b> rechte Gewalttaten
+            </h1>
+            <h1 className="title is-1">
+              haben <b>12</b> Organisationen
+            </h1>
+            <h1 className="title is-1">
+              seit dem Jahr <b>2000</b> registriert.
+            </h1>
           </ContentMiddle>
         </section>
 
         <section className="hero">
           <ContentMiddle>
-            <h2 className="title is-5">Rechte Gewalt vor deiner Haustür</h2>
+            <h2 className="title is-4">Rechte Gewalt vor deiner Haustür</h2>
 
             <p>
               LAUT der Antonio-Amadeu-Stiftung starben seit der Wende 213
@@ -160,18 +166,33 @@ function Home({ content }) {
           </ContentMiddle>
         </section>
 
-        <ParallaxBanner
-          className="your-class"
-          layers={[
-            {
-              image: "/images/karte.png",
-              amount: 0.5,
-            },
-          ]}
-          style={{
-            width: "100%",
-          }}
-        ></ParallaxBanner>
+        <div style={{ margin: "auto", width: "60%" }}>
+          <ParallaxBanner
+            className="your-class"
+            layers={[
+              {
+                image: "/images/karte.png",
+                amount: 0.2,
+              },
+            ]}
+            style={{
+              // width: "100%",
+              height: "50rem",
+            }}
+          ></ParallaxBanner>
+        </div>
+        <section className="hero">
+          <ContentMiddle>
+            <h2 className="title is-4">Rechte Gewalt vor deiner Haustür</h2>
+
+            <p>
+              LAUT der Antonio-Amadeu-Stiftung starben seit der Wende 213
+              Menschen durch rechte Gewalt (Stand 15.01.2021). Rechte Gewalt
+              passiert überall. Wenn du wissen willst wo, dann nutz unser
+              Recherche-Tool.
+            </p>
+          </ContentMiddle>
+        </section>
         <section className="hero">
           <ContentMiddle>
             {/* <h4 className="title is-4">Mach mit!</h4> */}
