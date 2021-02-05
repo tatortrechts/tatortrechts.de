@@ -26,134 +26,44 @@ function Home({ content }) {
       <div className="tor-margin-top"></div>
 
       <ParallaxProvider>
-        {/* <section
-          className="hero is-halfheight has-text-black"
-          style={{ backgroundColor: "#fb6a4a" }}
-        >
-          <div className="columns">
-            <div className="column is-6 has-text-centered">
-              <div className="hero-body has-text-black">
-                <div className="" style={{ margin: "auto" }}>
-                  <p className="title">Fast 16.000 rechte Gewalttaten</p>
-                  <p className="subtitle">Fullheight subtitle</p>
-                </div>
-              </div>
-              <div className="hero-body">
-                <div className="" style={{ margin: "auto" }}>
-                  <p className="title">haben 12 Organisationen</p>
-                  <p className="subtitle">Fullheight subtitle</p>
-                </div>
-              </div>
-              <div className="hero-body">
-                <div className="" style={{ margin: "auto" }}>
-                  <p className="title">seit dem Jahr 2000 registriert.</p>
-                  <p className="subtitle">Fullheight subtitle</p>
-                </div>
-              </div> */}
-        {/* <p>
-                {" "}
-                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
-                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-                est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor
-                in hendrerit in vulputate velit esse molestie consequat, vel
-                illum dolore eu feugiat nulla facilisis
-              </p> */}
-        {/* </div>
-            <div className="column is-6">
-              <Parallax
-                className="custom-class"
-                y={[20, -20]}
-                tagOuter="figure"
-              >
-                <img
-                  src="/images/Tatort Rechts_Symbolfoto_Waffengewalt.jpg"
-                  style={{ width: "40rem" }}
-                />
-              </Parallax>
-            </div>
-          </div>
-        </section> */}
-        {/* <ContentMiddle>
-          Stell dir vor du steigst Abends aus dem Bus aus und plötzlich greift
-          dich ein Mann an. Er schlägt dich. Und dann eskaliert die Situation,
-          der Mann zieht eine Waffe und zielt auf dich. Das ist kein
-          Gedankenspiel.
-        </ContentMiddle> */}
-        {/* <section className="hero is-medium is-link">
-          <div className="hero-body">
-            <p style={{ maxWidth: "30rem", margin: "auto" }}>
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-              <a href="/">consequat</a>. Duis autem vel eum iriure dolor in
-              hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et
-              iusto odio dignissim qui blandit praesent luptatum zzril delenit
-              augue duis dolore te feugait nulla facilisi. Nam liber tempor cum
-              soluta nobis eleifend option congue nihil imperdiet doming id quod
-              mazim placerat facer possim assum. Lorem ipsum dolor sit amet,
-              consectetuer adipiscing elit, sed diam nonummy nibh euismod
-              tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
-              enim ad minim veniam, quis nostrud exerci tation ullamcorper
-              suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
-              autem vel eum iriure dolor in hendrerit in vulputate velit esse
-              molestie consequat, vel illum dolore eu feugiat nulla facilisis.
-              At vero eos et accusam et justo duo dolores et ea rebum. Stet
-              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-              dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-              elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-              justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-              takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-              sit amet, consetetur sadipscing elitr, At accusam aliquyam diam
-              diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et
-              et invidunt justo labore Stet clita ea et gubergren, kasd magna no
-              rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum
-              dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            </p>
-          </div>
-        </section> */}
-        {/* <hr /> */}
-        {/* <hr /> */}
-        {/* <div className="vertical">
-          <div className="elements linear">
-            {elements.map((_, i) => {
-              const n = i - amount;
-              return (
-                <Parallax
-                  key={n}
-                  className="smallLinear"
-                  x={[`${offA * n}${unit}`, `${offB * n}${unit}`]}
-                >
-                  <Element name={n * -1} />
-                </Parallax>
-              );
-            })}
-          </div>
-        </div> */}
         <section className="hero is-primary" style={{ marginBottom: "2rem" }}>
           <ContentMiddle>
-            {/* <h4 className="title is-4">Rechte Gewalt vor deiner Haustür</h4> */}
-            <h1 className="title is-2">
-              <b className="is-size-1">12</b> Projekte haben seit
-            </h1>
-            <h1 className="title is-2">
-              dem Jahr <b className="is-size-1">2000</b> fast
-            </h1>
-            <h1 className="title is-2">
-              <b className="is-size-1"> 16.000</b> Fälle mit
-            </h1>
-            <h1 className="title is-2">
-              <b className="is-size-1">rechtem </b> Bezug registriert.
-            </h1>
+            <div className="columns">
+              <div className="column">
+                <h1 className="title is-2">
+                  <b className="is-size-1">12</b> Projekte haben seit
+                </h1>
+                <h1 className="title is-2">
+                  dem Jahr <b className="is-size-1">2000</b> fast
+                </h1>
+                <h1 className="title is-2">
+                  <b className="is-size-1"> 16.000</b> Fälle mit
+                </h1>
+                <h1 className="title is-2">
+                  <b className="is-size-1">rechtem </b> Bezug registriert.
+                </h1>
+              </div>
+              <div className="column is-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100%"
+                  height="100%"
+                  fill="currentColor"
+                  class="bi bi-clipboard-data"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
+                  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                  <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                </svg>
+              </div>
+            </div>
           </ContentMiddle>
         </section>
 
         <section className="hero">
           <ContentMiddle>
-            <h2 className="title is-4">Rechte Gewalt vor deiner Haustür</h2>
+            <h2 className="title is-2">Rechte Gewalt vor deiner Haustür</h2>
 
             <p>
               Hinter <a href="/ueber">Tatort Rechts</a> stehen{" "}
@@ -172,30 +82,25 @@ function Home({ content }) {
           style={{
             margin: "auto",
             width: "100%",
-            backgroundColor: "lightgrey",
+            borderTop: "0.5rem solid black",
+            borderBottom: "0.5rem solid black",
           }}
         >
           <a href="/karte">
             <ParallaxBanner
-              className="your-class"
+              className="tor-landing-map"
               layers={[
                 {
                   image: "/images/karte.jpg",
-                  amount: 0.2,
+                  amount: -1,
                 },
               ]}
-              style={{
-                // margin: "auto",
-                width: "100%",
-                // width: "50rem",
-                height: "60rem",
-              }}
             ></ParallaxBanner>
           </a>
         </div>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Recherche-Tool</h4>
+            <h4 className="title is-2">Recherche-Tool</h4>
             <p>
               Zum ersten Mal ist es möglich, die öffentlich verfügbaren Daten
               von <a href="/blog/chroniken">12 Projekt-Seiten</a> systematisch
@@ -210,7 +115,7 @@ function Home({ content }) {
         </section>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Gezielte Suchen</h4>
+            <h4 className="title is-2">Gezielte Suchen</h4>
             <p>
               Seit dem Jahr 2000 sind auf den 12 Projekt-Seiten zusammen etwa
               16.000 Fälle registriert worden, die einen rechten, rassistischen
@@ -224,7 +129,7 @@ function Home({ content }) {
         </section>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Zusammenhänge sehen</h4>
+            <h4 className="title is-2">Zusammenhänge sehen</h4>
             <p>
               Wir hoffen, dass es nun durch die visuell ansprechend und
               filterbar aufbereiteten Daten viel leichter sein wird,
@@ -246,14 +151,11 @@ function Home({ content }) {
               amount: 0.5,
             },
           ]}
-          style={{
-            height: "500px",
-          }}
         ></ParallaxBanner>
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Waffen und Hakenkreuz</h4>
+            <h4 className="title is-2">Waffen und Hakenkreuz</h4>
             <p>
               Hier ein Beispiel. Stell dir vor du steigst Abends aus dem Bus aus
               und plötzlich greift dich ein Mann an. Er schlägt dich. Und dann
@@ -284,14 +186,11 @@ function Home({ content }) {
               amount: 0.5,
             },
           ]}
-          style={{
-            height: "500px",
-          }}
         ></ParallaxBanner>
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Gefahr von Rechtsradikalismus</h4>
+            <h4 className="title is-2">Gefahr von Rechtsradikalismus</h4>
             <p>
               In dem Fall aus Bremen-Vegesack ist niemand tödlich verletzt
               worden. Doch wie gefährlich rechtsradikale Ideologien oder
@@ -311,14 +210,11 @@ function Home({ content }) {
               amount: 0.5,
             },
           ]}
-          style={{
-            height: "500px",
-          }}
         ></ParallaxBanner>
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">19. Februar 2020 - Hanau</h4>
+            <h4 className="title is-3">19. Februar 2020 - Hanau</h4>
             <p>
               Bei dem Anschlag in Hanau starben neun Menschen mit
               Migrationshintergrund durch Schüsse des Täters Tobias R. Laut
@@ -341,7 +237,7 @@ function Home({ content }) {
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">9. Oktober 2019 - Halle</h4>
+            <h4 className="title is-3">9. Oktober 2019 - Halle</h4>
             <p>
               Zum höchsten jüdischen Feiertag Jom Kippur versuchte ein
               27-Jähriger zu den Feierlichkeiten gewaltsam in eine Synagoge in
@@ -360,7 +256,7 @@ function Home({ content }) {
         </section>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">1. Juni 2019 - Istha</h4>
+            <h4 className="title is-3">1. Juni 2019 - Istha</h4>
             <p>
               Aus nächster Nähe ist der Kasseler Regierungspräsident Walter
               Lübcke erschossen worden. Lübcke wurde leblos auf der Terrasse
@@ -379,7 +275,7 @@ function Home({ content }) {
           </ContentMiddle>
         </section>
         <ParallaxBanner
-          className="your-class"
+          className="is-hidden-mobile"
           layers={[
             {
               image: "/tor_logo.svg",
@@ -388,12 +284,29 @@ function Home({ content }) {
           ]}
           style={{
             width: "100%",
-            // height: "30rem",
+          }}
+        ></ParallaxBanner>
+        <ParallaxBanner
+          className="is-hidden-tablet"
+          layers={[
+            {
+              children: (
+                <img
+                  src="/tor_logo.svg"
+                  style={{ width: "100%", height: "80%" }}
+                />
+              ),
+              amount: 0.5,
+              props: { style: { width: "100%" } },
+            },
+          ]}
+          style={{
+            width: "100%",
           }}
         ></ParallaxBanner>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-4">Vielzahl an Fällen</h4>
+            <h4 className="title is-2">Vielzahl an Fällen</h4>
             <p>
               Vielzahl an Fällen Dies ist nur eine kurze Erinnerung an die
               jüngsten Fälle. Es reihen sich viele weitere ein, wie etwa die
@@ -407,9 +320,9 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <section className="hero">
+        <section className="hero is-primary">
           <ContentMiddle>
-            <h4 className="title is-4">Du kannst etwas tun</h4>
+            <h4 className="title is-2">Du kannst etwas tun</h4>
             <p>
               Wir wollen mit <a href="/blog">Tatort Rechts</a> einen Schwerpunkt
               setzen auf rechte Gewalt und diese sichtbar machen. Dieses Projekt
