@@ -138,17 +138,17 @@ function Home({ content }) {
             })}
           </div>
         </div> */}
-        <section className="hero is-primary" style={{ marginBottom: "4rem" }}>
+        <section className="hero is-primary" style={{ marginBottom: "2rem" }}>
           <ContentMiddle>
             {/* <h4 className="title is-4">Rechte Gewalt vor deiner Haustür</h4> */}
-            <h1 className="title is-1">
-              Fast <b>16.000</b> rechte Gewalttaten
+            <h1 className="title is-2">
+              Fast <b className="is-size-1"> 16.000</b> rechte Gewalttaten
             </h1>
-            <h1 className="title is-1">
-              haben <b>12</b> Organisationen
+            <h1 className="title is-2">
+              haben <b className="is-size-1">12</b> Organisationen
             </h1>
-            <h1 className="title is-1">
-              seit dem Jahr <b>2000</b> registriert.
+            <h1 className="title is-2">
+              seit dem Jahr <b className="is-size-1">2000</b> registriert.
             </h1>
           </ContentMiddle>
         </section>
@@ -166,7 +166,13 @@ function Home({ content }) {
           </ContentMiddle>
         </section>
 
-        <div style={{ margin: "auto", width: "60%" }}>
+        <div
+          style={{
+            margin: "auto",
+            width: "100%",
+            backgroundColor: "lightgrey",
+          }}
+        >
           <ParallaxBanner
             className="your-class"
             layers={[
@@ -176,26 +182,16 @@ function Home({ content }) {
               },
             ]}
             style={{
-              // width: "100%",
-              height: "50rem",
+              // margin: "auto",
+              width: "100%",
+              // width: "50rem",
+              height: "60rem",
             }}
           ></ParallaxBanner>
         </div>
         <section className="hero">
           <ContentMiddle>
-            <h2 className="title is-4">Rechte Gewalt vor deiner Haustür</h2>
-
-            <p>
-              LAUT der Antonio-Amadeu-Stiftung starben seit der Wende 213
-              Menschen durch rechte Gewalt (Stand 15.01.2021). Rechte Gewalt
-              passiert überall. Wenn du wissen willst wo, dann nutz unser
-              Recherche-Tool.
-            </p>
-          </ContentMiddle>
-        </section>
-        <section className="hero">
-          <ContentMiddle>
-            {/* <h4 className="title is-4">Mach mit!</h4> */}
+            <h4 className="title is-4">Recherche-Tool</h4>
             <p>
               Mit Tatort Rechts ist es möglich, die öffentlich verfügbaren Daten
               zu rechter Gewalt von 12 Organisationen systematisch und gezielt
@@ -208,18 +204,6 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <ParallaxBanner
-          className="your-class"
-          layers={[
-            {
-              image: "/tor_logo.svg",
-              amount: 0.5,
-            },
-          ]}
-          style={{
-            width: "100%",
-          }}
-        ></ParallaxBanner>
         <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">Mach mit!</h4>
@@ -233,7 +217,21 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <section className="hero is-primary">
+        <ParallaxBanner
+          className="your-class"
+          layers={[
+            {
+              image: "/tor_logo.svg",
+              amount: 0.5,
+            },
+          ]}
+          style={{
+            width: "100%",
+            // height: "30rem",
+          }}
+        ></ParallaxBanner>
+
+        <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">Waffen und Hakenkreuz</h4>
             <p>
@@ -242,6 +240,16 @@ function Home({ content }) {
               Situation, der Mann zieht eine Waffe und zielt auf dich.
             </p>
             <p>Das ist kein Gedankenspiel.</p>
+          </ContentMiddle>
+        </section>
+        <section className="hero">
+          <ContentMiddle>
+            <p>
+              Es ist tatsächlich passiert, in Bremen-Vegesack. Der Mann mit der
+              Waffe wurde später von der Polizei festgenommen, in seiner Wohnung
+              wurde neben Drogen und weiteren Waffen ein Hakenkreuz aus Metall
+              gefunden.
+            </p>
           </ContentMiddle>
         </section>
         <ParallaxBanner
@@ -256,16 +264,7 @@ function Home({ content }) {
             height: "500px",
           }}
         ></ParallaxBanner>
-        <section className="hero is-primary">
-          <ContentMiddle>
-            <p>
-              Es ist tatsächlich passiert, in Bremen-Vegesack. Der Mann mit der
-              Waffe wurde später von der Polizei festgenommen, in seiner Wohnung
-              wurde neben Drogen und weiteren Waffen ein Hakenkreuz aus Metall
-              gefunden.
-            </p>
-          </ContentMiddle>
-        </section>
+
         <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">Gefahr von Rechtsradikalismus</h4>
@@ -279,7 +278,7 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <section className="hero is-primary">
+        <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">19. Februar 2020 - Hanau</h4>
             <p>
@@ -295,6 +294,7 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
+
         <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">9. Oktober 2019 - Halle</h4>
@@ -308,7 +308,7 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <section className="hero is-primary">
+        <section className="hero">
           <ContentMiddle>
             <h4 className="title is-4">1. Juni 2019 - Istha</h4>
             <p>
@@ -321,7 +321,7 @@ function Home({ content }) {
             </p>
           </ContentMiddle>
         </section>
-        <ContentMiddle>
+        {/* <ContentMiddle>
           <h4 className="title is-4">Recherche-Tool</h4>
           <p>
             Auf dieser Webseite “Tatort Rechts”, wollen wir über rechte
@@ -353,27 +353,8 @@ function Home({ content }) {
             im Jahr 2019 1.347 rechts, rassistisch und antisemitisch motivierte
             Angriffe.
           </p>
-        </ContentMiddle>
+        </ContentMiddle> */}
       </ParallaxProvider>
-
-      <ContentMiddle>
-        <div>
-          <small>
-            Das Vorhaben wurde mit Mitteln des Bundesministeriums für Bildung
-            und Forschung unter dem Förderkennzeichen 01IS20S43 gefördert. Die
-            Verantwortung für den Inhalt dieser Veröffentlichung liegt beim
-            Autor.
-          </small>
-        </div>
-        <div className="columns is-centered level mt-5">
-          <div className="column is-4">
-            <img src="/logo-bmbf.svg" />
-          </div>
-          <div className="column is-3">
-            <img src="/logo-ptf.svg" />
-          </div>
-        </div>
-      </ContentMiddle>
       <Footer />
     </>
   );
