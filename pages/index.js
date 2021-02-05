@@ -168,21 +168,23 @@ function Home({ content }) {
             backgroundColor: "lightgrey",
           }}
         >
-          <ParallaxBanner
-            className="your-class"
-            layers={[
-              {
-                image: "/images/karte.jpg",
-                amount: 0.2,
-              },
-            ]}
-            style={{
-              // margin: "auto",
-              width: "100%",
-              // width: "50rem",
-              height: "60rem",
-            }}
-          ></ParallaxBanner>
+          <a href="/karte">
+            <ParallaxBanner
+              className="your-class"
+              layers={[
+                {
+                  image: "/images/karte.jpg",
+                  amount: 0.2,
+                },
+              ]}
+              style={{
+                // margin: "auto",
+                width: "100%",
+                // width: "50rem",
+                height: "60rem",
+              }}
+            ></ParallaxBanner>
+          </a>
         </div>
         <section className="hero">
           <ContentMiddle>
