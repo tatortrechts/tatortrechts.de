@@ -172,7 +172,7 @@ function Home({ content }) {
             className="your-class"
             layers={[
               {
-                image: "/images/karte.png",
+                image: "/images/karte.jpg",
                 amount: 0.2,
               },
             ]}
