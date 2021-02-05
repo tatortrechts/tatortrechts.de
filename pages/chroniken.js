@@ -23,7 +23,7 @@ function Chroniken({ histoData, orgs }) {
       <ContentMiddle>
         <h1 className="is-size-1">Chroniken</h1>
         <p>
-          Auf Tatort Rechts sind Daten von {orgs.length} Organisationen. Eine
+          Auf Tatort Rechts sind Daten von {orgs.length} Projekte. Eine
           Übersicht über die Anzahl und Zeiträume der Daten.
           <br />
           <br />

@@ -242,7 +242,7 @@ function Home({ content }) {
           className="your-class"
           layers={[
             {
-              image: "/images/Tatort_Rechts_Symbolfoto_Zusammenhänge.jpg",
+              image: "/images/Tatort_Rechts_Symbolfoto_Zusammenhaenge.jpg",
               amount: 0.5,
             },
           ]}

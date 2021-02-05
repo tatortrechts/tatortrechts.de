@@ -87,7 +87,7 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                         <a href={x.url} target="_blank">
                           {x.chronicle.name}
                         </a>,
-                        "Chronik",
+                        "Projekt",
                       ],
                       [x.location.house_number, "Hausnummer"],
                       [x.location.street, "Straße"],

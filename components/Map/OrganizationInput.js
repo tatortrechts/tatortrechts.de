@@ -22,7 +22,7 @@ export default function OrganizationInput({
     if (organizations.length === values.length)
       return "keine Organisation ausgewählt";
 
-    if (values.length === 0) return "alle Quellen";
+    if (values.length === 0) return "alle";
 
     const orgFiltered = organizations.filter((x) => !values.includes(x.id));
 

@@ -129,8 +129,8 @@ const IncidentList = ({
                   Für den Zeitraum vom{" "}
                   <b>{dayjs(minMaxDate.minDate).format("DD.MM.YYYY")}</b> bis{" "}
                   <b>{dayjs(minMaxDate.maxDate).format("DD.MM.YYYY")}</b> haben{" "}
-                  <b>{numOrganizations}</b> Organisationen <b>{count}</b> rechte
-                  Taten registriert.
+                  <b>{numOrganizations}</b> Projekte <b>{count}</b> rechte Taten
+                  registriert.
                 </div>
               )}
               {minMaxDate.total !== count && (

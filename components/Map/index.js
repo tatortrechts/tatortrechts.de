@@ -647,7 +647,7 @@ class Map extends React.Component {
     const sideBarFilter = (
       <div className="box" id="sidebar-filter">
         <div className="is-size-7">
-          Durchsuch die Taten nach Schlagworten wie z. B.{" "}
+          Durchsuche die Taten nach Schlagworten wie z. B.{" "}
           <a
             className="is-clickable no-underline"
             onClick={() => this._setStateAndReload({ q: "Hakenkreuz" })}
@@ -661,7 +661,7 @@ class Map extends React.Component {
           >
             "Brand"
           </a>
-          , oder wähl einen Ort aus.
+          . Oder wähle einen Ort aus.
         </div>
         <div className="columns is-mobile is-multiline">
           <div className="column is-6-tablet is-12-mobile">
