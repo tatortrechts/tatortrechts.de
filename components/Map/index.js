@@ -563,10 +563,21 @@ class Map extends React.Component {
 
       mapboxSource.getClusterLeaves(clusterId, 100000000, 0, (_, clusters) => {
         if (clusters != null) {
+          const allClusters = {};
+
+          for (const x of clusters) {
+            const label = extractShortAddress(x.properties);
+            if (label in allClusters) {
+              allClusters[label] += x.properties.total;
+            } else {
+              allClusters[label] = x.properties.total;
+            }
+          }
+
           this.setState({
-            hoverClusters: clusters
-              .map((x) => x.properties)
-              .sort((a, b) => b.total - a.total),
+            hoverClusters: Object.entries(allClusters).sort(
+              (a, b) => b[1] - a[1]
+            ),
           });
         }
       });
@@ -576,7 +587,12 @@ class Map extends React.Component {
       tableRows = this.state.hoverClusters.slice(0, 5);
       notShownRows = this.state.hoverClusters.slice(5);
     } else {
-      tableRows = [hoverInfo.feature.properties];
+      tableRows = [
+        [
+          extractShortAddress(hoverInfo.feature.properties),
+          hoverInfo.feature.properties.total,
+        ],
+      ];
     }
 
     return (
@@ -593,8 +609,8 @@ class Map extends React.Component {
               {tableRows.map((x, i) => {
                 return (
                   <tr key={i}>
-                    <td>{x.total}</td>
-                    <td>{extractShortAddress(x)}</td>
+                    <td>{x[1]}</td>
+                    <td>{x[0]}</td>
                   </tr>
                 );
               })}
