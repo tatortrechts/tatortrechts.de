@@ -19,8 +19,7 @@ module.exports = {
           },
           {
             key: "Content-Security-Policy",
-            value:
-              "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'",
+            value: "default-src https: 'unsafe-inline'",
           },
           {
             key: "X-Frame-Options",
