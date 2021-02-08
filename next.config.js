@@ -17,10 +17,10 @@ module.exports = {
             key: "X-XSS-Protection",
             value: "1; mode=block",
           },
-          {
-            key: "Content-Security-Policy",
-            value: "default-src https: 'unsafe-inline'",
-          },
+          // {
+          //   key: "Content-Security-Policy",
+          //   value: "default-src https: 'unsafe-inline'",
+          // },
           {
             key: "X-Frame-Options",
             value: "deny",
