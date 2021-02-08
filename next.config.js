@@ -20,7 +20,7 @@ module.exports = {
           {
             key: "Content-Security-Policy",
             value:
-              "efault-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'",
+              "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'",
           },
           {
             key: "X-Frame-Options",
