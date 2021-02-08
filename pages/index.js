@@ -31,16 +31,12 @@ function Home({ content }) {
             <div className="columns">
               <div className="column">
                 <h1 className="title is-2">
-                  <b className="is-size-1">12</b> Projekte haben seit
+                  <b className="is-size-1">12</b> Projekte haben seit dem Jahr{" "}
+                  <b className="is-size-1">2000</b> über{" "}
+                  <b className="is-size-1"> 16.000</b> rechte Taten registriert.
                 </h1>
                 <h1 className="title is-2">
-                  dem Jahr <b className="is-size-1">2000</b> fast
-                </h1>
-                <h1 className="title is-2">
-                  <b className="is-size-1"> 16.000</b> Fälle mit
-                </h1>
-                <h1 className="title is-2">
-                  <b className="is-size-1">rechtem </b> Bezug registriert.
+                  Wir zeigen die Taten auf einer <a href="/karte">Karte</a>.
                 </h1>
               </div>
               <div className="column is-3">
@@ -63,7 +59,7 @@ function Home({ content }) {
 
         <section className="hero">
           <ContentMiddle>
-            <h2 className="title is-2">Rechte Gewalt vor deiner Haustür</h2>
+            <h2 className="title is-3">Rechte Gewalt vor deiner Haustür</h2>
 
             <p>
               Hinter <a href="/ueber">Tatort Rechts</a> stehen{" "}
@@ -100,7 +96,7 @@ function Home({ content }) {
         </div>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Recherche-Tool</h4>
+            <h4 className="title is-3">Recherche-Tool</h4>
             <p>
               Zum ersten Mal ist es möglich, die öffentlich verfügbaren Daten
               von <a href="/blog/chroniken">12 Projekt-Seiten</a> systematisch
@@ -115,7 +111,7 @@ function Home({ content }) {
         </section>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Gezielte Suchen</h4>
+            <h4 className="title is-3">Gezielte Suchen</h4>
             <p>
               Seit dem Jahr 2000 sind auf den 12 Projekt-Seiten zusammen etwa
               16.000 Fälle registriert worden, die einen rechten, rassistischen
@@ -129,7 +125,7 @@ function Home({ content }) {
         </section>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Zusammenhänge sehen</h4>
+            <h4 className="title is-3">Zusammenhänge sehen</h4>
             <p>
               Wir hoffen, dass es nun durch die visuell ansprechend und
               filterbar aufbereiteten Daten viel leichter sein wird,
@@ -155,7 +151,7 @@ function Home({ content }) {
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Waffen und Hakenkreuz</h4>
+            <h4 className="title is-3">Waffen und Hakenkreuz</h4>
             <p>
               Hier ein Beispiel. Stell dir vor du steigst Abends aus dem Bus aus
               und plötzlich greift dich ein Mann an. Er schlägt dich. Und dann
@@ -190,7 +186,7 @@ function Home({ content }) {
 
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Gefahr von Rechtsradikalismus</h4>
+            <h4 className="title is-3">Gefahr von Rechtsradikalismus</h4>
             <p>
               In dem Fall aus Bremen-Vegesack ist niemand tödlich verletzt
               worden. Doch wie gefährlich rechtsradikale Ideologien oder
@@ -306,7 +302,7 @@ function Home({ content }) {
         ></ParallaxBanner>
         <section className="hero">
           <ContentMiddle>
-            <h4 className="title is-2">Vielzahl an Fällen</h4>
+            <h4 className="title is-3">Vielzahl an Fällen</h4>
             <p>
               Vielzahl an Fällen Dies ist nur eine kurze Erinnerung an die
               jüngsten Fälle. Es reihen sich viele weitere ein, wie etwa die
@@ -322,7 +318,7 @@ function Home({ content }) {
         </section>
         <section className="hero is-primary">
           <ContentMiddle>
-            <h4 className="title is-2">Du kannst etwas tun</h4>
+            <h4 className="title is-3">Du kannst etwas tun</h4>
             <p>
               Wir wollen mit <a href="/blog">Tatort Rechts</a> einen Schwerpunkt
               setzen auf rechte Gewalt und diese sichtbar machen. Dieses Projekt
