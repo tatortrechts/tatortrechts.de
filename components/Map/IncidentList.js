@@ -175,11 +175,7 @@ const IncidentList = ({
             >
               {results &&
                 results.map((x) => (
-                  <IncidentBox
-                    key={x.rg_id}
-                    x={x}
-                    setHighlight={setHighlight}
-                  />
+                  <IncidentBox key={x.id} x={x} setHighlight={setHighlight} />
                 ))}
             </InfiniteScroll>
           </div>

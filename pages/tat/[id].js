@@ -5,7 +5,7 @@ import NavBar from "../../components/NavBar";
 import { shortTitle } from "../../utils/labels";
 import { fetchIncident } from "../../utils/networking";
 
-function IncidentDetail({ incident, rg_id }) {
+function IncidentDetail({ incident, incident_id }) {
   const title = shortTitle(incident);
   const description = (
     (incident.title ? incident.title + " - " : "") + incident.description
@@ -26,7 +26,7 @@ function IncidentDetail({ incident, rg_id }) {
           <div className="column is-7">
             <IncidentBox
               x={incident}
-              rg_id={rg_id}
+              incident_id={incident_id}
               setHighlight={() => console.log("todo")}
             />
             <div className="buttons is-centered mt-5">
@@ -42,10 +42,9 @@ function IncidentDetail({ incident, rg_id }) {
   );
 }
 
-export async function getServerSideProps({ query: { rg_id } }) {
-  const dec = Buffer.from(rg_id, "base64").toString();
-  const incident = await fetchIncident(dec);
-  return { props: { incident, rg_id } };
+export async function getServerSideProps({ query: { id } }) {
+  const incident = await fetchIncident(id);
+  return { props: { incident, incident_id: id } };
 }
 
 export default IncidentDetail;

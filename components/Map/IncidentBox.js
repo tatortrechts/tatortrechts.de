@@ -28,10 +28,10 @@ const TableRow = ({ value, label }) => {
   );
 };
 
-const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
+const IncidentBox = ({ x, setHighlight, incident_id = null }) => {
   const BOX_MAX_HEIGHT = 300;
 
-  const isDetailsView = rg_id !== null;
+  const isDetailsView = incident_id !== null;
   const [expanded, setExpanded] = useState(false);
   const [minBoxHeight, setMinBoxHeight] = useState(BOX_MAX_HEIGHT);
   const boxRef = useRef(null);
@@ -47,7 +47,7 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
   }, []);
 
   return (
-    <React.Fragment key={x.rg_id}>
+    <React.Fragment key={x.id}>
       <div
         className="card has-text-dark"
         key={x.id}
@@ -161,7 +161,8 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                         <a
                           target="_blank"
                           href={
-                            "/tat/" + (rg_id === null ? btoa(x.rg_id) : rg_id)
+                            "/tat/" +
+                            (incident_id === null ? x.id : incident_id)
                           }
                           style={{ color: "inherit" }}
                         >
@@ -183,8 +184,8 @@ const IncidentBox = ({ x, setHighlight, rg_id = null }) => {
                         <a
                           target="_blank"
                           href={
-                            "https://api.tatortrechts.de/fehler/?rg_id=" +
-                            (rg_id === null ? btoa(x.rg_id) : rg_id)
+                            "https://api.tatortrechts.de/fehler/?incident_id=" +
+                            (incident_id === null ? x.id : incident_id)
                           }
                           style={{ color: "inherit" }}
                         >

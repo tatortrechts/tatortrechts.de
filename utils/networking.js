@@ -263,13 +263,12 @@ async function fetchMinMaxDate() {
   }
 }
 
-async function fetchIncident(rg_id) {
-  const url = API_LOCATION + "/incidents/?rg_id=" + rg_id;
+async function fetchIncident(id) {
+  const url = API_LOCATION + "/incidents/" + id;
 
   try {
     const apiResponse = await ky.get(url).json();
-    if (apiResponse.results.length !== 1) return null;
-    return apiResponse.results[0];
+    return apiResponse;
   } catch (e) {
     return [null, e];
   }
