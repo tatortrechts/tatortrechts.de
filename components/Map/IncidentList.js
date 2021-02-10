@@ -1,8 +1,50 @@
 import * as dayjs from "dayjs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import Histogram from "./Histogram";
 import IncidentBox from "./IncidentBox";
+
+// Hook
+
+function useWindowSize() {
+  // Initialize state with undefined width/height so server and client renders match
+
+  // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+
+    height: undefined,
+  });
+
+  useEffect(() => {
+    // Handler to call on window resize
+
+    function handleResize() {
+      // Set window width/height to state
+
+      setWindowSize({
+        width: window.innerWidth,
+
+        height: window.innerHeight,
+      });
+    }
+
+    // Add event listener
+
+    window.addEventListener("resize", handleResize);
+
+    // Call handler right away so state gets updated with initial window size
+
+    handleResize();
+
+    // Remove event listener on cleanup
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty array ensures that effect is only run on mount
+
+  return windowSize;
+}
 
 const Onboarding = ({ hideOnboarding }) => {
   return (
@@ -100,6 +142,7 @@ const IncidentList = ({
 }) => {
   const containerRef = useRef(null);
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const size = useWindowSize();
 
   if (count === null) {
     return null;
@@ -121,16 +164,14 @@ const IncidentList = ({
             <Onboarding hideOnboarding={() => setShowOnboarding(false)} />
           </div>
         )}
-        {showResults && (
+        {(size.width < 1024 || showResults) && (
           <div id="tor-historesults">
             <div className="box tor-histogram">
               {minMaxDate.total === count && (
                 <div className="is-size-7">
-                  Für den Zeitraum vom{" "}
-                  <b>{dayjs(minMaxDate.minDate).format("DD.MM.YYYY")}</b> bis{" "}
-                  <b>{dayjs(minMaxDate.maxDate).format("DD.MM.YYYY")}</b> haben{" "}
-                  <b>{numOrganizations}</b> Projekte <b>{count}</b> rechte Taten
-                  registriert.
+                  Seit <b>{dayjs(minMaxDate.minDate).format("DD.MM.YYYY")}</b>{" "}
+                  haben <b>{numOrganizations}</b> Projekte <b>{count}</b> Fälle
+                  mit rechtem Bezug registriert.
                 </div>
               )}
               {minMaxDate.total !== count && (
