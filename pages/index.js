@@ -92,6 +92,7 @@ function Home({ content }) {
         >
           <a href="/karte">
             <ParallaxBanner
+              style={{ height: "500px" }}
               className="tor-landing-map"
               layers={[
                 {
@@ -148,7 +149,7 @@ function Home({ content }) {
         </section>
 
         <ParallaxBanner
-          style={{ height: "30rem" }}
+          style={{ height: "500px" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Zusammenhaenge.jpg",
@@ -183,7 +184,7 @@ function Home({ content }) {
           </ContentMiddle>
         </section>
         <ParallaxBanner
-          style={{ height: "30rem" }}
+          style={{ height: "500px" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Waffengewalt.jpg",
@@ -207,7 +208,7 @@ function Home({ content }) {
         </section>
 
         <ParallaxBanner
-          style={{ height: "30rem" }}
+          style={{ height: "500px" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Kerzen.jpg",
