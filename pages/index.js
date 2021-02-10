@@ -26,34 +26,42 @@ function Home({ content }) {
       <div className="tor-margin-top"></div>
 
       <ParallaxProvider>
-        <section className="hero is-primary" style={{ marginBottom: "2rem" }}>
+        <section
+          className="hero tor-gradient"
+          style={{
+            marginBottom: "2rem",
+          }}
+        >
           <ContentMiddle>
+            <h1 className="title is-3" style={{ lineHeight: 1.6 }}>
+              <b className="is-size-2">12</b> Projekte haben seit dem Jahr{" "}
+              <b className="is-size-2">2000</b> über{" "}
+              <b className="is-size-2"> 16.000</b> Fälle mit rechtem Bezug
+              registriert.
+              <br />
+              Wir zeigen die Fälle auf einer <a href="/karte">Karte</a>.
+            </h1>
+            <h1 className="title is-3" style={{ lineHeight: 1.6 }}></h1>
             <div className="columns">
-              <div className="column">
-                <h1 className="title is-2">
-                  <b className="is-size-1">12</b> Projekte haben seit dem Jahr{" "}
-                  <b className="is-size-1">2000</b> über{" "}
-                  <b className="is-size-1"> 16.000</b> rechte Taten registriert.
+              {/* <div className="column">
+                <h1 className="title is-2" style={{ lineHeight: 1.6 }}>
+                  <b className="is-size-1">12</b> Projekte haben seit
+                  <br /> dem Jahr <b className="is-size-1">2000</b>
+                  <br /> über <b className="is-size-1"> 16.000</b> Fälle mit
+                  <br /> <b className="is-size-1">rechtem</b> Bezug registriert.
                 </h1>
-                <h1 className="title is-2">
-                  Wir zeigen die Taten auf einer <a href="/karte">Karte</a>.
-                </h1>
-              </div>
-              <div className="column is-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="currentColor"
-                  class="bi bi-clipboard-data"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
-                  <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                  <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                </svg>
-              </div>
+              </div> */}
+
+              {/* <div
+                className="column is-3"
+                style={{
+                  filter: "blur(8px)",
+                  backgroundImage:
+                    "url(/images/Tatort_Rechts_Logo_Verbindungen.svg);",
+                }}
+              ></div> */}
             </div>
+            <div></div>
           </ContentMiddle>
         </section>
 
@@ -140,7 +148,7 @@ function Home({ content }) {
         </section>
 
         <ParallaxBanner
-          className="your-class"
+          style={{ height: "30rem" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Zusammenhaenge.jpg",
@@ -175,7 +183,7 @@ function Home({ content }) {
           </ContentMiddle>
         </section>
         <ParallaxBanner
-          className="your-class"
+          style={{ height: "30rem" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Waffengewalt.jpg",
@@ -199,7 +207,7 @@ function Home({ content }) {
         </section>
 
         <ParallaxBanner
-          className="your-class"
+          style={{ height: "30rem" }}
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Kerzen.jpg",

@@ -439,3 +439,13 @@ svg.tor-expanded {
   background-color: #eeb2a3;
   opacity: 0.9;
 }
+
+.tor-gradient {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(238, 178, 163, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
