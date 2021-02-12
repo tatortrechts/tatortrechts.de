@@ -84,7 +84,14 @@ const IncidentBox = ({ x, setHighlight, incident_id = null }) => {
                   >
                     {[
                       [
-                        <a href={x.url} target="_blank">
+                        <a
+                          href={
+                            x.url.includes("reachoutberlin.de")
+                              ? "https://web.archive.org/web/*/" + x.url
+                              : x.url
+                          }
+                          target="_blank"
+                        >
                           {x.chronicle.name}
                         </a>,
                         "Projekt",
