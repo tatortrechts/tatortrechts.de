@@ -327,16 +327,16 @@ function Home({ content }) {
         </section>
         <section className="hero is-primary">
           <ContentMiddle>
-            <h4 className="title is-3">Du kannst etwas tun</h4>
+            <h4 className="title is-3">Sichtbarkeit</h4>
             <p>
               Wir wollen mit <a href="/blog">Tatort Rechts</a> es User*innen
               ermöglichen, sich selbst einen Eindruck von den Fällen zu
               verschaffen. Durch das Recherche-Tool können Fälle mit rechtem
               Bezug sichtbar gemacht und verortet werden. Wie du auf der Karte
-              sehen kannst, fehlen noch
-              <a href="/blog/daten">Daten</a> aus mehreren Bundesländern.{" "}
+              sehen kannst, fehlen noch <a href="/blog/daten">Daten</a> aus
+              mehreren Bundesländern.{" "}
               <a href="https://tatortrechts.de/blog/mach-mit">Mach mit</a>.
-              Schick uns einen Hinweis, auf öffentlich bekannte Vorfälle
+              Schick uns einen Hinweis zu öffentlich bekannten Vorfällen
               rechter, rassistischer oder antisemitischer Gewalt.
             </p>
           </ContentMiddle>
