@@ -71,7 +71,7 @@ function Home({ content }) {
 
             <p>
               Hinter <a href="/ueber">Tatort Rechts</a> stehen{" "}
-              <a href="blog/team">Johannes Filter und Anna Neifer</a>. Seit
+              <a href="/blog/team">Johannes Filter und Anna Neifer</a>. Seit
               Sommer 2020 arbeiten wir an diesem Projekt, haben vieles verworfen
               und am Ende liest du jetzt diese Zeilen. Mit{" "}
               <a href="/blog">Tatort Rechts</a> wollen wir einen Schwerpunkt
