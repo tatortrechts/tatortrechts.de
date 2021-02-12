@@ -1,5 +1,19 @@
 module.exports = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/neuerfall",
+        destination: "https://api.tatortrechts.de/neuerfall",
+        permanent: false,
+      },
+      {
+        source: "/fehler",
+        destination: "https://api.tatortrechts.de/fehler",
+        permanent: false,
+      },
+    ];
+  },
   headers() {
     return [
       {
