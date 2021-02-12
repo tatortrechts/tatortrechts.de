@@ -6,7 +6,7 @@ import { shortTitle } from "../../utils/labels";
 import { fetchIncident } from "../../utils/networking";
 
 function IncidentDetail({ incident, incident_id }) {
-  const title = shortTitle(incident);
+  const title = shortTitle(incident) + "| Tatort Rechts";
   const description = (
     (incident.title ? incident.title + " - " : "") + incident.description
   ).substring(0, 200);

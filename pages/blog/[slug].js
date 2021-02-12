@@ -14,7 +14,7 @@ function Post({ content }) {
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:title" content={title}></meta>
+        <meta property="og:title" content={title + "| Tatort Rechts"}></meta>
         <meta name="description" content={description} />
         <meta
           property="og:image"
