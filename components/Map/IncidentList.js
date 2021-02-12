@@ -209,7 +209,7 @@ const IncidentList = ({
             <InfiniteScroll
               useWindow={false}
               getScrollParent={() => containerRef.current}
-              pageStart={1}
+              pageStart={0}
               loadMore={loadMore}
               threshold={500}
               hasMore={next != null}
