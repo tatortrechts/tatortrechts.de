@@ -1,4 +1,5 @@
 import Head from "next/head";
+import ContentMiddle from "../components/ContentMiddle";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { fetchContent } from "../utils/networking";
@@ -652,7 +653,10 @@ function Kontakt({ content }) {
       <NavBar />
       <div className="tor-margin-top"></div>
       <div dangerouslySetInnerHTML={{ __html: content.body }} />
-      <div dangerouslySetInnerHTML={{ __html: privacyHtml }} />
+
+      <ContentMiddle>
+        <div dangerouslySetInnerHTML={{ __html: privacyHtml }} />
+      </ContentMiddle>
 
       <Footer />
     </>
