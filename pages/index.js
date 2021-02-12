@@ -313,9 +313,9 @@ function Home({ content }) {
           <ContentMiddle>
             <h4 className="title is-3">Vielzahl an Fällen</h4>
             <p>
-              Vielzahl an Fällen Dies ist nur eine kurze Erinnerung an die
-              jüngsten Fälle. Es reihen sich viele weitere ein, wie etwa die
-              Mordserie der NSU-Terrorzelle. Die Liste der Fälle ist jedoch viel
+              Dies ist nur eine kurze Erinnerung an die jüngsten Fälle. Es
+              reihen sich viele weitere ein, wie etwa die Mordserie der
+              NSU-Terrorzelle. Die Liste der Fälle ist jedoch weit
               umfangreicher. Laut der{" "}
               <a href="https://www.amadeu-antonio-stiftung.de/rassismus/todesopfer-rechter-gewalt/">
                 Amadeu Antonio Stiftung
@@ -329,14 +329,15 @@ function Home({ content }) {
           <ContentMiddle>
             <h4 className="title is-3">Du kannst etwas tun</h4>
             <p>
-              Wir wollen mit <a href="/blog">Tatort Rechts</a> einen Schwerpunkt
-              setzen auf rechte Gewalt und diese sichtbar machen. Dieses Projekt
-              ist ein Prototyp, das Recherche-Tool ein erster Schritt. Wie du
-              auf der Karte sehen kannst, fehlen uns noch{" "}
-              <a href="/blog/daten">Daten</a> aus mehreren Bundesländern. Wenn
-              du Kenntnis über öffentlich bekannte Vorfälle rechter,
-              rassistischer oder antisemitischer Gewalt hast, dann{" "}
-              <a href="/blog/mach-mit">mach mit</a> und ergänze weitere Daten.
+              Wir wollen mit <a href="/blog">Tatort Rechts</a> es User*innen
+              ermöglichen, sich selbst einen Eindruck von den Fällen zu
+              verschaffen. Durch das Recherche-Tool können Fälle mit rechtem
+              Bezug sichtbar gemacht und verortet werden. Wie du auf der Karte
+              sehen kannst, fehlen noch
+              <a href="/blog/daten">Daten</a> aus mehreren Bundesländern.{" "}
+              <a href="https://tatortrechts.de/blog/mach-mit">Mach mit</a>.
+              Schick uns einen Hinweis, auf öffentlich bekannte Vorfälle
+              rechter, rassistischer oder antisemitischer Gewalt.
             </p>
           </ContentMiddle>
         </section>
