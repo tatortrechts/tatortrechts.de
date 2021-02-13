@@ -107,7 +107,7 @@ const Histogram = ({
         tickFormat={genTimeFormat}
       />
       <VictoryAxis
-        label="Taten"
+        label="Fälle"
         style={{
           tickLabels: { fontSize: 8, fontFamily },
           axisLabel: { fontSize: 7, padding: 40, fontFamily },

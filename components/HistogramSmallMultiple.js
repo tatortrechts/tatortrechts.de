@@ -69,7 +69,7 @@ export default function HistogramSmallMultiple({ histoData, orgs }) {
               {orgs.filter((xx) => x[0].chronicle == xx.id)[0].name}
             </h3>
             <p className="is-size-7">
-              {sum(x)} registrierte Taten in{" "}
+              {sum(x)} registrierte Fälle in{" "}
               {orgs.filter((xx) => x[0].chronicle == xx.id)[0].region} (
               <a
                 href={
