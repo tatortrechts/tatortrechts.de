@@ -601,7 +601,7 @@ class Map extends React.Component {
           <table className="table is-narrow">
             <thead>
               <tr>
-                <th>Taten</th>
+                <th>Fälle</th>
                 <th>Orte</th>
               </tr>
             </thead>
@@ -619,8 +619,8 @@ class Map extends React.Component {
           {notShownRows.length > 0 && (
             <p>
               ...und weitere{" "}
-              {notShownRows.map((x) => x.total).reduce((a, b) => a + b)} Taten
-              an {notShownRows.length} Orten.
+              {notShownRows.map((x) => x[1]).reduce((a, b) => a + b)} Fälle an{" "}
+              {notShownRows.length} Orten.
             </p>
           )}
         </div>
@@ -663,7 +663,7 @@ class Map extends React.Component {
     const sideBarFilter = (
       <div className="box" id="sidebar-filter">
         <div className="is-size-7">
-          Durchsuche die Taten nach Schlagworten wie z. B.{" "}
+          Durchsuche die Fälle nach Schlagworten wie z. B.{" "}
           <a
             className="is-clickable no-underline"
             onClick={() => this._setStateAndReload({ q: "Hakenkreuz" })}

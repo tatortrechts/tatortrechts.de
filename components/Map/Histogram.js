@@ -61,7 +61,7 @@ const Histogram = ({
       "days"
     );
 
-    const firstPart = count > 1 ? `${count} Taten` : `eine Tat`;
+    const firstPart = count > 1 ? `${count} Fälle` : `ein Fall`;
     let secondPart = ` von ${firstDate.format(
       "DD.MM.YYYY"
     )} bis ${secondDate.format("DD.MM.YYYY")}`;

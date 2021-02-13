@@ -177,7 +177,7 @@ const IncidentList = ({
               {minMaxDate.total !== count && (
                 <div className="is-size-7">
                   Auf deine Auswahl entfallen <b>{count}</b> von{" "}
-                  {minMaxDate.total} registrierte Taten.{" "}
+                  {minMaxDate.total} registrierte Fälle.{" "}
                   <a onClick={() => reset()}>Auswahl zurücksetzen.</a>
                 </div>
               )}
