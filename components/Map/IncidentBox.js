@@ -168,7 +168,7 @@ const IncidentBox = ({ x, setHighlight, incident_id = null }) => {
                         <a
                           target="_blank"
                           href={
-                            "/tat/" +
+                            "/fall/" +
                             (incident_id === null ? x.id : incident_id)
                           }
                           style={{ color: "inherit" }}

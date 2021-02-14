@@ -170,10 +170,8 @@ function Home({ content }) {
             <br />
             <p>Das ist kein Gedankenspiel.</p> <br />
             <p>
-              <a href="/tat/a2xlaW5lcmFuZG5vdGl6LTI0Mg==">
-                Es ist tatsächlich passiert
-              </a>
-              , in Bremen-Vegesack. Der Mann mit der Waffe wurde später von der
+              <a href="/fall/13135">Es ist tatsächlich passiert</a>, in
+              Bremen-Vegesack. Der Mann mit der Waffe wurde später von der
               Polizei festgenommen, in seiner Wohnung wurde neben Drogen und
               weiteren Waffen{" "}
               <a href="/https://www.weser-kurier.de/region/die-norddeutsche_artikel,-intensivtaeter-bedroht-36jaehrigen-_arid,1952655.html">
