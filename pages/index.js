@@ -73,11 +73,11 @@ function Home({ content }) {
               Hinter <a href="/ueber">Tatort Rechts</a> stehen{" "}
               <a href="/blog/team">Johannes Filter und Anna Neifer</a>. Seit
               Sommer 2020 arbeiten wir an diesem Projekt, haben vieles verworfen
-              und am Ende liest du jetzt diese Zeilen. Mit{" "}
-              <a href="/blog">Tatort Rechts</a> wollen wir einen Schwerpunkt
-              setzen zu rechter, rassistischer und antismetischer Gewalt. Wir
-              wollen offen legen: diese Gewalt passiert überall. Wenn du wissen
-              willst wo, dann nutze unser <a href="/karte">Recherche-Tool</a>.
+              und am Ende liest du jetzt diese Zeilen. Mit Tatort Rechts wollen
+              wir einen Schwerpunkt setzen zu rechter, rassistischer und
+              antismetischer Gewalt. Wir wollen offen legen: diese Gewalt
+              passiert überall. Wenn du wissen willst wo, dann nutze unser{" "}
+              <a href="/karte">Recherche-Tool</a>.
             </p>
           </ContentMiddle>
         </section>
@@ -108,8 +108,8 @@ function Home({ content }) {
             <h4 className="title is-3">Recherche-Tool</h4>
             <p>
               Zum ersten Mal ist es möglich, die öffentlich verfügbaren Daten
-              von <a href="/blog/chroniken">12 Projekt-Seiten</a> systematisch
-              zu durchsuchen. Das hat es so bisher noch nicht gegeben. Du kannst
+              von <a href="/blog/quellen">12 Projekt-Seiten</a> systematisch zu
+              durchsuchen. Das hat es so bisher noch nicht gegeben. Du kannst
               zum einen nach Fällen auf der <a href="/karte">Karte</a> suchen
               und dich in dein Bundesland bis zu deiner Stadt reinzoomen. Du
               kannst auch nach Schlagworten suchen, nach bestimmten Namen oder
@@ -174,7 +174,7 @@ function Home({ content }) {
               Bremen-Vegesack. Der Mann mit der Waffe wurde später von der
               Polizei festgenommen, in seiner Wohnung wurde neben Drogen und
               weiteren Waffen{" "}
-              <a href="/https://www.weser-kurier.de/region/die-norddeutsche_artikel,-intensivtaeter-bedroht-36jaehrigen-_arid,1952655.html">
+              <a href="https://www.weser-kurier.de/region/die-norddeutsche_artikel,-intensivtaeter-bedroht-36jaehrigen-_arid,1952655.html">
                 ein Hakenkreuz aus Metall
               </a>{" "}
               gefunden.
@@ -225,12 +225,12 @@ function Home({ content }) {
               Tobias R. Anzeichen für eine paranoide Schizophrenie und darauf
               aufgesetzt, eine “rechtsradikale Ideologie” erkennbar gewesen
               sein, so berichtet es{" "}
-              <a href="/https://www.spiegel.de/panorama/justiz/hanau-anschlag-neues-gutachten-zum-taeter-psychisch-krank-und-ein-rassist-a-00000000-0002-0001-0000-000174211404">
+              <a href="https://www.spiegel.de/panorama/justiz/hanau-anschlag-neues-gutachten-zum-taeter-psychisch-krank-und-ein-rassist-a-00000000-0002-0001-0000-000174211404">
                 der Spiegel
               </a>
               . In der Tatnacht konnten offenbar Notrufe von der Polizei nicht
               entgegengenommen werden. Der{" "}
-              <a href="/https://www.hessenschau.de/panorama/beuth-raeumt-notruf-panne-in-hanauer-tatnacht-ein,beuth-notrufpanne-hanau-100.html">
+              <a href="https://www.hessenschau.de/panorama/beuth-raeumt-notruf-panne-in-hanauer-tatnacht-ein,beuth-notrufpanne-hanau-100.html">
                 Notruf der Polizei
               </a>{" "}
               war unterbesetzt, wie Hessens Innenminister einräumte.
@@ -250,7 +250,7 @@ function Home({ content }) {
               </a>
               , seine Tat streamte er live ins Internet. Für den
               rechtsterroristischen Anschlag wurde gegen den{" "}
-              <a href="/https://www.tagesschau.de/inland/rechtsextremismus/halle-attentat-urteil-101.html">
+              <a href="https://www.tagesschau.de/inland/rechtsextremismus/halle-attentat-urteil-101.html">
                 Attentäter die Höchststrafe
               </a>{" "}
               verhängt.
@@ -264,7 +264,7 @@ function Home({ content }) {
               Aus nächster Nähe ist der Kasseler Regierungspräsident Walter
               Lübcke erschossen worden. Lübcke wurde leblos auf der Terrasse
               seines Wohnhauses gefunden. Die Tat gilt als{" "}
-              <a href="/https://www.stern.de/politik/deutschland/moerder-von-walter-luebcke-zu-lebenslanger-haft-verurteilt-30353688.html">
+              <a href="https://www.stern.de/politik/deutschland/moerder-von-walter-luebcke-zu-lebenslanger-haft-verurteilt-30353688.html">
                 erster rechtsextremistischer Mord
               </a>{" "}
               an einem Politiker in der Bundesrepublik Deutschland. Im Jahr 2021
