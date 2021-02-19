@@ -34,7 +34,7 @@ function Home({ content }) {
         >
           <ContentMiddle>
             <h1 className="title is-3" style={{ lineHeight: 1.6 }}>
-              <b className="is-size-2">12</b> Projekte haben seit dem Jahr{" "}
+              <b className="is-size-2">13</b> Projekte haben seit dem Jahr{" "}
               <b className="is-size-2">2000</b> über{" "}
               <b className="is-size-2"> 16.000</b> Fälle mit rechtem Bezug
               registriert.
@@ -45,7 +45,7 @@ function Home({ content }) {
             <div className="columns">
               {/* <div className="column">
                 <h1 className="title is-2" style={{ lineHeight: 1.6 }}>
-                  <b className="is-size-1">12</b> Projekte haben seit
+                  <b className="is-size-1">13</b> Projekte haben seit
                   <br /> dem Jahr <b className="is-size-1">2000</b>
                   <br /> über <b className="is-size-1"> 16.000</b> Fälle mit
                   <br /> <b className="is-size-1">rechtem</b> Bezug registriert.
@@ -108,7 +108,7 @@ function Home({ content }) {
             <h4 className="title is-3">Recherche-Tool</h4>
             <p>
               Zum ersten Mal ist es möglich, die öffentlich verfügbaren Daten
-              von <a href="/blog/quellen">12 Projekt-Seiten</a> systematisch zu
+              von <a href="/blog/quellen">13 Projekt-Seiten</a> systematisch zu
               durchsuchen. Das hat es so bisher noch nicht gegeben. Du kannst
               zum einen nach Fällen auf der <a href="/karte">Karte</a> suchen
               und dich in dein Bundesland bis zu deiner Stadt reinzoomen. Du
@@ -122,7 +122,7 @@ function Home({ content }) {
           <ContentMiddle>
             <h4 className="title is-3">Gezielte Suchen</h4>
             <p>
-              Seit dem Jahr 2000 sind auf den 12 Projekt-Seiten zusammen etwa
+              Seit dem Jahr 2000 sind auf den 13 Projekt-Seiten zusammen etwa
               16.000 Fälle registriert worden, die einen rechten, rassistischen
               oder antisemitischen Bezug haben. Die Erfassung{" "}
               <a href="/blog/daten">Daten sind sehr heterogen</a>, aber uns geht
