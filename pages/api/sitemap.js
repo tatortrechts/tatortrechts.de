@@ -1,4 +1,8 @@
-import { fetchChildPages, fetchContent } from "../../utils/networking";
+import {
+  fetchAllCaseIds,
+  fetchChildPages,
+  fetchContent,
+} from "../../utils/networking";
 
 const BASE_URL = "https://tatortrechts.de";
 
