@@ -7,6 +7,9 @@ if (process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.tatortrechts.de";
 }
 
+// TODO: remove ky and only use fetch since ky used node-fetch that can cause problems
+// and it's not really needed
+
 function buildQueryParams(
   q,
   startDate,
@@ -290,10 +293,11 @@ async function fetchAllCaseIds() {
   const url = API_LOCATION + "/all_case_ids/";
 
   try {
-    const apiResponse = await ky.get(url).json();
-    // if (apiResponse.results.length !== 1) return null;
+    const res = await fetch(url);
+    const apiResponse = await res.json();
     return apiResponse.result;
   } catch (e) {
+    console.log("erro");
     return [null, e];
   }
 }

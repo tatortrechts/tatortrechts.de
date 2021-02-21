@@ -2,11 +2,11 @@ import {
   fetchAllCaseIds,
   fetchChildPages,
   fetchContent,
-} from "../../utils/networking";
+} from "../utils/networking";
 
 const BASE_URL = "https://tatortrechts.de";
 
-async function Sitemap(req, res) {
+async function createSitemap() {
   const blogPage = await fetchContent("blog");
   const blogPosts = await fetchChildPages(blogPage.id);
   const blogRoutes = blogPosts.map(({ url }) => url);
@@ -33,13 +33,18 @@ async function Sitemap(req, res) {
     .join("");
 
   // Add urlSet to entire sitemap string
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlSet}</urlset>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlSet}</urlset>`;
+}
 
-  // set response content header to xml
+const Sitemap = () => {};
+
+Sitemap.getInitialProps = async ({ res, req }) => {
+  const sitemap = await createSitemap();
+
   res.setHeader("Content-Type", "text/xml");
-  // write the sitemap
   res.write(sitemap);
   res.end();
-}
+  return res;
+};
 
 export default Sitemap;
