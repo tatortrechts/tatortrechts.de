@@ -75,7 +75,7 @@ function Home({ content }) {
               Sommer 2020 arbeiten wir an diesem Projekt, haben vieles verworfen
               und am Ende liest du jetzt diese Zeilen. Mit Tatort Rechts wollen
               wir einen Schwerpunkt setzen zu rechter, rassistischer und
-              antismetischer Gewalt. Wir wollen offen legen: diese Gewalt
+              antisemitischer Gewalt. Wir wollen offen legen: diese Gewalt
               passiert überall. Wenn du wissen willst wo, dann nutze unser{" "}
               <a href="/karte">Recherche-Tool</a>.
             </p>
