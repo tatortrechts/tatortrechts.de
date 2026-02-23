@@ -13,11 +13,17 @@
 
   --bulma-card-header-shadow: none;
 
-  // Match old Bulma 0.9 pure gray text (was #4a4a4a, new default is blue-tinted #404654)
+  // Match old Bulma 0.9 pure gray palette (remove blue tint from scheme + text)
+  --bulma-scheme-h: 0;
+  --bulma-scheme-s: 0%;
   --bulma-text-h: 0deg;
   --bulma-text-s: 0%;
+}
 
-  // Match old Bulma 0.9 title weight (was semibold/600, new default is extrabold/800)
+// Bulma 1.0 sets --bulma-title-weight inside .title/.subtitle selector,
+// which overrides :root. Must override at same specificity level.
+.title,
+.subtitle {
   --bulma-title-weight: var(--bulma-weight-semibold);
 }
 
