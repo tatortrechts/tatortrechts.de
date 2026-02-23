@@ -1,9 +1,15 @@
 import { transformToHtml } from "./html";
 
-let API_LOCATION = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const isServer = typeof window === "undefined";
 
-if (!process.env.NEXT_PUBLIC_API_URL && process.env.NODE_ENV === "production") {
-  API_LOCATION = "https://api.tatortrechts.de";
+let API_LOCATION;
+if (isServer && process.env.API_URL) {
+  API_LOCATION = process.env.API_URL;
+} else {
+  API_LOCATION = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  if (!process.env.NEXT_PUBLIC_API_URL && process.env.NODE_ENV === "production") {
+    API_LOCATION = "https://api.tatortrechts.de";
+  }
 }
 
 function buildQueryParams(
