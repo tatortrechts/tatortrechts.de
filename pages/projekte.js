@@ -36,18 +36,22 @@ export async function getServerSideProps() {
     fetchOrganizations(),
   ]);
 
-  const histoData = {};
-  histo.forEach((x) => {
-    x["time_interval"] = "year";
-    x["date_histogram"] = x["year"];
+  if (!content) return { notFound: true };
 
-    if (x["chronicle"] in histoData) {
-      histoData[x["chronicle"]] = histoData[x["chronicle"]].concat([x]);
-    } else {
-      histoData[x["chronicle"]] = [x];
-    }
-  });
-  return { props: { histoData, orgs, content } };
+  const histoData = {};
+  if (Array.isArray(histo)) {
+    histo.forEach((x) => {
+      x["time_interval"] = "year";
+      x["date_histogram"] = x["year"];
+
+      if (x["chronicle"] in histoData) {
+        histoData[x["chronicle"]] = histoData[x["chronicle"]].concat([x]);
+      } else {
+        histoData[x["chronicle"]] = [x];
+      }
+    });
+  }
+  return { props: { histoData, orgs: orgs || [], content } };
 }
 
 export default Projekte;

@@ -33,6 +33,7 @@ function Post({ content }) {
 
 export async function getServerSideProps({ query: { slug } }) {
   const content = await fetchContent(slug);
+  if (!content) return { notFound: true };
   return { props: { content } };
 }
 

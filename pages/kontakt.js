@@ -665,6 +665,7 @@ function Kontakt({ content }) {
 
 export async function getServerSideProps() {
   const content = await fetchContent("kontakt");
+  if (!content) return { notFound: true };
   return { props: { content } };
 }
 

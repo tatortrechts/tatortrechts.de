@@ -29,6 +29,7 @@ function Blog({ content }) {
 
 export async function getServerSideProps() {
   const content = await fetchContent("blog");
+  if (!content) return { notFound: true };
   return { props: { content } };
 }
 

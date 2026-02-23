@@ -346,6 +346,7 @@ function Home({ content }) {
 
 export async function getServerSideProps() {
   const content = await fetchContent("home");
+  if (!content) return { notFound: true };
   return { props: { content } };
 }
 

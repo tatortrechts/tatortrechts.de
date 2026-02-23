@@ -195,6 +195,9 @@ async function fetchContent(slug) {
   const url = API_LOCATION + `/content/api/v2/pages/?slug=${slug}`;
   const response = await fetch(url);
   const apiResponse = await response.json();
+  if (!apiResponse.items || apiResponse.items.length === 0) {
+    return null;
+  }
   const id = apiResponse.items[0].id;
 
   const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;

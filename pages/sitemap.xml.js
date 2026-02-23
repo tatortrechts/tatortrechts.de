@@ -8,11 +8,14 @@ const BASE_URL = "https://tatortrechts.de";
 
 async function createSitemap() {
   const blogPage = await fetchContent("blog");
-  const blogPosts = await fetchChildPages(blogPage.id);
-  const blogRoutes = blogPosts.map(({ url }) => url);
+  let blogRoutes = [];
+  if (blogPage) {
+    const blogPosts = await fetchChildPages(blogPage.id);
+    blogRoutes = blogPosts.map(({ url }) => url);
+  }
 
   const caseIds = await fetchAllCaseIds();
-  const caseRoutes = caseIds.map((x) => `/fall/${x}`);
+  const caseRoutes = Array.isArray(caseIds) ? caseIds.map((x) => `/fall/${x}`) : [];
 
   const localRoutes = [
     "",

@@ -43,6 +43,7 @@ function Hintergrund({ content }) {
 
 export async function getServerSideProps() {
   const content = await fetchContent("hintergrund");
+  if (!content) return { notFound: true };
   return { props: { content } };
 }
 
