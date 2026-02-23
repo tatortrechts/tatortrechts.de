@@ -299,10 +299,10 @@ async function fetchAllCaseIds() {
 
   try {
     const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const apiResponse = await res.json();
     return apiResponse.result;
   } catch (e) {
-    console.log("erro");
     return [null, e];
   }
 }

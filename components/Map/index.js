@@ -156,7 +156,11 @@ export default function Map({
       bbox,
       locationId
     );
-    setIncidentsHistogram(result);
+    if (result.length === 2 && result[0] === null) {
+      console.error(`Could not fetch histogram. ${result[1]}`);
+    } else {
+      setIncidentsHistogram(result);
+    }
   }, [getOrganizationIds]);
 
   const loadIncidents = useCallback(async () => {
@@ -440,7 +444,10 @@ export default function Map({
   const handleLoadMore = useCallback(async () => {
     if (incidentsNext == null) return;
     const result = await fetchIncidentsNext(incidentsNext);
-    if (result.next == null) return;
+    if (result.length === 2 && result[0] === null) {
+      console.error(`Could not fetch more incidents. ${result[1]}`);
+      return;
+    }
     setIncidentsNext(result.next);
     setIncidentsResults((prev) => (prev ? prev.concat(result.results) : result.results));
   }, [incidentsNext]);
