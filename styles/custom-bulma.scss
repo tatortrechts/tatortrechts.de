@@ -12,4 +12,11 @@
   --bulma-link-l: 35%;
 
   --bulma-card-header-shadow: none;
+
+  // Match old Bulma 0.9 pure gray text (was #4a4a4a, new default is blue-tinted #404654)
+  --bulma-text-h: 0deg;
+  --bulma-text-s: 0%;
+
+  // Match old Bulma 0.9 title weight (was semibold/600, new default is extrabold/800)
+  --bulma-title-weight: var(--bulma-weight-semibold);
 }
