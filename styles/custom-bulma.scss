@@ -20,3 +20,10 @@
   // Match old Bulma 0.9 title weight (was semibold/600, new default is extrabold/800)
   --bulma-title-weight: var(--bulma-weight-semibold);
 }
+
+// In Bulma 1.0, active navbar items get a colored background.
+// Old Bulma 0.9 only changed text color. Restore that behavior.
+a.navbar-item.is-active {
+  background-color: transparent !important;
+  color: var(--bulma-link) !important;
+}
