@@ -2,14 +2,19 @@ import { transformToHtml } from "./html";
 
 const isServer = typeof window === "undefined";
 
+// Public URL used for URLs rendered in HTML (images, links visible to browser)
+let PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+if (!process.env.NEXT_PUBLIC_API_URL && process.env.NODE_ENV === "production") {
+  PUBLIC_API_URL = "https://api.tatortrechts.de";
+}
+
+// Internal URL used for server-side API fetches (may differ in Docker environments)
 let API_LOCATION;
 if (isServer && process.env.API_URL) {
   API_LOCATION = process.env.API_URL;
 } else {
-  API_LOCATION = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-  if (!process.env.NEXT_PUBLIC_API_URL && process.env.NODE_ENV === "production") {
-    API_LOCATION = "https://api.tatortrechts.de";
-  }
+  API_LOCATION = PUBLIC_API_URL;
 }
 
 function buildQueryParams(
@@ -218,7 +223,7 @@ async function fetchContent(slug) {
 
   if (article_image != null) {
     article = {};
-    article.image_url = API_LOCATION + article_image_thumbnail.url;
+    article.image_url = PUBLIC_API_URL + article_image_thumbnail.url;
     article.title = title;
     article.teaser = article_teaser;
     article.date = article_date;
@@ -255,7 +260,7 @@ async function fetchChildPages(pageId) {
       teaser,
       title,
       date,
-      thumbnail_url: API_LOCATION + thumbnail_url,
+      thumbnail_url: PUBLIC_API_URL + thumbnail_url,
     };
   });
   return items;
@@ -318,6 +323,7 @@ async function fetchAllCaseIds() {
 
 export {
   API_LOCATION,
+  PUBLIC_API_URL,
   fetchAggregatedIncidents,
   fetchAutocomplete,
   fetchIncidents,
