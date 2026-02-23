@@ -1,6 +1,6 @@
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import * as dayjs from "dayjs";
 import React, { useEffect, useRef, useState } from "react";
 import { shortTitle } from "../../utils/labels";
@@ -54,7 +54,7 @@ const IncidentBox = ({ x, setHighlight, incident_id = null }) => {
         onMouseEnter={() => setHighlight(x.location.geolocation.coordinates)}
         onMouseLeave={() => setHighlight(null)}
       >
-        <Collapse in={expanded} timeout={1000} collapsedHeight={minBoxHeight}>
+        <Collapse in={expanded} timeout={1000} collapsedSize={minBoxHeight}>
           <div ref={boxRef} style={{ height: "auto" }}>
             <header className="card-header">
               <p className="card-header-title">{shortTitle(x)}</p>
@@ -138,13 +138,12 @@ const IncidentBox = ({ x, setHighlight, incident_id = null }) => {
                     <div className="column is-12">
                       Quellen:
                       <ul className="dashed">
-                        {x.sources.map((x, i) => (
+                        {x.sources.map((s, i) => (
                           <Source
-                            key={i}
-                            name={x.name}
-                            url={x.url}
-                            date={x.date}
-                            key={x.name + x.date + x.url}
+                            key={s.name + s.date + s.url}
+                            name={s.name}
+                            url={s.url}
+                            date={s.date}
                           />
                         ))}
                       </ul>

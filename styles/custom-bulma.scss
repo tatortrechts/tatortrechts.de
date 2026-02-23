@@ -1,11 +1,15 @@
-$card-header-shadow: 0;
+@use "../node_modules/bulma/bulma.scss";
 
-$tor-primary-color: #a50f15;
+// Custom theme overrides using CSS custom properties (Bulma v1.0)
+// Original color: #a50f15 = hsl(357, 82%, 35%)
+:root {
+  --bulma-primary-h: 357deg;
+  --bulma-primary-s: 82%;
+  --bulma-primary-l: 35%;
 
-$link-focus-border: $tor-primary-color;
-$link: $tor-primary-color;
-$primary: $tor-primary-color;
+  --bulma-link-h: 357deg;
+  --bulma-link-s: 82%;
+  --bulma-link-l: 35%;
 
-// $navbar-height: 1rem;
-// $navbar-padding-horizontal: 1rem;
-@import "../node_modules/bulma/bulma.sass";
+  --bulma-card-header-shadow: none;
+}

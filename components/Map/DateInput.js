@@ -1,4 +1,5 @@
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import * as dayjs from "dayjs";
 import React from "react";
 
 export default function DateInput({
@@ -8,40 +9,34 @@ export default function DateInput({
   endDate,
   endCb,
 }) {
-  const { minDate, maxDate } = minMaxDate;
+  const minDate = minMaxDate.minDate ? dayjs(minMaxDate.minDate) : undefined;
+  const maxDate = minMaxDate.maxDate ? dayjs(minMaxDate.maxDate) : undefined;
   return (
     <div className="tor-date-input">
-      <KeyboardDatePicker
-        initialFocusedDate={minDate}
+      <DatePicker
         minDate={minDate}
         maxDate={maxDate}
-        type="small"
-        // views={["year", "month"]}
         label="von"
         value={startDate}
         onChange={startCb}
-        autoOk
         format="DD.MM.YYYY"
-        cancelLabel="Abbrechen"
-        clearLabel="Entfernen"
-        clearable
-        invalidDateMessage="Format: TT.MM.JJJJ"
+        slotProps={{
+          textField: { size: "small" },
+          actionBar: { actions: ["clear", "cancel", "accept"] },
+        }}
       />
       <span className="ml-3"></span>
-      <KeyboardDatePicker
+      <DatePicker
         minDate={minDate}
         maxDate={maxDate}
-        type="small"
-        // views={["year", "month"]}
         label="bis"
         value={endDate}
         onChange={endCb}
-        autoOk
         format="DD.MM.YYYY"
-        cancelLabel="Abbrechen"
-        clearLabel="Entfernen"
-        clearable
-        invalidDateMessage="Format: TT.MM.JJJJ"
+        slotProps={{
+          textField: { size: "small" },
+          actionBar: { actions: ["clear", "cancel", "accept"] },
+        }}
       />
     </div>
   );

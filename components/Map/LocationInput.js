@@ -1,5 +1,5 @@
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 import React from "react";
 import { extractShortAddress } from "../../utils/labels";
 
@@ -27,7 +27,7 @@ export default function LocationInput({ options, cbChange, cbInputChange }) {
           return result;
         }}
         getOptionLabel={(x) => extractShortAddress(x)}
-        getOptionSelected={(o, v) => o.id === v.id}
+        isOptionEqualToValue={(o, v) => o.id === v.id}
         noOptionsText="kein Ort gefunden"
         renderInput={(params) => (
           <TextField

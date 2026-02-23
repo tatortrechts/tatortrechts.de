@@ -97,7 +97,7 @@ function Home({ content }) {
               layers={[
                 {
                   image: "/images/karte.jpg",
-                  amount: -1,
+                  speed: -20,
                 },
               ]}
             ></ParallaxBanner>
@@ -153,7 +153,7 @@ function Home({ content }) {
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Zusammenhaenge.jpg",
-              amount: 0.5,
+              speed: -5,
             },
           ]}
         ></ParallaxBanner>
@@ -186,7 +186,7 @@ function Home({ content }) {
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Waffengewalt.jpg",
-              amount: 0.5,
+              speed: -5,
             },
           ]}
         ></ParallaxBanner>
@@ -210,7 +210,7 @@ function Home({ content }) {
           layers={[
             {
               image: "/images/Tatort_Rechts_Symbolfoto_Kerzen.jpg",
-              amount: 0.5,
+              speed: -5,
             },
           ]}
         ></ParallaxBanner>
@@ -282,7 +282,7 @@ function Home({ content }) {
           layers={[
             {
               image: "/tor_logo.svg",
-              amount: 0.5,
+              speed: -5,
             },
           ]}
           style={{
@@ -299,8 +299,7 @@ function Home({ content }) {
                   style={{ width: "100%", height: "80%" }}
                 />
               ),
-              amount: 0.5,
-              props: { style: { width: "100%" } },
+              speed: -5,
             },
           ]}
           style={{

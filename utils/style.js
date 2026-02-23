@@ -1,8 +1,8 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@mui/material/styles";
 
 const torPrimaryColor = "#a50f15";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: torPrimaryColor,

@@ -17,7 +17,7 @@ module.exports = {
   headers() {
     return [
       {
-        source: "/:path*{/}?",
+        source: "/:path*",
         headers: [
           {
             key: "Cache-Control",

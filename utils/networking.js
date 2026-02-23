@@ -1,14 +1,10 @@
-import ky from "ky-universal";
 import { transformToHtml } from "./html";
 
-let API_LOCATION = "http://localhost:8000";
+let API_LOCATION = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-if (process.env.NODE_ENV === "production") {
+if (!process.env.NEXT_PUBLIC_API_URL && process.env.NODE_ENV === "production") {
   API_LOCATION = "https://api.tatortrechts.de";
 }
-
-// TODO: remove ky and only use fetch since ky used node-fetch that can cause problems
-// and it's not really needed
 
 function buildQueryParams(
   q,
@@ -77,8 +73,9 @@ async function _fetch(
   );
   const url = `${API_LOCATION}/${endpoint}/${paramsString}`;
   try {
-    const apiResponse = await ky.get(url, { timeout: 30000 }).json();
-    return apiResponse;
+    const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
   } catch (e) {
     return [null, e];
   }
@@ -176,8 +173,9 @@ function fetchHistogramIncidents(
 
 async function fetchIncidentsNext(url) {
   try {
-    const apiResponse = await ky.get(url).json();
-    return apiResponse;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
   } catch (e) {
     return [null, e];
   }
@@ -189,11 +187,13 @@ function fetchOrganizations() {
 
 async function fetchContent(slug) {
   const url = API_LOCATION + `/content/api/v2/pages/?slug=${slug}`;
-  const apiResponse = await ky.get(url).json();
+  const response = await fetch(url);
+  const apiResponse = await response.json();
   const id = apiResponse.items[0].id;
 
   const url2 = API_LOCATION + `/content/api/v2/pages/${id}/`;
-  const apiResponse2 = await ky.get(url2).json();
+  const response2 = await fetch(url2);
+  const apiResponse2 = await response2.json();
   const {
     layout,
     body,
@@ -224,7 +224,8 @@ async function fetchChildPages(pageId) {
   const url =
     API_LOCATION +
     `/content/api/v2/pages/?child_of=${pageId}&order=-article_date&live=true`;
-  const apiResponse = await ky.get(url).json();
+  const response = await fetch(url);
+  const apiResponse = await response.json();
   const items = apiResponse.items.map((x) => {
     const {
       meta: { slug },
@@ -255,7 +256,9 @@ async function fetchMinMaxDate() {
   const url = API_LOCATION + "/min_max_date/";
 
   try {
-    const apiResponse = await ky.get(url).json();
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const apiResponse = await response.json();
     return {
       minDate: apiResponse.min_date,
       maxDate: apiResponse.max_date,
@@ -270,8 +273,9 @@ async function fetchIncident(id) {
   const url = API_LOCATION + "/incidents/" + id;
 
   try {
-    const apiResponse = await ky.get(url).json();
-    return apiResponse;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
   } catch (e) {
     return [null, e];
   }
@@ -281,8 +285,9 @@ async function fetchChroHisto() {
   const url = API_LOCATION + "/chronicles_histogram/";
 
   try {
-    const apiResponse = await ky.get(url).json();
-    // if (apiResponse.results.length !== 1) return null;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const apiResponse = await response.json();
     return apiResponse.result;
   } catch (e) {
     return [null, e];

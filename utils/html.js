@@ -1,13 +1,13 @@
 import cheerio from "cheerio";
 import * as dayjs from "dayjs";
-import ky from "ky-universal";
 import { API_LOCATION, fetchChildPages } from "./networking";
 
 dayjs.locale("de");
 
 async function imageToHtml(imgId, className = null) {
   const url = API_LOCATION + `/content/api/v2/images/${imgId}/`;
-  const apiResponse = await ky.get(url).json();
+  const response = await fetch(url);
+  const apiResponse = await response.json();
   const src = API_LOCATION + apiResponse.meta.download_url;
   const {
     title,

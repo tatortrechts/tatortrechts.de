@@ -1,6 +1,6 @@
-import DayjsUtils from "@date-io/dayjs";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import * as deLocale from "dayjs/locale/de";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/de";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import "../styles/custom-bulma.scss";
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
 
   return (
-    <MuiPickersUtilsProvider utils={DayjsUtils} locale={deLocale}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
       <Head>
         <link rel="mask-icon" href="/tor_logo.svg" color="blue" />
 
@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }) {
         <meta property="fb:app_id" content="100776818676812" />
       </Head>
       <Component {...pageProps} />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 }
 

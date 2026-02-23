@@ -1,9 +1,8 @@
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import React from "react";
 
 // at least one org has to be selected
@@ -39,7 +38,6 @@ export default function OrganizationInput({
         multiple
         value={organizationsSelected}
         onChange={handleChangeMultiple}
-        input={<Input />}
         displayEmpty
         renderValue={renderValue}
       >
