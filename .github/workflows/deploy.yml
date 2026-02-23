@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Dokku
+        run: |
+          curl -f -X POST \
+            "https://deploy.app.jfilter.de/deploy/tor?token=${{ secrets.DOKKU_DEPLOY_TOKEN }}" \
+            --max-time 600
