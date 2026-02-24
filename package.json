@@ -19,7 +19,7 @@
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.0.0",
-    "bulma": "^1.0.0",
+    "bulma": "^0.9.4",
     "cheerio": "^1.0.0",
     "dayjs": "^1.11.0",
     "mapbox-gl": "^3.0.0",
