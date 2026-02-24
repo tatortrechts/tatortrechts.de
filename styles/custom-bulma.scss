@@ -13,11 +13,19 @@
 
   --bulma-card-header-shadow: none;
 
-  // Match old Bulma 0.9 pure gray palette (remove blue tint from scheme + text)
+  // Match old Bulma 0.9 pure gray palette (remove blue tint from scheme, text, dark)
   --bulma-scheme-h: 0;
   --bulma-scheme-s: 0%;
   --bulma-text-h: 0deg;
   --bulma-text-s: 0%;
+  --bulma-dark-h: 0deg;
+  --bulma-dark-s: 0%;
+}
+
+// Bulma 1.0 redefines --bulma-card-header-shadow inside .card-header,
+// overriding :root. Must override at same specificity level.
+.card-header {
+  --bulma-card-header-shadow: none;
 }
 
 // Bulma 1.0 sets --bulma-title-weight inside .title/.subtitle selector,
