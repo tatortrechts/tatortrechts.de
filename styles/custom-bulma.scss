@@ -1,42 +1,57 @@
+// =============================================================================
+// Bulma 1.0 customization — Sass-level overrides
+// =============================================================================
+// Bulma 1.0 introduced a blue-tinted gray palette (hue 221, sat 14%).
+// Override at the Sass level so ALL derived CSS variables (text-h, dark-h,
+// scheme-h, shade values, etc.) are computed from pure grays at compile time.
+// This eliminates the need for per-variable CSS :root overrides.
+
+// 1) Configure initial variables FIRST (before Bulma loads them).
+//    Replace blue-tinted grays with pure grays (hue 0, sat 0%).
+@use "../node_modules/bulma/sass/utilities/initial-variables" with (
+  $scheme-h: 0,
+  $scheme-s: 0%,
+  $black:          hsl(0, 0%, 4%),
+  $black-bis:      hsl(0, 0%, 9%),
+  $black-ter:      hsl(0, 0%, 14%),
+  $grey-darker:    hsl(0, 0%, 21%),
+  $grey-dark:      hsl(0, 0%, 29%),
+  $grey:           hsl(0, 0%, 48%),
+  $grey-light:     hsl(0, 0%, 71%),
+  $grey-lighter:   hsl(0, 0%, 86%),
+  $grey-lightest:  hsl(0, 0%, 93%),
+  $white-ter:      hsl(0, 0%, 96%),
+  $white-bis:      hsl(0, 0%, 98%),
+  $white:          hsl(0, 0%, 100%)
+);
+
+// 2) Configure derived variables: primary + link = #a50f15 = hsl(357, 82%, 35%)
+@use "../node_modules/bulma/sass/utilities/derived-variables" with (
+  $primary: hsl(357, 82%, 35%),
+  $link: hsl(357, 82%, 35%)
+);
+
+// 3) Load Bulma (reuses already-configured modules above)
 @use "../node_modules/bulma/bulma.scss";
 
-// Custom theme overrides using CSS custom properties (Bulma v1.0)
-// Original color: #a50f15 = hsl(357, 82%, 35%)
-:root {
-  --bulma-primary-h: 357deg;
-  --bulma-primary-s: 82%;
-  --bulma-primary-l: 35%;
+// =============================================================================
+// Component-level overrides (Bulma 0.9 → 1.0 behavioral differences)
+// =============================================================================
 
-  --bulma-link-h: 357deg;
-  --bulma-link-s: 82%;
-  --bulma-link-l: 35%;
-
-  --bulma-card-header-shadow: none;
-
-  // Match old Bulma 0.9 pure gray palette (remove blue tint from scheme, text, dark)
-  --bulma-scheme-h: 0;
-  --bulma-scheme-s: 0%;
-  --bulma-text-h: 0deg;
-  --bulma-text-s: 0%;
-  --bulma-dark-h: 0deg;
-  --bulma-dark-s: 0%;
-}
-
-// Bulma 1.0 redefines --bulma-card-header-shadow inside .card-header,
-// overriding :root. Must override at same specificity level.
+// Bulma 1.0 adds a card-header shadow; Bulma 0.9 had none.
+// Must override at selector level because Bulma redefines it inside .card-header.
 .card-header {
   --bulma-card-header-shadow: none;
 }
 
-// Bulma 1.0 sets --bulma-title-weight inside .title/.subtitle selector,
-// which overrides :root. Must override at same specificity level.
+// Bulma 1.0 changed default title weight; restore semibold from 0.9.
 .title,
 .subtitle {
   --bulma-title-weight: var(--bulma-weight-semibold);
 }
 
-// In Bulma 1.0, active navbar items get a colored background.
-// Old Bulma 0.9 only changed text color. Restore that behavior.
+// Bulma 1.0 gives active navbar items a colored background.
+// Bulma 0.9 only changed text color. Restore that behavior.
 a.navbar-item.is-active {
   background-color: transparent !important;
   color: var(--bulma-link) !important;
