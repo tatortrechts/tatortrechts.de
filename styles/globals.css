@@ -430,15 +430,6 @@ svg.tor-expanded {
   flex-flow: column nowrap;
 }
 
-.hero.is-primary,
-.hero.is-primary .title {
-  color: black;
-  /* background-color: ffe5e5; */
-  /* background-color: #c48a88; */
-  /* background-color: #fc9272; */
-  background-color: #eeb2a3;
-  opacity: 0.9;
-}
 
 .tor-gradient {
   background: rgb(255, 255, 255);
