@@ -10,30 +10,30 @@
     "test:ui": "npx playwright test --ui"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "22"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@math.gl/web-mercator": "^4.0.0",
-    "@mui/icons-material": "^6.0.0",
-    "@mui/material": "^6.0.0",
-    "@mui/x-date-pickers": "^7.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@math.gl/web-mercator": "^4.1.0",
+    "@mui/icons-material": "^6.5.0",
+    "@mui/material": "^6.5.0",
+    "@mui/x-date-pickers": "^7.29.4",
     "bulma": "^0.9.4",
-    "cheerio": "^1.0.0",
-    "dayjs": "^1.11.0",
-    "mapbox-gl": "^3.0.0",
-    "next": "^15.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "cheerio": "^1.2.0",
+    "dayjs": "^1.11.23",
+    "mapbox-gl": "^3.34.2",
+    "next": "^15.5.29",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-infinite-scroller": "^1.2.6",
-    "react-map-gl": "^7.1.0",
-    "react-scroll-parallax": "^3.4.0",
-    "sass": "^1.70.0",
-    "victory": "^37.0.0"
+    "react-map-gl": "^7.1.9",
+    "react-scroll-parallax": "^3.5.0",
+    "sass": "^1.108.1",
+    "victory": "^37.4.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
-    "prettier": "^3.0.0"
+    "@playwright/test": "^1.65.0",
+    "prettier": "^3.9.10"
   }
 }
