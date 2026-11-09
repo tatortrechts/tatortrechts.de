@@ -1,5 +1,6 @@
 module.exports = {
   poweredByHeader: false,
+  agentRules: false,
   async redirects() {
     return [
       {
